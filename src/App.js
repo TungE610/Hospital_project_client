@@ -6,6 +6,7 @@ function App(props) {
   return (
 		<div style={{height : '100vh'}}>
 			<Login />
+			<p>Vailozluon daucatmoi</p>
 		</div>
 	);
 }
