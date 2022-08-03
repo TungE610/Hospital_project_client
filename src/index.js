@@ -23,7 +23,7 @@ export default function App() {
 		<p>Vailozluon</p>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />}>
+        <Route path="/" element={<Layout />}>
           <Route path="/Login" element={<Login/>}/>
           <Route path="/TopPage" element={<TopPage />} />
           <Route path="/AboutPage" element={<AboutPage />} />
