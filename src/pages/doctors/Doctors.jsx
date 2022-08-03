@@ -23,7 +23,7 @@ const Doctors = () => {
   const getDoctors = async () => {
 		setLoading(true)
 			try {
-				const response = await fetch("http://localhost:5000/doctors")
+				const response = await fetch("https://hospital-project-api.herokuapp.com/api/doctors")
 				const jsonData = await response.json()
 				setDoctorData(jsonData)
 				setLoading(false)
