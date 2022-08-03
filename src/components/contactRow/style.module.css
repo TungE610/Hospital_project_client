@@ -1,0 +1,8 @@
+.ContactRow {
+	box-sizing: border-box;
+	display: flex;
+	background-color: #6032322c;
+	padding-left: 80px;
+	height : 25px;
+	width : 100%;
+}

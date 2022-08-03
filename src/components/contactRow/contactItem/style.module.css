@@ -1,0 +1,15 @@
+.contactItem {
+	display: flex;
+	width : 25%;
+	align-items: center;
+}
+.contactItemLogo {
+	width: 20px;
+	height : 20px;
+}
+.itemInfo {
+	margin-left: 10px;
+	font-size: 13px;
+	font-weight: 600;
+	color : rgb(104, 86, 86);
+}

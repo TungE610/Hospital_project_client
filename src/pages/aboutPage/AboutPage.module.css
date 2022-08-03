@@ -1,0 +1,28 @@
+* {
+	box-sizing: border-box;
+	margin:0;
+}
+
+.aboutPage {
+	height : 100vh;
+	width : 99.95vw;
+}
+.pageTitle {
+display: flex;
+align-items: center;
+gap: 10px;
+margin : auto;
+justify-content: center;
+margin: 50px 0;
+}
+.titleText{
+	font-size: 40px;
+	font-weight: 900;
+	color : #B53E5A;
+	letter-spacing: 1px;
+	margin : 0;
+}
+.titleLogo {
+	width: 45px;
+	height : 45px;
+}

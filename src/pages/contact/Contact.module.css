@@ -1,0 +1,19 @@
+.contactForm {
+	margin : 50px auto;
+}
+
+.contactHeader {
+	width : 80%;
+	margin : 50px auto;
+}
+.sectionTitle {
+   font-size: 40px;
+  font-weight: lighter;
+	color : #B56161;
+	margin-bottom : 20px
+}
+.sectionMessage {
+	font-size: 20px;
+	font-weight: lighter;
+	color : #B56161
+}

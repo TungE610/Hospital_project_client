@@ -1,0 +1,42 @@
+*{
+	box-sizing: border-box;
+	margin : 0;
+}
+
+
+.navbarItem{
+	display: flex;
+	align-items: center;
+	justify-self: center;
+	padding : 0 24px 0 5px;
+	color : #753c3cda;
+	text-decoration: none;
+}
+
+.navbarItem{
+  border: 2px solid transparent;
+  border-bottom: 2px solid #B56161;
+  margin-right: 0px;
+  padding-right: 30px;
+  transition: border 0.3s ease;
+}
+
+.navbarItem:hover {
+  border-top: 2px solid #B56161;
+  border-left: 2px solid #B56161;
+  border-right: 2px solid #B56161;
+  border-bottom: 2px solid transparent;
+	background-color: #b561612c;
+}
+
+.navBarItemIcon {
+	width : 25px;
+	height : 25px;
+	opacity: 0.8;
+}
+.itemContent p{
+	padding-left : 6px;
+	padding-top : 10px;
+	font-size: 14px;
+	font-weight: bolder;
+}

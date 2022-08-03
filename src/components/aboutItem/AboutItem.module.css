@@ -1,0 +1,109 @@
+*,
+:before,
+:after {
+    box-sizing: border-box;
+}
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,700,900,400italic,700italic,900italic);
+.aboutItem {
+	box-sizing: border-box;
+	display: flex;
+	height : 400px;
+	padding : 5px 40px; 
+	width : 100%;
+	padding : 0 60px 0 120px;
+	justify-content: center;
+	align-items: center;
+	margin-top : 100px;
+	background-color: #d6d5dd33;
+	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.aboutItemText {
+	width : 50%;
+	padding-right : 90px;
+}
+.textTitle {
+	font-size : 3em;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-weight: 700;
+	color : #B53E5A;
+	transition-delay: 1s;
+
+}
+.textTitle.scrolledTo {
+	animation: text-shadow 1.5s ease-in-out infinite;
+	font-size: 3em;
+	font-weight: 900;
+	line-height: 1;
+}
+
+.textContent {
+	font-size: 20px;
+	font-weight: 600;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	color : #2e575a;
+	margin-top : 20px;
+	line-height: 1.5;
+	transition-duration: 1s;
+}
+.aboutItemImage {
+	width : 50%;
+	height : 100%;
+}
+.itemImage {
+	border-radius: 5px;
+	height : 100%;
+	width : 85%;
+}
+@keyframes text-shadow {
+	0% {  
+			transform: translateY(0);
+			text-shadow: 
+					0 0 0 #0c2ffb, 
+					0 0 0 #2cfcfd, 
+					0 0 0 #fb203b, 
+					0 0 0 #fefc4b;
+	}
+
+	20% {  
+			transform: translateY(-1em);
+			text-shadow: 
+					0 0.125em 0 #0c2ffb, 
+					0 0.25em 0 #2cfcfd, 
+					0 -0.125em 0 #fb203b, 
+					0 -0.25em 0 #fefc4b;
+	}
+
+	40% {  
+			transform: translateY(0.5em);
+			text-shadow: 
+					0 -0.0625em 0 #0c2ffb, 
+					0 -0.125em 0 #2cfcfd, 
+					0 0.0625em 0 #fb203b, 
+					0 0.125em 0 #fefc4b;
+	}
+	
+ 60% {
+			transform: translateY(-0.25em);
+			text-shadow: 
+					0 0.03125em 0 #0c2ffb, 
+					0 0.0625em 0 #2cfcfd, 
+					0 -0.03125em 0 #fb203b, 
+					0 -0.0625em 0 #fefc4b;
+	}
+
+	80% {  
+			transform: translateX(0);
+			text-shadow: 
+					0 0 0 #0c2ffb, 
+					0 0 0 #2cfcfd, 
+					0 0 0 #fb203b, 
+					0 0 0 #fefc4b;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	* {
+		animation: none !important;
+		transition: none !important;
+	}}

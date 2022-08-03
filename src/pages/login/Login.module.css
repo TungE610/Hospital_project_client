@@ -1,0 +1,28 @@
+
+.loginPage {
+
+}
+.loginPage::before {
+	content: "";
+  position: absolute;
+  top: 0; 
+  left: 0;
+  width: 100%; 
+  height: 100%;  
+  opacity: .55; 
+  z-index: -9;
+  background: url('../../assets//login_bg.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	transition: background-color 1s;
+
+}
+.loginPage {
+  background-color: rgba(230, 126, 175, 0.103);
+}
+.boo:before::before {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background-color: inherit;
+  content: ' ';
+}

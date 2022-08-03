@@ -1,0 +1,7 @@
+.formInfo {
+	margin : 0;
+}
+.medicalCard {
+	display: flex;
+	gap : 30px;
+}
