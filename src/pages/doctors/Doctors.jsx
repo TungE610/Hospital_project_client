@@ -25,6 +25,7 @@ const Doctors = () => {
 			try {
 				const response = await fetch("https://hospital-project-api.herokuapp.com/api/doctors")
 				const jsonData = await response.json()
+				console.log(jsonData)
 				setDoctorData(jsonData)
 				setLoading(false)
 			} catch(error){

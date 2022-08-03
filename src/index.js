@@ -20,7 +20,6 @@ export default function App() {
 
   return (
 		<LogginContext.Provider value={[loginData, setLoggedIn]}>
-		<p>Vailozluon</p>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
