@@ -12,12 +12,12 @@ const RegisterModal = (props) => {
 		const patient_id =`${values.citizen_id.slice(-4)}${values.dob.slice(-5).replace('-','')}`
 		console.log(values.examinate)
 					try {
-						let response = await fetch(`http://localhost:5000/specialties/${values.examinate}`)
+						let response = await fetch(`https://hospital-project-api.herokuapp.com/api/specialties/${values.examinate}`)
 						let jsonData = await response.json()
 						const room_id = jsonData.room_id
 						console.log("room_id", room_id)
 						if(jsonData.room_id) {
-							response = await fetch(`http://localhost:5000/room/${jsonData.room_id}`)
+							response = await fetch(`https://hospital-project-api.herokuapp.com/api/room/${jsonData.room_id}`)
 							jsonData = await response.json()
 							console.log("doctor: ", jsonData.doctor_id)
 							const body = {
@@ -27,7 +27,7 @@ const RegisterModal = (props) => {
 								expected_time : new Date().toLocaleString(),
 								room_id : room_id,
 							}
-							response = await fetch(`http://localhost:5000/registrations`, {
+							response = await fetch(`https://hospital-project-api.herokuapp.com/api/registrations`, {
 								method : "POST",
 								headers : {"Content-Type" : "application/json"},
 								body : JSON.stringify(body)
@@ -42,7 +42,7 @@ const RegisterModal = (props) => {
 									start_time : new Date().toLocaleString() ,
 									appointment_id : `${jsonData.doctor_id.slice(-2)}${patient_id.slice(-2)}${new Date().toISOString().split('T')[0].slice(-5).replace('-', '')}`
 								}
-								response = await fetch(`http://localhost:5000/appointments`, {
+								response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments`, {
 									method : "POST",
 									headers : {"Content-Type" : "application/json"},
 									body : JSON.stringify(body)
@@ -54,7 +54,7 @@ const RegisterModal = (props) => {
 						} else {
 						}
 					} catch(error){
-						let response = await fetch(`http://localhost:5000/room/min_wait/${values.examinate}`)
+						let response = await fetch(`https://hospital-project-api.herokuapp.com/api/room/min_wait/${values.examinate}`)
 						let jsonData = await response.json()
 						const body = {
 							specialty_id : values.examinate,
@@ -63,7 +63,7 @@ const RegisterModal = (props) => {
 							expected_time : new Date(new Date().getTime() + 30*60000).toLocaleString(),
 							room_id : jsonData.room_id
 						}
-						 response = await fetch(`http://localhost:5000/registrations`, {
+						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/registrations`, {
 							method : "POST",
 							headers : {"Content-Type" : "application/json"},
 							body : JSON.stringify(body)
@@ -76,7 +76,7 @@ const RegisterModal = (props) => {
 		getRegisterValueHandler(values)
 		 try {
 			const body = values
-			const response = await fetch("http://localhost:5000/patients", {
+			const response = await fetch("https://hospital-project-api.herokuapp.com/api/patients", {
 				method : "POST",
 				headers : {"Content-Type" : "application/json"},
 				body : JSON.stringify(body)
