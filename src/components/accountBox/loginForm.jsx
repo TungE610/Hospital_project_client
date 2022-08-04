@@ -20,16 +20,17 @@ export function LoginForm() {
   let navigate = useNavigate();
 	const loginHandler = async () => {
 		 try {
-			await fetch("https://hospital-project-api.herokuapp.com/api/users/login",{ mode: 'no-cors' })
+			let headers = new Headers();
+			await fetch("https://hospital-project-api.herokuapp.com/api/users/login",{mode: 'cors'})
 			const body = {
 				email : loginData.email,
 				password : loginData.password
 			}
-			 const response = await fetch(`https://hospital-project-api.herokuapp.com/api/users/login`, {
+			 const response = await fetch("https://hospital-project-api.herokuapp.com/api/users/login", {
 				method : "POST",
 				headers : {"Content-Type" : "application/json"},
 				body : JSON.stringify(body),
-				mode: 'no-cors'
+				mode: 'cors',
 			})
 			if(response.status === 200) {
 				successNotification()
