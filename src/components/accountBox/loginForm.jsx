@@ -28,7 +28,8 @@ export function LoginForm() {
 			 const response = await fetch(`https://hospital-project-api.herokuapp.com/api/users/login`, {
 				method : "POST",
 				headers : {"Content-Type" : "application/json"},
-				body : JSON.stringify(body)
+				body : JSON.stringify(body),
+				mode: 'no-cors'
 			})
 			if(response.status === 200) {
 				successNotification()
