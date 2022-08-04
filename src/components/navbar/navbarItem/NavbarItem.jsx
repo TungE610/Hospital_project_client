@@ -1,6 +1,6 @@
 import React from "react";
 import styles from './NavbarItem.module.css'
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const NavbarItem = (props) => {
 

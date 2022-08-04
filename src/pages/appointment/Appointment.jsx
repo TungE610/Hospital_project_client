@@ -33,7 +33,7 @@ const Appointments = (props) => {
   const getAppointments = async () => {
 		setLoading(true)
 			try {
-				const response = await fetch("http://localhost:5000/appointments")
+				const response = await fetch("https://hospital-project-api.herokuapp.com/api/appointments")
 				const jsonData = await response.json()
 				setAppointmentData(jsonData)
 				setLoading(false)
@@ -172,9 +172,9 @@ const saveNotification = () => {
 				try {
 					let response 
 					if(searchValue.trim().length > 0){
-						 response = await fetch(`http://localhost:5000/appointments/appointment_id/${searchValue}`)
+						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/appointment_id/${searchValue}`)
 					} else {
-						 response = await fetch(`http://localhost:5000/appointments`)
+						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments`)
 					}					
 					const jsonData = await response.json()
 					setAppointmentData(jsonData)
@@ -187,9 +187,9 @@ const saveNotification = () => {
 				try {
 					let response 
 					if(searchValue.trim().length > 0){
-						response = await fetch(`http://localhost:5000/appointments/doctor_id/${searchValue}`)
+						response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/doctor_id/${searchValue}`)
 				 } else {
-						response = await fetch(`http://localhost:5000/appointments`)
+						response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments`)
 				 }	
 					const jsonData = await response.json()
 					setAppointmentData(jsonData)
@@ -202,9 +202,9 @@ const saveNotification = () => {
 				try {
 					let response 
 					if(searchValue.trim().length > 0){
-						response = await fetch(`http://localhost:5000/appointments/specialty/${searchValue}`)
+						response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/specialty/${searchValue}`)
 				 } else {
-						response = await fetch(`http://localhost:5000/appointments`)
+						response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments`)
 				 }	
 					const jsonData = await response.json()
 					setAppointmentData(jsonData)
@@ -217,7 +217,7 @@ const saveNotification = () => {
 const filterMyAppointment = async () => {
 	setLoading(true)
 		try {
-				const response = await fetch(`http://localhost:5000/appointments/doctor_id/${loginData.doctor_id}`)
+				const response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/doctor_id/${loginData.doctor_id}`)
 				const jsonData = await response.json()
 				setAppointmentData(jsonData)
 				setLoading(false)
@@ -229,7 +229,7 @@ const addAppointmentHandler = async () => {
 	try {
 		console.log('runs')
 		console.log("room_id:", loginData.room_id)
-			let response = await fetch(`http://localhost:5000/registrations/${loginData.room_id}`)
+			let response = await fetch(`https://hospital-project-api.herokuapp.com/api/registrations/${loginData.room_id}`)
 			const jsonData = await response.json()
 			console.log('json : ', jsonData)
 			// appointment_id, doctor_id, patient_id, specialty_id, room_id, start_time
@@ -241,7 +241,7 @@ const addAppointmentHandler = async () => {
 					room_id : loginData.room_id,
 					start_time : new Date().toLocaleString()
 			}
-			response = await fetch('http://localhost:5000/appointments', {
+			response = await fetch('https://hospital-project-api.herokuapp.com/api/appointments', {
 				method : "POST",
 				headers : {"Content-Type" : "application/json"},
 				body : JSON.stringify(body)			

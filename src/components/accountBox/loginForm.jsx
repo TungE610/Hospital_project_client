@@ -20,16 +20,16 @@ export function LoginForm() {
   let navigate = useNavigate();
 	const loginHandler = async () => {
 		 try {
+			await fetch("https://hospital-project-api.herokuapp.com/api/users/login")
 			const body = {
 				email : loginData.email,
 				password : loginData.password
 			}
-			const response = await fetch(`http://localhost:5000/users/login`, {
+			 const response = await fetch(`https://hospital-project-api.herokuapp.com/api/users/login`, {
 				method : "POST",
 				headers : {"Content-Type" : "application/json"},
 				body : JSON.stringify(body)
 			})
-			console.log(response)
 			if(response.status === 200) {
 				successNotification()
 				navigate('/TopPage')
@@ -61,13 +61,6 @@ export function LoginForm() {
 				'Your email or password is incorrect. Please try again !!',
 		});
 	};
-	const yetLogginedNotification = () => {
-		notification["error"]({
-			message: 'UNSUCCESSFUL',
-			description:
-				'Please enter your email and password !!',
-		});
-	};
 	return (
     <BoxContainer>
       <FormContainer>
@@ -77,7 +70,7 @@ export function LoginForm() {
       <Marginer direction="vertical" margin={10} />
       <MutedLink href="#">Forget your password?</MutedLink>
       <Marginer direction="vertical" margin="1.6em" />
-      <SubmitButton type="submit" onClick={() => {loginHandler()}}>SIGN IN AS ADMIN</SubmitButton>
+      <SubmitButton type="submit" onClick={() => {loginHandler()}}>SIGN IN AS DOCTOR</SubmitButton>
 			<SubmitButton>
 					<Link to="/TopPage">
 				USE AS GUEST

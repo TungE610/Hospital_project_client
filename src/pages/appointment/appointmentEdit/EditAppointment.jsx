@@ -28,7 +28,7 @@ const EditAppointments = () => {
 	const fetchAppointment = async () => {
 		setLoading(true)
 		try {
-			const response = await fetch(`http://localhost:5000/appointments/${appointment_id}`)
+			const response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/${appointment_id}`)
 			const jsonData = await response.json()
 			setAppointmentData(jsonData)
 			console.log(jsonData)
@@ -44,7 +44,7 @@ const EditAppointments = () => {
 		setLoading(true)
 		const body = {diagnosis : values.diagnosis, expected_time : expectedTime}
 		console.log("body:",body)
-		const response = await fetch(`http://localhost:5000/appointments/${appointment_id}`, {
+		const response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/${appointment_id}`, {
 			method : "POST",
 			headers : {"Content-Type" : "application/json"},
 			body : JSON.stringify(body)
