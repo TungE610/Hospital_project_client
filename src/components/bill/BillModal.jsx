@@ -36,7 +36,7 @@ const BillModal = (props) => {
 
 	const getMedical = async () => {
 		   try {
-				const response = await fetch('http://localhost:5000/medicals')
+				const response = await fetch('https://hospital-project-api.herokuapp.com/api/medicals')
 				const jsonData = await response.json()
 				const medicalData = jsonData.map(element => {
 					return {...element,selectedQuantity : 0}
@@ -61,7 +61,7 @@ const BillModal = (props) => {
 						total_charges : totalFee,
 
 					}
-					let response = await fetch('http://localhost:5000/bills', {
+					let response = await fetch('https://hospital-project-api.herokuapp.com/api/bills', {
 						method : "POST",
 						headers : {"Content-Type" : "application/json"},
 						body : JSON.stringify(body)
@@ -80,7 +80,7 @@ const BillModal = (props) => {
 					})
 					medicalbody.forEach(async (element) => {
 						if (element)
-						 response = await fetch('http://localhost:5000/medicines', {
+						 response = await fetch('https://hospital-project-api.herokuapp.com/api/medicines', {
 							method : "POST",
 							headers : {"Content-Type" : "application/json"},
 							body : JSON.stringify(element)
@@ -89,7 +89,7 @@ const BillModal = (props) => {
 					body = {
 						end_time : new Date().toLocaleTimeString()
 					}
-					response = await fetch(`http://localhost:5000/appointments/end_up/${props.appointment_id}`, {
+					response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/end_up/${props.appointment_id}`, {
 						method : "POST",
 						headers : {"Content-Type" : "application/json"},
 						body : JSON.stringify(body)
