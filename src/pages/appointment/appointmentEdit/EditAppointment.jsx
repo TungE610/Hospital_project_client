@@ -47,7 +47,8 @@ const EditAppointments = () => {
 		const response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/${appointment_id}`, {
 			method : "POST",
 			headers : {"Content-Type" : "application/json"},
-			body : JSON.stringify(body)
+			body : JSON.stringify(body),
+			mode: 'cors'
 		})
 		setLoading(false)
 		console.log("den day r")

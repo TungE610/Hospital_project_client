@@ -22,7 +22,6 @@ const Appointments = (props) => {
 	const [selectedPatientId, setSelectedPatientId] = useState('')
 	const [status_of_insurance, setStatus_of_insurance] = useState(false)
 	const [doctorStatus, setDoctorStatus] = useState(false)
-  const [doctorRoomId , setDoctorRoomId] = useState('')
 	const [typeSee, setTypeSee] = useState(true)
 	const navigate = useNavigate();
 	const { Option } = Select;
@@ -229,7 +228,7 @@ const addAppointmentHandler = async () => {
 	try {
 		console.log('runs')
 		console.log("room_id:", loginData.room_id)
-			let response = await fetch(`https://hospital-project-api.herokuapp.com/api/registrations/${loginData.room_id}`)
+			let response = await fetch(`https://hospital-project-api.herokuapp.com/api/registrations/${loginData.room_id}`,{mode: 'cors'})
 			const jsonData = await response.json()
 			console.log('json : ', jsonData)
 			// appointment_id, doctor_id, patient_id, specialty_id, room_id, start_time
@@ -244,7 +243,8 @@ const addAppointmentHandler = async () => {
 			response = await fetch('https://hospital-project-api.herokuapp.com/api/appointments', {
 				method : "POST",
 				headers : {"Content-Type" : "application/json"},
-				body : JSON.stringify(body)			
+				body : JSON.stringify(body),
+				mode: 'cors'			
 			})
 			successNotification()
 	}catch(error) {
