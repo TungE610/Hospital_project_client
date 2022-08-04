@@ -43,7 +43,7 @@ export function LoginForm() {
 			}
 		}catch(error) {
 			console.log(error.message)
-			alert("Some things went wrong sorry :((")
+			alert("Please wait some second...")
 		}
 		
 	}
