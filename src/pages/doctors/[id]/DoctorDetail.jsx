@@ -19,7 +19,7 @@ const DoctorDetail = () => {
   }
 	const getDoctor = async () => {
 		try {
-			const response = await fetch(`http://localhost:5000/doctors/${doctorId}`)
+			const response = await fetch(`https://hospital-project-api.herokuapp.com/api/doctors/${doctorId}`,{mode : 'cors'})
 			const jsonData = await response.json()
 			setDoctorData(jsonData)
 		} catch(error){
