@@ -194,7 +194,7 @@ const BillModal = (props) => {
 						<div className={styles.medicalCard}>
 						<Select
 							style={{
-								width: 250,
+								width: 400,
 							}}
 							onChange={selectMedical1Handler}
 						>
@@ -219,7 +219,7 @@ const BillModal = (props) => {
 						<div className={styles.medicalCard}>
 						<Select
 							style={{
-								width: 120,
+								width: 400,
 							}}
 							onChange={selectMedical2Handler}
 						>
@@ -244,7 +244,7 @@ const BillModal = (props) => {
 						<div className={styles.medicalCard}>
 						<Select
 							style={{
-								width: 250,
+								width: 400,
 							}}
 							onChange={selectMedical3Handler}
 						>
