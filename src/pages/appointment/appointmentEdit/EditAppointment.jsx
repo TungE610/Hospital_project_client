@@ -28,7 +28,7 @@ const EditAppointments = () => {
 	const fetchAppointment = async () => {
 		setLoading(true)
 		try {
-			const response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/${appointment_id}`)
+			const response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/${appointment_id}`,{mode : 'cors'})
 			const jsonData = await response.json()
 			setAppointmentData(jsonData)
 			console.log(jsonData)

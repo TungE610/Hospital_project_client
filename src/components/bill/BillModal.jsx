@@ -36,7 +36,7 @@ const BillModal = (props) => {
 
 	const getMedical = async () => {
 		   try {
-				const response = await fetch('https://hospital-project-api.herokuapp.com/api/medicals')
+				const response = await fetch('https://hospital-project-api.herokuapp.com/api/medicals', {mode : 'cors'})
 				const jsonData = await response.json()
 				const medicalData = jsonData.map(element => {
 					return {...element,selectedQuantity : 0}
@@ -64,7 +64,8 @@ const BillModal = (props) => {
 					let response = await fetch('https://hospital-project-api.herokuapp.com/api/bills', {
 						method : "POST",
 						headers : {"Content-Type" : "application/json"},
-						body : JSON.stringify(body)
+						body : JSON.stringify(body),
+						mode : 'cors'
 					})
 
 					const medicalbody = medical.map(element => {
@@ -83,7 +84,8 @@ const BillModal = (props) => {
 						 response = await fetch('https://hospital-project-api.herokuapp.com/api/medicines', {
 							method : "POST",
 							headers : {"Content-Type" : "application/json"},
-							body : JSON.stringify(element)
+							body : JSON.stringify(element),
+							mode : 'cors'
 						})
 					})
 					body = {
@@ -92,7 +94,8 @@ const BillModal = (props) => {
 					response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/end_up/${props.appointment_id}`, {
 						method : "POST",
 						headers : {"Content-Type" : "application/json"},
-						body : JSON.stringify(body)
+						body : JSON.stringify(body),
+						mode : 'cors'
 					})
 					closePopup()
 				}catch (error) {

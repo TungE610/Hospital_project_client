@@ -32,7 +32,7 @@ const Appointments = (props) => {
   const getAppointments = async () => {
 		setLoading(true)
 			try {
-				const response = await fetch("https://hospital-project-api.herokuapp.com/api/appointments")
+				const response = await fetch("https://hospital-project-api.herokuapp.com/api/appointments",{mode : 'cors'})
 				const jsonData = await response.json()
 				setAppointmentData(jsonData)
 				setLoading(false)
@@ -171,9 +171,9 @@ const saveNotification = () => {
 				try {
 					let response 
 					if(searchValue.trim().length > 0){
-						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/appointment_id/${searchValue}`)
+						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/appointment_id/${searchValue}`,{mode : 'cors'})
 					} else {
-						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments`)
+						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments`,{mode : 'cors'})
 					}					
 					const jsonData = await response.json()
 					setAppointmentData(jsonData)
@@ -186,9 +186,9 @@ const saveNotification = () => {
 				try {
 					let response 
 					if(searchValue.trim().length > 0){
-						response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/doctor_id/${searchValue}`)
+						response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/doctor_id/${searchValue}`,{mode : 'cors'})
 				 } else {
-						response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments`)
+						response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments`,{mode : 'cors'})
 				 }	
 					const jsonData = await response.json()
 					setAppointmentData(jsonData)
@@ -201,9 +201,9 @@ const saveNotification = () => {
 				try {
 					let response 
 					if(searchValue.trim().length > 0){
-						response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/specialty/${searchValue}`)
+						response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/specialty/${searchValue}`,{mode : 'cors'})
 				 } else {
-						response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments`)
+						response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments`,{mode : 'cors'})
 				 }	
 					const jsonData = await response.json()
 					setAppointmentData(jsonData)
@@ -216,7 +216,7 @@ const saveNotification = () => {
 const filterMyAppointment = async () => {
 	setLoading(true)
 		try {
-				const response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/doctor_id/${loginData.doctor_id}`)
+				const response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/doctor_id/${loginData.doctor_id}`,{mode : 'cors'})
 				const jsonData = await response.json()
 				setAppointmentData(jsonData)
 				setLoading(false)
