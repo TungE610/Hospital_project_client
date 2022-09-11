@@ -205,7 +205,7 @@ const BillModal = (props) => {
 							})}
 						</Select>
 						  <div style={{lineHeight:"31px"}}>{` x `}</div>
-							<Input size="small" min={1} max={100} defaultValue={1} onChange={(e) => {
+							<Input size="small" min={1} max={100} defaultValue={0} onChange={(e) => {
 								if(e.target.value) {
 									selectedQuantityHandler(e.target.value,medical1)
 								} else {
@@ -230,7 +230,7 @@ const BillModal = (props) => {
 							})}
 						</Select>
 						  <div style={{lineHeight:"31px"}}>{` x `}</div>
-							<Input size="small" min={1} max={100} defaultValue={1} onChange={(e) => {
+							<Input size="small" min={1} max={100} defaultValue={0} onChange={(e) => {
 								if(e.target.value) {
 									selectedQuantityHandler(e.target.value,medical2)
 								} else {
@@ -255,7 +255,7 @@ const BillModal = (props) => {
 							})}
 						</Select>
 						  <div style={{lineHeight:"31px"}}>{` x `}</div>
-							<Input size="small" min={1} max={100} defaultValue={1} onChange={(e) => {
+							<Input size="small" min={1} max={100} defaultValue={0} onChange={(e) => {
 									if(e.target.value) {
 											selectedQuantityHandler(e.target.value,medical3)
 									} else {
