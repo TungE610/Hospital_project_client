@@ -16,7 +16,7 @@ const RoomDetail = () => {
   }
 	const getDoctors = async () => {
 		try {
-			const response = await fetch(`https://hospital-project-api.herokuapp.com/api/rooms/${roomId}`)
+			const response = await fetch(`https://hospital-project-api.herokuapp.com/api/rooms/${roomId}`, {mode : 'cors'})
 			const jsonData = await response.json()
 			setDoctorData(jsonData)
 		} catch(error){
