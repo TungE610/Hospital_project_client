@@ -40,9 +40,6 @@ const Doctors = () => {
 	const toggleModalHandler = (state) => {
 		setIsModalVisible(state)
   }
-const handleEdit = (doctor_id) => {
-
-}
 const modelDelete = (id) => {
 	Modal.confirm({
 		title: 'You sure to remove this doctor',
@@ -159,7 +156,22 @@ const saveNotification = () => {
 			title : "Specialty",
 			key : "specialty",
 			dataIndex : "specialty",
-			align : "center"
+			align : "center",
+			filters : [
+				{
+					text: 'Tim Mạch',
+					value: 'Tim Mạch',
+				},
+				{
+					text: 'Tai Mũi Họng',
+					value: 'Tai Mũi Họng',
+				},
+				{
+					text: 'Mắt',
+					value: 'Mắt',
+				},
+			],
+			onFilter: (value, record) => record.specialty === value,
 		},
 		{
 			title : "Room_id",

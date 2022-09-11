@@ -19,7 +19,7 @@ const Rooms = () => {
   const getRooms = async () => {
 		  setLoading(true)
 			try {
-				const response = await fetch("https://hospital-project-api.herokuapp.com/api/rooms")
+				const response = await fetch("https://hospital-project-api.herokuapp.com/api/rooms", {mode : 'cors'})
 				const jsonData = await response.json()
 				setRoomData(jsonData)
 				setLoading(false);
@@ -56,10 +56,17 @@ const Rooms = () => {
 			key : "status",
 			dataIndex : "status",
 			align : "center",
-			filters: [
-				{ text: 'True', value: 't' },
-				{ text: 'False', value: 'f' },
+			filters : [
+				{
+					text: 'True',
+					value: 't',
+				},
+				{
+					text: 'False',
+					value: 'f',
+				},
 			],
+			onFilter: (value, record) => record.status === value,
 			render : (status) => {
 				if (status === 'f') {
 					return (
@@ -82,7 +89,8 @@ const Rooms = () => {
 			dataIndex : "num_of_waiting",
 			align : "center",
 			width : 200,
-			sorter: true,
+			sorter: (a, b) => a.num_of_waiting - b.num_of_waiting,
+			sortDirections: ['ascend'],
 		},
 		{
 			title : "Manager",
@@ -97,6 +105,21 @@ const Rooms = () => {
 			dataIndex : "specialty",
 			align : "center",
 			sorter: true,
+			filters : [
+				{
+					text: 'Tim Mạch',
+					value: 'Tim Mạch',
+				},
+				{
+					text: 'Tai Mũi Họng',
+					value: 'Tai Mũi Họng',
+				},
+				{
+					text: 'Mắt',
+					value: 'Mắt',
+				},
+			],
+			onFilter: (value, record) => record.specialty === value,
 		},
 	]
 	const searchTypeHandler = (value) => {
@@ -114,9 +137,9 @@ const Rooms = () => {
 				try {
 					let response 
 					if(searchValue.trim().length > 0){
-						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/rooms/room_id/${searchValue}`)
+						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/rooms/room_id/${searchValue}`, {mode : 'cors'})
 					} else {
-						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/rooms`)
+						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/rooms`, {mode : 'cors'})
 					}			
 					const jsonData = await response.json()
 					setRoomData(jsonData)
@@ -129,9 +152,9 @@ const Rooms = () => {
 				try {
 					let response 
 					if(searchValue.trim().length > 0){
-						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/rooms/specialty/${searchValue}`)
+						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/rooms/specialty/${searchValue}`, {mode : 'cors'})
 					} else {
-						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/rooms`)
+						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/rooms`, {mode : 'cors'})
 					}							
 					const jsonData = await response.json()
 					setRoomData(jsonData)
