@@ -218,7 +218,9 @@ const BillModal = (props) => {
 						<Space>
 						<div className={styles.medicalCard}>
 						<Select
-							style="width: 250px "
+							style={{
+								width: 120,
+							}}
 							onChange={selectMedical2Handler}
 						>
 							{medical.map(element => {
