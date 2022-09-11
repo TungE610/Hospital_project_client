@@ -17,11 +17,10 @@ const BillModal = (props) => {
 	const [medical2,setMedical2] = useState('heroin')
 	const [medical3,setMedical3] = useState('heroin')
   
-	console.log('props: ', props)
 	const selectMedical1Handler = (value) => {
 			setMedical1(value)
 	}
-	  
+	  console.log("medical: ", medical)
 	const selectMedical2Handler = (value) => {
 			setMedical2(value)
 	}
@@ -142,6 +141,7 @@ const BillModal = (props) => {
 		medical.forEach(element => {
 			medicine_fee = medicine_fee + Number(element.cost.replace(/[^0-9.-]+/g,"")) * element.selectedQuantity
 		})
+		console.log("medicine_fee: ", medicine_fee)
 		setMedicineFee(medicine_fee)
 	}
 	 useEffect(() => {
