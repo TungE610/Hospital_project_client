@@ -74,7 +74,7 @@ const deletetpl =async  (id) => {
 const deleteTptt = async (id) => {
 	try {
 		console.log(id)
-		const res = await fetch(`http://localhost:5000/doctors/delete/${id}`,{
+		const res = await fetch(`https://hospital-project-api.herokuapp.com/api/doctors/delete/${id}`,{
 			method : "POST",
 			headers : {"Content-Type" : "application/json"},
 			mode: 'cors'
@@ -229,9 +229,9 @@ const saveNotification = () => {
 				try {
 					let response 
 					if(searchValue.trim().length > 0){
-						 response = await fetch(`http://localhost:5000/doctors/doctor_id/${searchValue}`,{mode: 'cors'})
+						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/doctors/doctor_id/${searchValue}`,{mode: 'cors'})
 					} else {
-						 response = await fetch(`http://localhost:5000/doctors`,{mode: 'cors'})
+						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/doctors`,{mode: 'cors'})
 					}					
 					const jsonData = await response.json()
 					setDoctorData(jsonData)
@@ -244,9 +244,9 @@ const saveNotification = () => {
 				try {
 					let response 
 					if(searchValue.trim().length > 0){
-						 response = await fetch(`http://localhost:5000/doctors/name/${searchValue}`,{mode: 'cors'})
+						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/doctors/name/${searchValue}`,{mode: 'cors'})
 					} else {
-						 response = await fetch(`http://localhost:5000/doctors`,{mode: 'cors'})
+						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/doctors`,{mode: 'cors'})
 					}
 					const jsonData = await response.json()
 					setDoctorData(jsonData)
