@@ -1,8 +1,7 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import {React, Fragment, useState, useEffect, useContext}from "react";
-import styles from './notificationBox.module.css';
+import styles from './NotificationBox.module.css';
 
-const notificationBox = (props) => {
+const NotificationBox = (props) => {
 	const [chatopen, setChatopen] = useState(false)
   let hide = {
     display: 'none',
@@ -49,4 +48,4 @@ const handleSend = e => {
 		)
 }
 
-export default notificationBox
+export default NotificationBox
