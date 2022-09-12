@@ -1,5 +1,5 @@
 import {React, Fragment, useState, useEffect, useContext}from "react";
-import styles from './NotificationBox.module.css';
+import styles from './Notification.module.css';
 
 const NotificationBox = (props) => {
 	const [chatopen, setChatopen] = useState(false)
