@@ -17,7 +17,7 @@ const RegisterModal = (props) => {
 						const room_id = jsonData.room_id
 						console.log("room_id", room_id)
 						if(jsonData.room_id) {
-							response = await fetch(`https://hospital-project-api.herokuapp.com/api/room/${jsonData.room_id}`)
+							response = await fetch(`https://hospital-project-api.herokuapp.com/api/rooms/${jsonData.room_id}`)
 							jsonData = await response.json()
 							console.log("doctor: ", jsonData.doctor_id)
 							const body = {
