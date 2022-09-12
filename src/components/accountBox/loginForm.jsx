@@ -33,7 +33,6 @@ export function LoginForm() {
 				body : JSON.stringify(body),
 				mode: 'cors',
 			})
-			console.log("done")
 			if(response.status === 200) {
 				successNotification()
 				navigate('/TopPage')
