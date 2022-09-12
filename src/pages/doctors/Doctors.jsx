@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import RegisterModal from "../../components/registerModal/RegisterModal";
 import { SearchOutlined, EditTwoTone, DeleteTwoTone, ExclamationCircleOutlined } from '@ant-design/icons'
 import LogginContext from '../../components/accountBox/LogginContext'
+import notificationBox from "../../components/notificationBox/notificationBox";
 
 const Doctors = () => {
   const [doctorData, setDoctorData] = useState([])
@@ -301,8 +302,8 @@ const saveNotification = () => {
 								},
 							})}
 				/>
+		<notificationBox messages={["vailin sap den luot b roi"]}/>
 		</div>
-
 	)
 }
 
