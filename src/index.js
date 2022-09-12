@@ -14,12 +14,10 @@ import ErrorPage from "./pages/error/ErrorPage";
 import Appointment from "./pages/appointment/Appointment";
 import LogginContext from './components/accountBox/LogginContext' 
 import EditAppointments from "./pages/appointment/appointmentEdit/EditAppointment";
-import { ReactSession } from 'react-client-session';
 
 export default function App() {
 	const [loginData, setLoggedIn] = useState({isLoggedIn : false , role : '', doctor_id : null, room_id : null});
-  ReactSession.setStoreType("localStorage");
-  ReactSession.set("email", "Bob");
+
   return (
 		<LogginContext.Provider value={[loginData, setLoggedIn]}>
     <BrowserRouter>
