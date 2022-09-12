@@ -40,14 +40,14 @@ return (
 			<Logo />
 			   <NavbarItem className="navbarItem" link="/TopPage" iconLink='home.png' itemContent='HOME'/>
 				 <NavbarItem className="navbarItem" link="/AboutPage" iconLink='about.png' itemContent='ABOUT'/>
-				 {loginData.role === 'super_admin' || loginData.role === 'doctor' || sessionStorage.getItem("name") ? <NavbarItem className="navbarItem" link="/Appointments" iconLink='appointment.png' itemContent='APPOINTMENT'/> : ''}
+				 {loginData.role === 'super_admin' || loginData.role === 'doctor' || sessionStorage.getItem("email") ? <NavbarItem className="navbarItem" link="/Appointments" iconLink='appointment.png' itemContent='APPOINTMENT'/> : ''}
 				 {/* <NavbarItem className="navbarItem" link="/Appointments" iconLink='dining-table.png' itemContent='Appointment'/> */}
 				 <NavbarItem className="navbarItem" link="/Doctors" iconLink='doctor.png' itemContent='DOCTORS'/>
 				 <NavbarItem className="navbarItem" link="/Rooms" iconLink='dining-table.png' itemContent='ROOMS'/>
 				 <NavbarItem className="navbarItem" link="/Contact" iconLink='contacts.png' itemContent='CONTACTS'/>
 		<div className={styles.navbarButtons}>
 			{
-				(!loginData.isLoggedIn || sessionStorage.getItem("name")) ? 
+				(!loginData.isLoggedIn || sessionStorage.getItem("email")) ? 
 			<MyButton  type="primary" size="large" onClick={() => {navigate('/Login')}}>
 				<p className={styles.loginText} style={{marginBottom : 0, fontWeight : "bold"}}>LOGIN</p>
 			</MyButton> : 
