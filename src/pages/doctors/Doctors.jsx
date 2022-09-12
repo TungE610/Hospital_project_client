@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import RegisterModal from "../../components/registerModal/RegisterModal";
 import { SearchOutlined, EditTwoTone, DeleteTwoTone, ExclamationCircleOutlined } from '@ant-design/icons'
 import LogginContext from '../../components/accountBox/LogginContext'
-import NotificationBox from "../../components/notificationBox/NotificationBox";
+import NotificationBox from "../../components/notificationBox/Notification";
 
 const Doctors = () => {
   const [doctorData, setDoctorData] = useState([])

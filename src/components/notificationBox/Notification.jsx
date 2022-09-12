@@ -9,7 +9,6 @@ const NotificationBox = (props) => {
   let show = {
     display: 'block'
   }
-  let textRef = React.createRef()
   const {messages} = props
 
   const toggle = e => {
@@ -18,12 +17,11 @@ const NotificationBox = (props) => {
 
 const handleSend = e => {
   const get = props.getMessage
-  get(textRef.current.value)
 }
 		return (
 		<div className={styles.chatCon}>
       <div className={styles.chatBox} style={chatopen ? show : hide}>
-    		<div className={styles.header}>Chat with me</div>
+    		<div className={styles.header}>Notification</div>
     			<div className={styles.msgArea}>
       {
         messages.map((msg, i) => (
@@ -37,12 +35,12 @@ const handleSend = e => {
 
     </div>
     	<div className={styles.footer}>
-      	<input type="text"  ref={textRef} />
+      	<input type="text" />
       	<button onClick={handleSend}><i></i></button>
     	</div>
   	</div>
     <div className={styles.pop}>
-      <p><img onClick={toggle} src="https://p7.hiclipart.com/preview/151/758/442/iphone-imessage-messages-logo-computer-icons-message.jpg" alt="" /></p>
+			<p><img onClick={toggle} src={require(`../../assets/messages.png`)}/></p>
     </div>
     </div>
 		)
