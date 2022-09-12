@@ -47,13 +47,13 @@ return (
 				 <NavbarItem className="navbarItem" link="/Contact" iconLink='contacts.png' itemContent='CONTACTS'/>
 		<div className={styles.navbarButtons}>
 			{
-				(!loginData.isLoggedIn || !sessionStorage.getItem("email")) ? 
+				(loginData.isLoggedIn || sessionStorage.getItem("email")) ? 
+			<MyButton  type="primary" size="large" onClick={logoutHandler}>
+				<p className={styles.loginText} style={{marginBottom : 0, fontWeight : "bold"}}>LOGOUT</p>
+			</MyButton> : 
 			<MyButton  type="primary" size="large" onClick={() => {navigate('/Login')}}>
 				<p className={styles.loginText} style={{marginBottom : 0, fontWeight : "bold"}}>LOGIN</p>
-			</MyButton> : 
-			<MyButton  type="primary" size="large" onClick={logoutHandler}>
-						<p className={styles.loginText} style={{marginBottom : 0, fontWeight : "bold"}}>LOGOUT</p>
-			</MyButton> 
+			</MyButton>
 			}
 			<MyButton  type="primary" size="large" onClick={() => {openModalHandler(true)}}>
 				<p className={styles.appointmentText} style={{marginBottom : 0, fontWeight : "bold"}}>APPOINTMENT</p>
