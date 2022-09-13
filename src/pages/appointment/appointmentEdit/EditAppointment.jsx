@@ -51,7 +51,6 @@ const EditAppointments = () => {
 			mode: 'cors'
 		})
 		setLoading(false)
-		console.log("den day r")
 		navigate('/Appointments')
   };
   useEffect(() => {

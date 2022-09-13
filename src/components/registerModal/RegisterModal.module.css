@@ -1,0 +1,17 @@
+:global .ant-modal-content {
+	border-radius: 10px !important;
+}
+
+:global .ant-modal-header {
+	background-color: #B56161 !important;
+	border-radius: 10px 10px 0 0!important;
+}
+
+:global .ant-form-item-label label{
+	color: #B56161 !important;
+	font-weight: 700;
+}
+:global .ant-btn-primary {
+	background-color: #B56161 !important;
+	border-color: #B56161 !important;
+}

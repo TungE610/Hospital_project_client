@@ -41,7 +41,7 @@ const NotificationBox = () => {
 				: 
 				""
       }
-				<p className={styles.left}><span>"Welcome to HUST CLINIC website"</span></p>
+				<p className={styles.left}><span>Welcome to HUST CLINIC website</span></p>
     </div>
   	</div>
     <div className={styles.pop}>

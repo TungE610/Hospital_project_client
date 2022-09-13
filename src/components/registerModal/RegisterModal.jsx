@@ -1,7 +1,8 @@
-import React, {useState, useForm, useCallback} from "react";
+import React, {useState, useForm, useCallback, useEffect} from "react";
 import styles from './RegisterModal.module.css'
 import { Modal, Form, Input, Select, Switch, notification} from "antd";
 import 'antd/dist/antd.css';
+
 const { Option } = Select;
 const { TextArea } = Input;
 
@@ -20,7 +21,6 @@ const RegisterModal = (props) => {
 						if(jsonData.room_id) {
 							response = await fetch(`https://hospital-project-api.herokuapp.com/api/room/${jsonData.room_id}`, {mode: 'cors'})
 							jsonData = await response.json()
-							console.log("jsonData: ", jsonData)
 							console.log("doctor: ", jsonData.doctor_id)
 							const body = {
 								specialty_id : values.examinate,
@@ -37,11 +37,9 @@ const RegisterModal = (props) => {
 								body : JSON.stringify(body),
 								mode : 'cors'
 							})
-
-							sessionStorage.clear();
-							sessionStorage.setItem("patient_id", patient_id);
-							sessionStorage.setItem("notifications", `Có ${num_of_waiting} người đang đợi trong phòng mà bạn đang kí. ${num_of_waiting > 0 ? `Vui lòng đợi đến ${body.expected_time.getHours()}:${body.expected_time.getMinutes()}` : "Hãy vào vòng nhé"} !!`);
-
+								sessionStorage.clear();
+								sessionStorage.setItem("patient_id", patient_id);
+								sessionStorage.setItem("notifications", `Có ${num_of_waiting} người đang đợi trong phòng mà bạn đang kí. ${num_of_waiting > 0 ? `Vui lòng đợi đến ${body.expected_time.getHours()}:${body.expected_time.getMinutes()}` : "Hãy vào vòng nhé"} !!`);
 
 							console.log(jsonData.doctor_id)
 							if(jsonData.doctor_id){
@@ -124,7 +122,7 @@ const RegisterModal = (props) => {
 		};
 	
 	return (
-		<Modal title="Make An Appointment" visible={props.isModalVisible} onOk={form.submit} onCancel={closePopup} okText="Submit" cancelText="Cancel" width={800}>
+		<Modal title={<div style={{"color" : "#fff", "letterSpacing": "2px", "fontWeight": "700", "fontSize" : "20px"}}>Make an appointment</div>} visible={props.isModalVisible} onOk={form.submit} onCancel={closePopup} okText="Submit" cancelText="Cancel" width={800} style={{"borderRadius": "10px"}}>
 		<Form    
 		    form={form}
 				onFinish={onSubmit}   

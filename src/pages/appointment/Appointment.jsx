@@ -23,6 +23,7 @@ const Appointments = (props) => {
 	const [status_of_insurance, setStatus_of_insurance] = useState(false)
 	const [doctorStatus, setDoctorStatus] = useState(false)
 	const [typeSee, setTypeSee] = useState(true)
+	const [edited, setEdited] = useState(false)
 	const navigate = useNavigate();
 	const { Option } = Select;
 
@@ -34,7 +35,14 @@ const Appointments = (props) => {
 			try {
 				const response = await fetch("https://hospital-project-api.herokuapp.com/api/appointments",{mode : 'cors'})
 				const jsonData = await response.json()
-				setAppointmentData(jsonData)
+				console.log(jsonData)
+				const transformedData =  await jsonData.map(appointment => {
+					return {...appointment, 
+						diagnosis: (appointment.diagnosis !== null ? appointment.diagnosis : "in progess"),
+					}
+				})
+				console.log("transformedData: ", transformedData)
+				setAppointmentData(transformedData)
 				setLoading(false)
 			} catch(error){
 				console.log(error.message)
@@ -48,12 +56,10 @@ const Appointments = (props) => {
 		searchHandler()
 	}, [searchValue])
 	const editAppointmentHandler = (id) => {
+		  setEdited(true)
 			navigate(`/Appointments/Edit/${id}`)
 	}
-	console.log(appointmentData)
-const sendAppointmentInfo = (id) => {
-
-}
+	console.log("appointmentData:", appointmentData)
 const successNotification = () => {
 	notification["success"]({
 		message: 'SUCCESSFULL',
@@ -69,6 +75,16 @@ const saveNotification = () => {
 			`Successfully change!!`,
 	});
 };
+console.log("edited :", edited)
+const yetEditedNotification = () => {
+	notification["error"]({
+		message: 'Not Successful',
+		description:
+			`You can not send bill until update appointment.!!`,
+	});
+};
+
+
 	const columns = [
 		{
 			title : "Appointment ID",
@@ -127,7 +143,6 @@ const saveNotification = () => {
           <EditTwoTone
             id={record.appointment_id}
             onClick={(event) => {
-							console.log(record.appointment_id)
 							event.stopPropagation()
               editAppointmentHandler(record.appointment_id)
             }}
@@ -143,7 +158,11 @@ const saveNotification = () => {
 								setSelectedPatientId(record.patient_id)
 								const status_insurance = appointmentData.find(element => element.patient_id === record.patient_id).status_of_insurance
 								setStatus_of_insurance(status_insurance)
-								setIsBillModalVisible(true)
+								if (edited) {
+									setIsBillModalVisible(true)
+								} else {
+									yetEditedNotification()
+								}
 						}}
 									/>
         </Space>
@@ -176,7 +195,12 @@ const saveNotification = () => {
 						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments`,{mode : 'cors'})
 					}					
 					const jsonData = await response.json()
-					setAppointmentData(jsonData)
+					const transformedData =  await jsonData.map(appointment => {
+						return {...appointment, 
+							diagnosis: (appointment.diagnosis !== null ? appointment.diagnosis : "in progess"),
+						}
+					})
+					setAppointmentData(transformedData)
 					setLoading(false)
 				} catch(error){
 					console.log(error.message)
@@ -191,7 +215,12 @@ const saveNotification = () => {
 						response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments`,{mode : 'cors'})
 				 }	
 					const jsonData = await response.json()
-					setAppointmentData(jsonData)
+					const transformedData =  await jsonData.map(appointment => {
+						return {...appointment, 
+							diagnosis: (appointment.diagnosis !== null ? appointment.diagnosis : "in progess"),
+						}
+					})
+					setAppointmentData(transformedData)
 					setLoading(false)
 				} catch(error){
 					console.log(error.message)
@@ -206,7 +235,12 @@ const saveNotification = () => {
 						response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments`,{mode : 'cors'})
 				 }	
 					const jsonData = await response.json()
-					setAppointmentData(jsonData)
+					const transformedData =  await jsonData.map(appointment => {
+						return {...appointment, 
+							diagnosis: (appointment.diagnosis !== null ? appointment.diagnosis : "in progess"),
+						}
+					})
+					setAppointmentData(transformedData)
 					setLoading(false)
 				} catch(error){
 					console.log(error.message)
@@ -218,7 +252,12 @@ const filterMyAppointment = async () => {
 		try {
 				const response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/doctor_id/${loginData.doctor_id}`,{mode : 'cors'})
 				const jsonData = await response.json()
-				setAppointmentData(jsonData)
+				const transformedData =  await jsonData.map(appointment => {
+					return {...appointment, 
+						diagnosis: (appointment.diagnosis !== null ? appointment.diagnosis : "in progess"),
+					}
+				})
+				setAppointmentData(transformedData)
 				setLoading(false)
 		}catch(error){
 				console.log(error.message)
