@@ -38,6 +38,7 @@ export function LoginForm() {
 				navigate('/TopPage')
 				const user = await response.json()
 				setLoggedIn({isLoggedIn : true, role : user.role, doctor_id : user.doctor_id, room_id : user.room_id})
+				sessionStorage.clear();
 				sessionStorage.setItem("email", user.email);
 			} else {
 				loginFailNotification()

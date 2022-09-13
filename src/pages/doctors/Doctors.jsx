@@ -302,7 +302,7 @@ const saveNotification = () => {
 								},
 							})}
 				/>
-		<NotificationBox messages={["vailin sap den luot b roi"]}/>
+		<NotificationBox />
 		</div>
 	)
 }

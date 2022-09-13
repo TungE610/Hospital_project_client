@@ -15,23 +15,32 @@ const RegisterModal = (props) => {
 						let response = await fetch(`https://hospital-project-api.herokuapp.com/api/specialties/${values.examinate}`)
 						let jsonData = await response.json()
 						const room_id = jsonData.room_id
+						const num_of_waiting = jsonData.num_of_waiting
 						console.log("room_id", room_id)
 						if(jsonData.room_id) {
-							response = await fetch(`https://hospital-project-api.herokuapp.com/api/rooms/${jsonData.room_id}`)
+							response = await fetch(`https://hospital-project-api.herokuapp.com/api/room/${jsonData.room_id}`)
 							jsonData = await response.json()
+							console.log("jsonData: ", jsonData)
 							console.log("doctor: ", jsonData.doctor_id)
 							const body = {
 								specialty_id : values.examinate,
 								patient_id : patient_id,
 								registration_time : new Date().toLocaleString(),
-								expected_time : new Date().toLocaleString(),
+								expected_time : new Date(new Date().getTime() + num_of_waiting*20*60000),
 								room_id : room_id,
 							}
+
 							response = await fetch(`https://hospital-project-api.herokuapp.com/api/registrations`, {
 								method : "POST",
 								headers : {"Content-Type" : "application/json"},
-								body : JSON.stringify(body)
+								body : JSON.stringify(body),
+								mode : 'no-cors'
 							})
+							sessionStorage.clear();
+							sessionStorage.setItem("patient_id", patient_id);
+							sessionStorage.setItem("notifications", [`Có ${num_of_waiting} người đang đợi trong phòng mà bạn đang kí. Vui lòng đợi trong khoảng ${body.expected_time.getTime()} phút !!`]);
+
+
 							console.log(jsonData.doctor_id)
 							if(jsonData.doctor_id){
 								const body = {
@@ -52,6 +61,7 @@ const RegisterModal = (props) => {
 								failNotification()
 							}
 						} else {
+							failNotification()
 						}
 					} catch(error){
 						let response = await fetch(`https://hospital-project-api.herokuapp.com/api/room/min_wait/${values.examinate}`)
