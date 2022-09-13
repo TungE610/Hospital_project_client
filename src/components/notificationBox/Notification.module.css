@@ -8,14 +8,14 @@
 .chatCon .chatBox {
 	/* display: none; */
   width: 100%;
-  height: 400px;
+  height: 360px;
   border-radius: 25px;
   background-color: #eee;
 }
 
 .chatCon .chatBox .header {
   background-color: #B56161;
-  padding: 15px;
+  padding: 10px;
   border-radius: 20px 20px 0 0;
   color: #fff;
   font-size: 20px;
@@ -91,5 +91,5 @@
 }
 
 .chatCon .pop img {
-  width: 25%;
+  width: 20%;
 }

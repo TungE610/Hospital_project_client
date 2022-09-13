@@ -26,7 +26,7 @@ const NotificationBox = () => {
 		return (
 		<div className={styles.chatCon}>
       <div className={styles.chatBox} style={chatopen ? show : hide}>
-    		<div className={styles.header}>Notification</div>
+    		<div className={styles.header} onClick={toggle}>Notification</div>
     			<div className={styles.msgArea}>
       {
         // notifications.map((msg, i) => (
@@ -36,9 +36,12 @@ const NotificationBox = () => {
         //     <p className={styles.left}><span>{ msg }</span></p>
         //   )
         // ))
+				notification.length > 0 ?
 				<p className={styles.left}><span>{ notification }</span></p>
+				: 
+				""
       }
-
+				<p className={styles.left}><span>"Welcome to HUST CLINIC website"</span></p>
     </div>
   	</div>
     <div className={styles.pop}>
