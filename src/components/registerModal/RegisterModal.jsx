@@ -12,13 +12,13 @@ const RegisterModal = (props) => {
 		const patient_id =`${values.citizen_id.slice(-4)}${values.dob.slice(-5).replace('-','')}`
 		console.log(values.examinate)
 					try {
-						let response = await fetch(`https://hospital-project-api.herokuapp.com/api/specialties/${values.examinate}`)
+						let response = await fetch(`https://hospital-project-api.herokuapp.com/api/specialties/${values.examinate}`, {mode: 'cors'})
 						let jsonData = await response.json()
 						const room_id = jsonData.room_id
 						const num_of_waiting = jsonData.num_of_waiting
 						console.log("room_id", room_id)
 						if(jsonData.room_id) {
-							response = await fetch(`https://hospital-project-api.herokuapp.com/api/room/${jsonData.room_id}`)
+							response = await fetch(`https://hospital-project-api.herokuapp.com/api/room/${jsonData.room_id}`, {mode: 'cors'})
 							jsonData = await response.json()
 							console.log("jsonData: ", jsonData)
 							console.log("doctor: ", jsonData.doctor_id)
@@ -26,19 +26,21 @@ const RegisterModal = (props) => {
 								specialty_id : values.examinate,
 								patient_id : patient_id,
 								registration_time : new Date().toLocaleString(),
-								expected_time : new Date(new Date().getTime() + num_of_waiting*20*60000),
+								expected_time : new Date(new Date().getTime() + num_of_waiting*20*60000).toLocaleString(),
 								room_id : room_id,
+								status : true
 							}
 
 							response = await fetch(`https://hospital-project-api.herokuapp.com/api/registrations`, {
 								method : "POST",
 								headers : {"Content-Type" : "application/json"},
 								body : JSON.stringify(body),
-								mode : 'no-cors'
+								mode : 'cors'
 							})
+
 							sessionStorage.clear();
 							sessionStorage.setItem("patient_id", patient_id);
-							sessionStorage.setItem("notifications", [`Có ${num_of_waiting} người đang đợi trong phòng mà bạn đang kí. Vui lòng đợi trong khoảng ${body.expected_time.getTime()} phút !!`]);
+							sessionStorage.setItem("notifications", `Có ${num_of_waiting} người đang đợi trong phòng mà bạn đang kí. ${num_of_waiting > 0 ? `Vui lòng đợi đến ${body.expected_time.getHours()}:${body.expected_time.getMinutes()}` : "Hãy vào vòng nhé"} !!`);
 
 
 							console.log(jsonData.doctor_id)
@@ -51,10 +53,12 @@ const RegisterModal = (props) => {
 									start_time : new Date().toLocaleString() ,
 									appointment_id : `${jsonData.doctor_id.slice(-2)}${patient_id.slice(-2)}${new Date().toISOString().split('T')[0].slice(-5).replace('-', '')}`
 								}
+								const 
 								response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments`, {
 									method : "POST",
 									headers : {"Content-Type" : "application/json"},
-									body : JSON.stringify(body)
+									body : JSON.stringify(body),
+									mode: 'cors'
 								})
 								successNotification()
 							} else {

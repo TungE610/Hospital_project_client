@@ -5,7 +5,7 @@ import Navbar from "../../../components/navbar/Navbar";
 import RegisterModal from "../../../components/registerModal/RegisterModal";
 import { Table, Tag } from 'antd'
 import { useParams } from "react-router-dom";
-
+import NotificationBox from "../../../components/notificationBox/Notification";
 
 const RoomDetail = () => {
 	const [doctorData, setDoctorData] = useState([])
@@ -86,6 +86,7 @@ useEffect(() => {
 				columns={columns} 
 				dataSource={doctorData}         
 		/>
+		<NotificationBox />
 		</div>
 		)
 

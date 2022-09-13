@@ -7,6 +7,7 @@ import styles from './TopPage.module.css'
 import RegisterModal from "../../components/registerModal/RegisterModal";
 import styled from "styled-components";
 import LogginContext from '../../components/accountBox/LogginContext'
+import NotificationBox from "../../components/notificationBox/Notification";
 
 
 const TopPage = () => {
@@ -53,6 +54,7 @@ console.log(loginData)
 						</MyButton>
 					</div>
 			</div>
+			<NotificationBox />
 		</div>
   );
 }

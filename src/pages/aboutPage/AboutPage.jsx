@@ -5,6 +5,7 @@ import styles from './AboutPage.module.css'
 import AboutItem from '../../components/aboutItem/AboutItem';
 import 'antd/dist/antd.css';
 import RegisterModal from '../../components/registerModal/RegisterModal';
+import NotificationBox from "../../components/notificationBox/Notification";
 
 const AboutPage = () => {
 	const [isModalVisible, setIsModalVisible] = useState(false)
@@ -29,6 +30,7 @@ const AboutPage = () => {
 		<AboutItem  type={1}  textTitle="OUR VISION" textContent={textContent1} imageLink="about1.jpg"/>
 		<AboutItem  type={0}  textTitle="OUR COMMIT" textContent={textContent2} imageLink="about2.jpg"/>
 		<AboutItem  type={1}  textTitle="OUR SERVICE" textContent={textContent3} imageLink="about3.jpg"/>
+		<NotificationBox />
    </div>
  )
 }

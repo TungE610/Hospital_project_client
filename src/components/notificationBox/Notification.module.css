@@ -29,12 +29,14 @@
   padding: 15px;
 }
 
-.chatCon .chatBox .msg-area .left span {
+.chatCon .chatBox .msgArea .left span {
   display: inline-block;
-  font-size: 17.5px;
+  font-size: 15px;
   border-radius: 15px;
   padding: 15px;
-  background-color: #ddd;
+	background-color: #B56161;
+	color: #fff;
+
 }
 
 .chatCon .chatBox .msgArea .right {

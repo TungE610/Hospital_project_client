@@ -6,6 +6,8 @@ import { Table, Tag, Input, Select,Button, Tooltip } from 'antd'
 import RegisterModal from "../../components/registerModal/RegisterModal";
 import { Link, useNavigate } from "react-router-dom";
 import { SearchOutlined } from '@ant-design/icons';
+import NotificationBox from "../../components/notificationBox/Notification";
+
 
 const Rooms = () => {
   const [roomData, setRoomData] = useState([])
@@ -206,6 +208,7 @@ const Rooms = () => {
 							navigate(`/Rooms/${record.room_id}`);
             },
           })}/>
+					<NotificationBox />
 	</div>
 	)
 }

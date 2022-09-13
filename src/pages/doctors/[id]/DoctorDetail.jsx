@@ -6,6 +6,8 @@ import RegisterModal from "../../../components/registerModal/RegisterModal";
 import { Card } from 'antd'
 import { useParams } from "react-router-dom";
 import { scroller } from "react-scroll";
+import NotificationBox from "../../../components/notificationBox/Notification";
+
 const { Meta } = Card;
 
 const DoctorDetail = () => {
@@ -57,7 +59,7 @@ useEffect(() => {
   			>
     <Meta title={doctorData.doctor_name} description="www.instagram.com" id="19"/>
   </Card>
-
+		<NotificationBox />
 		</div>
 	)
 }
