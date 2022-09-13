@@ -28,6 +28,7 @@ const NotificationBox = () => {
       <div className={styles.chatBox} style={chatopen ? show : hide}>
     		<div className={styles.header} onClick={toggle}>Notification</div>
     			<div className={styles.msgArea}>
+						<p className={styles.left}><span>Welcome to HUST CLINIC website</span></p>
       {
         // notifications.map((msg, i) => (
         //   i%2 ? (
@@ -41,7 +42,6 @@ const NotificationBox = () => {
 				: 
 				""
       }
-				<p className={styles.left}><span>Welcome to HUST CLINIC website</span></p>
     </div>
   	</div>
     <div className={styles.pop}>

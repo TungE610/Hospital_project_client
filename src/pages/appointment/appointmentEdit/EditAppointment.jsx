@@ -42,7 +42,7 @@ const EditAppointments = () => {
   }
 	const onFinish = async (values) => {
 		setLoading(true)
-		const body = {diagnosis : values.diagnosis, expected_time : expectedTime}
+		const body = {diagnosis : values.diagnosis}
 		console.log("body:",body)
 		const response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/${appointment_id}`, {
 			method : "POST",
@@ -51,14 +51,15 @@ const EditAppointments = () => {
 			mode: 'cors'
 		})
 		setLoading(false)
-		navigate('/Appointments')
+		
+		navigate('/Appointments',{state:{edited: true}} )
   };
   useEffect(() => {
     fetchAppointment()
 	}, [])
-const pickExpectedTimeHandler = (time,timeString) => {
-	setExpectedTime(timeString)
-}
+// const pickExpectedTimeHandler = (time,timeString) => {
+// 	setExpectedTime(timeString)
+// }
 	return (
 		<div className ="edit-appointment">
 			<RegisterModal isModalVisible={isModalVisible} toggleModal={toggleModalHandler}/>
@@ -99,9 +100,9 @@ const pickExpectedTimeHandler = (time,timeString) => {
       >
 				<p className={styles.formInfo}>{appointmentData.patient_id}</p>
       </Form.Item>
-			<Form.Item  name={"expected_time"} label="Expected Time">
+			{/* <Form.Item  name={"expected_time"} label="Expected Time">
 					<TimePicker onChange={pickExpectedTimeHandler} defaultOpenValue={moment('00:00:00', 'HH:mm:ss')} />
-      </Form.Item>
+      </Form.Item> */}
       <Form.Item  name={"diagnosis"} label="Diagnosis">
         <Input.TextArea showCount maxLength={100} size={"large"}/>
       </Form.Item>

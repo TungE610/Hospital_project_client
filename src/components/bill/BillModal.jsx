@@ -84,7 +84,7 @@ const BillModal = (props) => {
 							method : "POST",
 							headers : {"Content-Type" : "application/json"},
 							body : JSON.stringify(element),
-							mode : 'cors'
+							mode : 'no-cors'
 						})
 					})
 					body = {
@@ -94,8 +94,11 @@ const BillModal = (props) => {
 						method : "POST",
 						headers : {"Content-Type" : "application/json"},
 						body : JSON.stringify(body),
-						mode : 'cors'
+						mode : 'no-cors'
 					})
+
+
+
 					closePopup()
 				}catch (error) {
 					console.log(error.message)

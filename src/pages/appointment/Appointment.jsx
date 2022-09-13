@@ -3,7 +3,7 @@ import styles from "./Appointment.module.css"
 import ContactRow from "../../components/contactRow/ContactRow";
 import Navbar from "../../components/navbar/Navbar";
 import { Table, Tag, Input,Select,Button, Tooltip, Space,Modal,notification } from 'antd'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import RegisterModal from "../../components/registerModal/RegisterModal";
 import { SearchOutlined, EditTwoTone, DeleteTwoTone, SendOutlined } from '@ant-design/icons'
 import LogginContext from '../../components/accountBox/LogginContext'
@@ -23,7 +23,9 @@ const Appointments = (props) => {
 	const [status_of_insurance, setStatus_of_insurance] = useState(false)
 	const [doctorStatus, setDoctorStatus] = useState(false)
 	const [typeSee, setTypeSee] = useState(true)
-	const [edited, setEdited] = useState(false)
+	const [sent, setSent] = useState(false)
+
+	const location = useLocation();
 	const navigate = useNavigate();
 	const { Option } = Select;
 
@@ -56,7 +58,6 @@ const Appointments = (props) => {
 		searchHandler()
 	}, [searchValue])
 	const editAppointmentHandler = (id) => {
-		  setEdited(true)
 			navigate(`/Appointments/Edit/${id}`)
 	}
 	console.log("appointmentData:", appointmentData)
@@ -75,7 +76,6 @@ const saveNotification = () => {
 			`Successfully change!!`,
 	});
 };
-console.log("edited :", edited)
 const yetEditedNotification = () => {
 	notification["error"]({
 		message: 'Not Successful',
@@ -99,9 +99,9 @@ const yetEditedNotification = () => {
 			align : "center"
 		},
 		{
-			title : "Expected Time",
-			key : "expected_time",
-			dataIndex : "expected_time",
+			title : "End Time",
+			key : "end_time",
+			dataIndex : "end_time",
 			align : "center"
 		},
 		{
@@ -139,7 +139,7 @@ const yetEditedNotification = () => {
       width: '10%',
 			align : "center",
       render: (_text, record) => (loginData.role === 'doctor' && loginData.doctor_id === record.doctor_id) && !record.end_time ? (
-        <Space size="middle">
+         (record.end_time === null ? <Space size="middle">
           <EditTwoTone
             id={record.appointment_id}
             onClick={(event) => {
@@ -158,21 +158,23 @@ const yetEditedNotification = () => {
 								setSelectedPatientId(record.patient_id)
 								const status_insurance = appointmentData.find(element => element.patient_id === record.patient_id).status_of_insurance
 								setStatus_of_insurance(status_insurance)
-								if (edited) {
+								if (location.state.edited) {
 									setIsBillModalVisible(true)
 								} else {
 									yetEditedNotification()
 								}
 						}}
 									/>
-        </Space>
+        </Space> : 
+				<Tag color="orange">
+					Was sent
+				</Tag>)
       ) : 						
 			<Tag color="red">
 					Not allow
 			</Tag>
     },
 	]
-	console.log("status : ", status_of_insurance)
 	const searchTypeHandler = (value) => {
     setSearchType(value)
 	}

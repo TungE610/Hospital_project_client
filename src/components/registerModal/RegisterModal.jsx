@@ -37,9 +37,10 @@ const RegisterModal = (props) => {
 								body : JSON.stringify(body),
 								mode : 'cors'
 							})
+							const transformedExpectedTime = new Date(new Date().getTime() + jsonData.num_of_waiting*20*60000)
 								sessionStorage.clear();
 								sessionStorage.setItem("patient_id", patient_id);
-								sessionStorage.setItem("notifications", `Có ${num_of_waiting} người đang đợi trong phòng mà bạn đang kí. ${num_of_waiting > 0 ? `Vui lòng đợi đến ${body.expected_time.getHours()}:${body.expected_time.getMinutes()}` : "Hãy vào vòng nhé"} !!`);
+								sessionStorage.setItem("notifications", `Có ${num_of_waiting} người đang đợi trong phòng mà bạn đang kí. ${num_of_waiting > 0 ? `Vui lòng đợi đến ${transformedExpectedTime.getHours()}:${transformedExpectedTime.getMinutes()}` : "Hãy vào vòng nhé"} !!`);
 
 							console.log(jsonData.doctor_id)
 							if(jsonData.doctor_id){
@@ -72,7 +73,7 @@ const RegisterModal = (props) => {
 							specialty_id : values.examinate,
 							patient_id : patient_id,
 							registration_time : new Date().toLocaleString(),
-							expected_time : new Date(new Date().getTime() + 30*60000).toLocaleString(),
+							expected_time : new Date(new Date().getTime() + jsonData.num_of_waiting*20*60000).toLocaleString(),
 							room_id : jsonData.room_id
 						}
 						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/registrations`, {
@@ -80,6 +81,12 @@ const RegisterModal = (props) => {
 							headers : {"Content-Type" : "application/json"},
 							body : JSON.stringify(body)
 						})
+						const transformedExpectedTime = new Date(new Date().getTime() + jsonData.num_of_waiting*20*60000)
+						sessionStorage.clear();
+						sessionStorage.setItem("patient_id", patient_id);
+						sessionStorage.setItem("notifications", `Có ${jsonData.num_of_waiting} người đang đợi trong phòng mà bạn đang kí. ${jsonData.num_of_waiting > 0 ? `Vui lòng đợi đến ${transformedExpectedTime.getHours()}:${transformedExpectedTime.getMinutes()}` : "Hãy vào vòng nhé"} !!`);
+
+
 						failNotification()
 						console.log("error: ", error.message)
 				}
@@ -122,7 +129,7 @@ const RegisterModal = (props) => {
 		};
 	
 	return (
-		<Modal title={<div style={{"color" : "#fff", "letterSpacing": "2px", "fontWeight": "700", "fontSize" : "20px"}}>Make an appointment</div>} visible={props.isModalVisible} onOk={form.submit} onCancel={closePopup} okText="Submit" cancelText="Cancel" width={800} style={{"borderRadius": "10px"}}>
+		<Modal title="Make an appointment" visible={props.isModalVisible} onOk={form.submit} onCancel={closePopup} okText="Submit" cancelText="Cancel" width={800} style={{"borderRadius": "10px"}}>
 		<Form    
 		    form={form}
 				onFinish={onSubmit}   
