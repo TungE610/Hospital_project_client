@@ -64,7 +64,7 @@ const BillModal = (props) => {
 						method : "POST",
 						headers : {"Content-Type" : "application/json"},
 						body : JSON.stringify(body),
-						mode : 'cors'
+						mode : 'no-cors'
 					})
 
 					const medicalbody = medical.map(element => {

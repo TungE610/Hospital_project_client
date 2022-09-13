@@ -158,7 +158,7 @@ const yetEditedNotification = () => {
 								setSelectedPatientId(record.patient_id)
 								const status_insurance = appointmentData.find(element => element.patient_id === record.patient_id).status_of_insurance
 								setStatus_of_insurance(status_insurance)
-								if (location.state.edited) {
+								if (location.state) {
 									setIsBillModalVisible(true)
 								} else {
 									yetEditedNotification()
