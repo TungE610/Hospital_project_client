@@ -85,7 +85,7 @@ const BillModal = (props) => {
 							method : "POST",
 							headers : {"Content-Type" : "application/json"},
 							body : JSON.stringify(element),
-							mode : 'no-cors'
+							mode : 'cors'
 						})
 					})
 					body = {
