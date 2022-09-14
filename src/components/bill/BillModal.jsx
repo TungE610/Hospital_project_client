@@ -50,7 +50,7 @@ const BillModal = (props) => {
 	}, [])
 	const  onSubmit = async () => {
 				try {
-					const body = {
+					let body = {
 						bill_id : props.appointment_id,
 						appointment_id : props.appointment_id,
 						patient_id : props.patient_id,
