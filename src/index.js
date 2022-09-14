@@ -33,7 +33,7 @@ export default function App() {
           <Route path="/Doctors/:doctorId" element={<DoctorDetail />} />
           <Route path="/Contact" element={<Contact />} />
           <Route path="/Error" element={<ErrorPage />} />
-          <Route path="/Appointments" element={loginData.role === 'super_admin' || loginData.role==='doctor'? <Appointment /> : < ErrorPage/>} />
+          <Route path="/Appointments" element={loginData.role === 'super_admin' || loginData.role==='doctor' || sessionStorage.getItem("email")? <Appointment /> : < ErrorPage/>} />
 					<Route path="/Appointments/Edit/:appointment_id" element={loginData.role === 'super_admin' || loginData.role==='doctor'? <EditAppointments /> : < ErrorPage/>} />
         </Route>
       </Routes>

@@ -78,6 +78,7 @@ const BillModal = (props) => {
 							return null
 						}
 					})
+					console.log("medicalbody: ", medicalbody)
 					medicalbody.forEach(async (element) => {
 						if (element)
 						 response = await fetch('https://hospital-project-api.herokuapp.com/api/medicines', {
@@ -88,7 +89,7 @@ const BillModal = (props) => {
 						})
 					})
 					body = {
-						end_time : new Date().toLocaleTimeString()
+						end_time : new Date().toLocaleTimeString('it-IT')
 					}
 					response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/end_up/${props.appointment_id}`, {
 						method : "POST",
