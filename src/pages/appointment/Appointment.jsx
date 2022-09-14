@@ -138,7 +138,7 @@ const yetEditedNotification = () => {
       key: 'action',
       width: '10%',
 			align : "center",
-      render: (_text, record) => (loginData.role === 'doctor' && loginData.doctor_id === record.doctor_id) && !record.end_time ? (
+      render: (_text, record) => (loginData.role === 'doctor' && loginData.doctor_id === record.doctor_id) ? (
          (record.end_time === null ? <Space size="middle">
           <EditTwoTone
             id={record.appointment_id}

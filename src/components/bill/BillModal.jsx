@@ -58,15 +58,15 @@ const BillModal = (props) => {
 						medicine_fee : medicineFee,
 						discounted_charges : props.status_insurance === true ? totalFee  : 0,
 						total_charges : totalFee,
-
+						date_time : new Date().toLocaleTimeString('it-IT'),
 					}
+					console.log(body)
 					let response = await fetch('https://hospital-project-api.herokuapp.com/api/bills', {
 						method : "POST",
 						headers : {"Content-Type" : "application/json"},
 						body : JSON.stringify(body),
 						mode : 'no-cors'
 					})
-
 					const medicalbody = medical.map(element => {
 						if(element.selectedQuantity > 0) {
 							return {
@@ -122,7 +122,7 @@ const BillModal = (props) => {
 			});
 		};
 	 const getExaminationFeeHandler = (e) => {
-			setExaminationFee(e.target.value)
+			setExaminationFee(parseInt(e.target.value))
 		}	 
 	 useEffect(() => {
 		setTotalFee(parseInt(examinationFee) + parseInt(medicineFee))
