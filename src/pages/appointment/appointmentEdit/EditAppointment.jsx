@@ -87,13 +87,13 @@ const EditAppointments = () => {
       </Form.Item>
       <Form.Item
         name={"room_id"}
-        label="Room Id"
+        label="Room"
       >
 				<p className={styles.formInfo}>{appointmentData.room_id}</p>
       </Form.Item>
       <Form.Item
         name={"patient_id"}
-        label="Patient Id"
+        label="Patient"
       >
 				<p className={styles.formInfo}>{appointmentData.patient_id}</p>
       </Form.Item>
