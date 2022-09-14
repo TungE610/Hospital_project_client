@@ -65,7 +65,7 @@ const BillModal = (props) => {
 						method : "POST",
 						headers : {"Content-Type" : "application/json"},
 						body : body,
-						mode : 'cors'
+						mode : 'no-cors'
 					})
 					const medicalbody = medical.map(element => {
 						if(element.selectedQuantity > 0) {
@@ -84,7 +84,7 @@ const BillModal = (props) => {
 						 response = await fetch('https://hospital-project-api.herokuapp.com/api/medicines', {
 							method : "POST",
 							headers : {"Content-Type" : "application/json"},
-							body : JSON.stringify(element),
+							body : element,
 							mode : 'no-cors'
 						})
 					})
@@ -94,8 +94,8 @@ const BillModal = (props) => {
 					response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/end_up/${props.appointment_id}`, {
 						method : "POST",
 						headers : {"Content-Type" : "application/json"},
-						body : JSON.stringify(body),
-						mode : 'cors'
+						body : body,
+						mode : 'no-cors'
 					})
 
 
