@@ -17,7 +17,7 @@ const Contact = () => {
   }
 	const  onSubmit = useCallback( async (values) => {
 		setFormSentData(values)
-			await axios.post("http://localhost:5000/contact", formSentData)
+			await axios.post("https://hospital-project-api.herokuapp.com/contact", formSentData)
 			.then(res => {
 				console.log("res: ",res)
 				successNotification()
