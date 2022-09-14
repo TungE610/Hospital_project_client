@@ -65,6 +65,7 @@ const BillModal = (props) => {
 						method : "POST",
 						headers : {"Content-Type" : "application/json"},
 						body : JSON.stringify(body),
+						mode : 'cors'
 					})
 					const medicalbody = medical.map(element => {
 						if(element.selectedQuantity > 0) {
@@ -94,7 +95,7 @@ const BillModal = (props) => {
 						method : "POST",
 						headers : {"Content-Type" : "application/json"},
 						body : JSON.stringify(body),
-						mode : 'no-cors'
+						mode : 'cors'
 					})
 
 
