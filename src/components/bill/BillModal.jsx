@@ -84,7 +84,7 @@ const BillModal = (props) => {
 						 response = await fetch('https://hospital-project-api.herokuapp.com/api/medicines', {
 							method : "POST",
 							headers : {"Content-Type" : "application/json"},
-							body : element,
+							body : JSON.stringify(element),
 							mode : 'no-cors'
 						})
 					})
@@ -94,7 +94,7 @@ const BillModal = (props) => {
 					response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/end_up/${props.appointment_id}`, {
 						method : "POST",
 						headers : {"Content-Type" : "application/json"},
-						body : body,
+						body : JSON.stringify(body),
 						mode : 'cors'
 					})
 
