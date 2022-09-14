@@ -28,7 +28,7 @@ const EditAppointments = () => {
 	const fetchAppointment = async () => {
 		setLoading(true)
 		try {
-			const response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/${appointment_id}`,{mode : 'cors'})
+			const response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/${appointment_id}`,{mode : 'no-cors'})
 			const jsonData = await response.json()
 			setAppointmentData(jsonData)
 			console.log(jsonData)
@@ -48,7 +48,7 @@ const EditAppointments = () => {
 			method : "POST",
 			headers : {"Content-Type" : "application/json"},
 			body : JSON.stringify(body),
-			mode: 'cors'
+			mode: 'no-cors'
 		})
 		setLoading(false)
 		
