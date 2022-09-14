@@ -64,7 +64,7 @@ const BillModal = (props) => {
 					let response = await fetch('https://hospital-project-api.herokuapp.com/api/bills', {
 						method : "POST",
 						headers : {"Content-Type" : "application/json"},
-						body : JSON.stringify(body),
+						body : body,
 						mode : 'cors'
 					})
 					const medicalbody = medical.map(element => {
