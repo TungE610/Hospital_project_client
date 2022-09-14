@@ -60,7 +60,6 @@ const BillModal = (props) => {
 						total_charges : totalFee,
 						date_time : new Date().toLocaleTimeString('it-IT'),
 					}
-					console.log(body)
 					let response = await fetch('https://hospital-project-api.herokuapp.com/api/bills', {
 						method : "POST",
 						headers : {"Content-Type" : "application/json"},

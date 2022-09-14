@@ -84,7 +84,7 @@ const yetEditedNotification = () => {
 	});
 };
 
-
+console.log("loginData: ", loginData)
 	const columns = [
 		{
 			title : "Appointment ID",
