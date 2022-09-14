@@ -50,7 +50,7 @@ const BillModal = (props) => {
 	}, [])
 	const  onSubmit = async () => {
 				try {
-					let body = {
+					const body = {
 						bill_id : props.appointment_id,
 						appointment_id : props.appointment_id,
 						patient_id : props.patient_id,
@@ -65,7 +65,6 @@ const BillModal = (props) => {
 						method : "POST",
 						headers : {"Content-Type" : "application/json"},
 						body : JSON.stringify(body),
-						mode : 'no-cors'
 					})
 					const medicalbody = medical.map(element => {
 						if(element.selectedQuantity > 0) {
