@@ -21,17 +21,17 @@ const EditAppointments = () => {
 	const [isModalVisible, setIsModalVisible] = useState(false)
 	const [loading, setLoading] = useState(false);
 	const [appointmentData, setAppointmentData] = useState({})
-	const [expectedTime, setExpectedTime] = useState('')
 	let { appointment_id } = useParams();
 	const [form] = Form.useForm();
   const navigate = useNavigate()
 	const fetchAppointment = async () => {
 		setLoading(true)
 		try {
+			console.log('runs')
 			const response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/${appointment_id}`,{mode : 'no-cors'})
 			const jsonData = await response.json()
 			setAppointmentData(jsonData)
-			console.log(jsonData)
+			console.log("Appointment data: ", appointmentData)
 			setLoading(false)
 		}catch(error){
 			console.log(error.message)
@@ -57,9 +57,6 @@ const EditAppointments = () => {
   useEffect(() => {
     fetchAppointment()
 	}, [])
-// const pickExpectedTimeHandler = (time,timeString) => {
-// 	setExpectedTime(timeString)
-// }
 	return (
 		<div className ="edit-appointment">
 			<RegisterModal isModalVisible={isModalVisible} toggleModal={toggleModalHandler}/>
@@ -100,9 +97,6 @@ const EditAppointments = () => {
       >
 				<p className={styles.formInfo}>{appointmentData.patient_id}</p>
       </Form.Item>
-			{/* <Form.Item  name={"expected_time"} label="Expected Time">
-					<TimePicker onChange={pickExpectedTimeHandler} defaultOpenValue={moment('00:00:00', 'HH:mm:ss')} />
-      </Form.Item> */}
       <Form.Item  name={"diagnosis"} label="Diagnosis">
         <Input.TextArea showCount maxLength={100} size={"large"}/>
       </Form.Item>
