@@ -40,6 +40,8 @@ export function LoginForm() {
 				setLoggedIn({isLoggedIn : true, role : user.role, doctor_id : user.doctor_id, room_id : user.room_id})
 				sessionStorage.clear();
 				sessionStorage.setItem("email", user.email);
+				sessionStorage.setItem("role", user.role);
+				sessionStorage.setItem("doctor_id", user.doctor_id);
 			} else {
 				loginFailNotification()
 				navigate('/Login')

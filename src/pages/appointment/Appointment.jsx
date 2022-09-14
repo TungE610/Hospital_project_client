@@ -138,7 +138,7 @@ console.log("loginData: ", loginData)
       key: 'action',
       width: '10%',
 			align : "center",
-      render: (_text, record) => (loginData.role === 'doctor' && loginData.doctor_id === record.doctor_id || sessionStorage.getItem('email')) ? 
+      render: (_text, record) => (loginData.role === 'doctor' && loginData.doctor_id === record.doctor_id && sessionStorage.getItem('email')) ? 
          (record.end_time === null ? (<Space size="middle">
           <EditTwoTone
             id={record.appointment_id}

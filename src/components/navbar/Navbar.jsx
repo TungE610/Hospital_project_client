@@ -29,7 +29,7 @@ const logoutHandler = () => {
 	// 	window.localStorage.setItem('isLoggedIn', false)
 	setLoggedIn({isLoggedIn : false, role:'', doctor_id : null, room_id : null})
 	navigate('/Login')
-	sessionStorage.removeItem("email");
+	sessionStorage.clear();
 
 }
 // useEffect(()=> {
