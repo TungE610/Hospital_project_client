@@ -1,4 +1,5 @@
 import {React, useState, useEffect, useContext}from "react";
+import axios from 'axios'
 import styles from "./EditAppointment.module.css"
 import ContactRow from "../../../components/contactRow/ContactRow";
 import Navbar from "../../../components/navbar/Navbar";
@@ -24,15 +25,14 @@ const EditAppointments = () => {
 	let { appointment_id } = useParams();
 	const [form] = Form.useForm();
   const navigate = useNavigate()
+	const baseUrl = 'https://hospital-project-api.herokuapp.com/api'
 	const fetchAppointment = async () => {
 		setLoading(true)
 		try {
-			console.log('runs')
-			const response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/${appointment_id}`,{mode : 'no-cors'})
-			const jsonData = await response.json()
-			console.log("Edit data:", jsonData)
-			setAppointmentData(jsonData)
-			setLoading(false)
+			axios(`${baseUrl}/appointments/${appointment_id}`).then(response => {
+				setAppointmentData(response.data)
+				setLoading(false)
+			});
 		}catch(error){
 			console.log(error.message)
 		}
