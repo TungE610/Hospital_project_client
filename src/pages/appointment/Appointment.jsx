@@ -273,27 +273,24 @@ const filterMyAppointment = async () => {
 }
 const addAppointmentHandler = async () => {
 	try {
-		console.log('runs')
-		console.log("room_id:", loginData.room_id)
-			let response = await fetch(`https://hospital-project-api.herokuapp.com/api/registrations/${loginData.room_id}`,{mode: 'cors'})
-			const jsonData = await response.json()
-			console.log('json : ', jsonData)
-			// appointment_id, doctor_id, patient_id, specialty_id, room_id, start_time
-			const body = {
-					appointment_id : `${loginData.doctor_id.slice(-2)}${jsonData.patient_id.slice(-2)}${new Date().toISOString().split('T')[0].slice(-5).replace('-', '')}`,
-					doctor_id : loginData.doctor_id,
-					patient_id : jsonData.patient_id,
-					specialty_id : jsonData.specialty_id,
-					room_id : loginData.room_id,
-					start_time : new Date().toLocaleString()
-			}
-			response = await fetch('https://hospital-project-api.herokuapp.com/api/appointments', {
-				method : "POST",
-				headers : {"Content-Type" : "application/json"},
-				body : JSON.stringify(body),
-				mode: 'cors'			
+			axios(`${baseUrl}/registrations/${loginData.room_id}`).then(response => {
+				const body = {
+						appointment_id : `${loginData.doctor_id.slice(-2)}${response.data.patient_id.slice(-2)}${new Date().toISOString().split('T')[0].slice(-5).replace('-', '')}`,
+						doctor_id : loginData.doctor_id,
+						patient_id : response.data.patient_id,
+						specialty_id : response.data.specialty_id,
+						room_id : loginData.room_id,
+						start_time : new Date().toLocaleString()
+				}
+				axios.post(`${baseUrl}/appointments`, body)
+				.then(response => {
+					console.log(response)
+				}).catch(error => {
+					console.log(error)
+
+				})
+				successNotification()
 			})
-			successNotification()
 	}catch(error) {
 		console.log(error)
 	}
