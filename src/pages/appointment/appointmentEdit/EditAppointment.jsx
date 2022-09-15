@@ -37,7 +37,6 @@ const EditAppointments = () => {
 			console.log(error.message)
 		}
 	}
-	console.log("Appointment data: ", appointmentData)
 	const toggleModalHandler = (state) => {
 		setIsModalVisible(state)
   }
@@ -45,12 +44,13 @@ const EditAppointments = () => {
 		setLoading(true)
 		const body = {diagnosis : values.diagnosis}
 		console.log("body:",body)
-		const response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/${appointment_id}`, {
-			method : "POST",
-			headers : {"Content-Type" : "application/json"},
-			body : JSON.stringify(body),
-			mode: 'no-cors'
+		axios.post(`${baseUrl}/appointments/${appointment_id}`, body)
+		.then(response => {
+			console.log(response)
 		})
+		.catch(error => 
+			console.log(error)
+		);
 		setLoading(false)
 		
 		navigate('/Appointments',{state:{edited: true}} )
