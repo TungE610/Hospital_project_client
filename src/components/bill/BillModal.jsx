@@ -1,5 +1,6 @@
 import React,{useState, useRef, useCallback, useEffect} from "react";
 import styles from './BillModal.module.css'
+import axios from 'axios'
 import { Modal, Form, Input, Select, notification, InputNumber,Space} from "antd";
 import 'antd/dist/antd.css';
 import { useParams, useNavigate } from "react-router-dom";
@@ -12,6 +13,7 @@ const BillModal = (props) => {
 	const [medicineFee, setMedicineFee] = useState(0)
 	const [medical, setMedical] = useState([])
 	const [totalFee, setTotalFee] = useState(0)
+	const baseUrl = 'https://hospital-project-api.herokuapp.com/api'
 	const { Option } = Select;
 	const [medical1,setMedical1] = useState('heroin')
 	const [medical2,setMedical2] = useState('heroin')
@@ -35,12 +37,12 @@ const BillModal = (props) => {
 
 	const getMedical = async () => {
 		   try {
-				const response = await fetch('https://hospital-project-api.herokuapp.com/api/medicals', {mode : 'cors'})
-				const jsonData = await response.json()
-				const medicalData = jsonData.map(element => {
-					return {...element,selectedQuantity : 0}
+				axios(`${baseUrl}/medicals`).then(response => {
+					const medicalData = response.data.map(element => {
+						return {...element,selectedQuantity : 0}
+					})
+					setMedical(medicalData)			 
 				})
-				setMedical(medicalData)			 
 			 }catch(error) {
 					console.log(error.message)
 			 }
@@ -48,6 +50,7 @@ const BillModal = (props) => {
 	useEffect(() => {
 		getMedical()
 	}, [])
+
 	const  onSubmit = async () => {
 				try {
 					let body = {
@@ -60,13 +63,14 @@ const BillModal = (props) => {
 						total_charges : totalFee,
 						date_time :     new Date().toLocaleString(),
 					}
-					console.log("body: ", body)
-					let response = await fetch('https://hospital-project-api.herokuapp.com/api/bills', {
-						method : "POST",
-						headers : {"Content-Type" : "application/json"},
-						body : JSON.stringify(body),
-						mode : 'cors'
+					axios.post(`${baseUrl}/bills`, body)
+					.then(response => {
+						console.log(response)
 					})
+					.catch(error => 
+						console.log(error)
+					);
+
 					const medicalbody = medical.map(element => {
 						if(element.selectedQuantity > 0) {
 							return {
@@ -80,26 +84,27 @@ const BillModal = (props) => {
 					})
 					console.log("medicalbody: ", medicalbody)
 					medicalbody.forEach(async (element) => {
-						if (element)
-						 response = await fetch('https://hospital-project-api.herokuapp.com/api/medicines', {
-							method : "POST",
-							headers : {"Content-Type" : "application/json"},
-							body : JSON.stringify(element),
-							mode : 'cors'
-						})
+						if (element) 
+						{
+							axios.post(`${baseUrl}/medicines`, element)
+							.then(response => {
+								console.log(response)
+							})
+							.catch(error => 
+								console.log(error)
+							);
+						}
 					})
 					body = {
 						end_time : new Date().toLocaleTimeString('it-IT')
 					}
-					response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/end_up/${props.appointment_id}`, {
-						method : "POST",
-						headers : {"Content-Type" : "application/json"},
-						body : JSON.stringify(body),
-						mode : 'cors'
+					axios.post(`${baseUrl}/appointments/end_up/${props.appointment_id}`, body)
+					.then(response => {
+						console.log(response)
 					})
-
-
-
+					.catch(error => 
+						console.log(error)
+					);
 					closePopup()
 				}catch (error) {
 					console.log(error.message)
