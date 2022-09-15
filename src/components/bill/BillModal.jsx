@@ -1,9 +1,8 @@
 import React,{useState, useRef, useCallback, useEffect} from "react";
 import styles from './BillModal.module.css'
 import axios from 'axios'
-import { Modal, Form, Input, Select, notification, InputNumber,Space} from "antd";
+import { Modal, Form, Input, Select, notification,Space} from "antd";
 import 'antd/dist/antd.css';
-import { useParams, useNavigate } from "react-router-dom";
 
 
 

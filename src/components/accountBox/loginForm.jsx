@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import axios from 'axios'
 import {
   BoldLink,
   BoxContainer,
@@ -17,35 +18,38 @@ export function LoginForm() {
   const { switchToSignup } = useContext(AccountContext);
   const [loginData, setLoginData] = useState({})
 	const [,setLoggedIn] = useContext(LogginContext)
+	const baseUrl = 'https://hospital-project-api.herokuapp.com/api'
+
   let navigate = useNavigate();
 	const loginHandler = async () => {
 		 try {
+			axios(`${baseUrl}/users/login`).then(response => {
+				console.log(response)
+			})
 
-
-			await fetch("https://hospital-project-api.herokuapp.com/api/users/login",{mode: 'cors'})
 			 const body = {
 				email : loginData.email,
 				password : loginData.password
 			}
-			 const response = await fetch("https://hospital-project-api.herokuapp.com/api/users/login", {
-				method : "POST",
-				headers : {"Content-Type" : "application/json"},
-				body : JSON.stringify(body),
-				mode: 'cors',
+			axios.post(`${baseUrl}/users/login`, body)
+			.then(response => {
+				if(response.status === 200) {
+					successNotification()
+					navigate('/TopPage')
+					const user =  response.data
+					setLoggedIn({isLoggedIn : true, role : user.role, doctor_id : user.doctor_id, room_id : user.room_id})
+					sessionStorage.clear();
+					sessionStorage.setItem("email", user.email);
+					sessionStorage.setItem("role", user.role);
+					sessionStorage.setItem("doctor_id", user.doctor_id);
+				} else {
+					loginFailNotification()
+					navigate('/Login')
+				}
 			})
-			if(response.status === 200) {
-				successNotification()
-				navigate('/TopPage')
-				const user = await response.json()
-				setLoggedIn({isLoggedIn : true, role : user.role, doctor_id : user.doctor_id, room_id : user.room_id})
-				sessionStorage.clear();
-				sessionStorage.setItem("email", user.email);
-				sessionStorage.setItem("role", user.role);
-				sessionStorage.setItem("doctor_id", user.doctor_id);
-			} else {
-				loginFailNotification()
-				navigate('/Login')
-			}
+			.catch(error => 
+				console.log(error)
+			);
 		}catch(error) {
 			alert("Please wait some second...")
 		}
