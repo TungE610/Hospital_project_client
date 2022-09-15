@@ -55,7 +55,6 @@ export function LoginForm() {
 		}
 		
 	}
-	console.log(loginData)
 	const successNotification = () => {
 		notification["success"]({
 			message: 'SUCCESSFULL',

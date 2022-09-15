@@ -18,6 +18,7 @@ import EditAppointments from "./pages/appointment/appointmentEdit/EditAppointmen
 export default function App() {
 	const [loginData, setLoggedIn] = useState({isLoggedIn : false , role : '', doctor_id : null, room_id : null});
 
+	console.log("check: ", sessionStorage.getItem("role") === 'doctor')
   return (
 		<LogginContext.Provider value={[loginData, setLoggedIn]}>
     <BrowserRouter>
