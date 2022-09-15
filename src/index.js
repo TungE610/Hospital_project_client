@@ -24,7 +24,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-				  <Route path="" element={<Login/>}/>
+				  <Route path="" element={<TopPage/>}/>
           <Route path="/Login" element={<Login/>}/>
           <Route path="/TopPage" element={<TopPage />} />
           <Route path="/AboutPage" element={<AboutPage />} />
@@ -34,7 +34,7 @@ export default function App() {
           <Route path="/Doctors/:doctorId" element={<DoctorDetail />} />
           <Route path="/Contact" element={<Contact />} />
           <Route path="/Error" element={<ErrorPage />} />
-          <Route path="/Appointments" element={sessionStorage.getItem('role') === 'super_admin' || sessionStorage.getItem("role")==='doctor' || sessionStorage.getItem("email")? <Appointment /> : < ErrorPage/>} />
+          <Route path="/Appointments" element={sessionStorage.getItem('role') === 'super_admin' || sessionStorage.getItem("role")==='doctor' || loginData.isLoggedIn? <Appointment /> : < ErrorPage/>} />
 					<Route path="/Appointments/Edit/:appointment_id" element={sessionStorage.getItem('role') === 'super_admin' || sessionStorage.getItem('role')==='doctor'? <EditAppointments /> : < ErrorPage/>} />
         </Route>
       </Routes>
