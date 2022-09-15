@@ -50,9 +50,6 @@ const modelDelete = (id) => {
 		content: '',
 		onOk: () => {
 			deletetpl(id)
-
-			// remove deleted task from display data
-
 		},
 		onCancel: () => { 
 			setIsDeleteModalVisible(false);
@@ -81,7 +78,6 @@ const deleteTptt = async (id) => {
 			method : "POST",
 			headers : {"Content-Type" : "application/json"},
 			mode: 'cors'
-			// body : JSON.stringify(body)
 		})
 	}catch (error) {
 		if (error.response.status === 404) {
@@ -89,7 +85,6 @@ const deleteTptt = async (id) => {
 		}
 	}
 }
-console.log(loginData)
 const saveNotification = () => {
 	notification["success"]({
 		message: 'SUCCESSFULL',
@@ -116,13 +111,6 @@ const saveNotification = () => {
 			dataIndex : "age",
 			align : "center"
 		},
-		// {
-		// 	title : "Phone Number",
-		// 	key : "phone_number",
-		// 	render: (phone_number) => (
-		// 		<Link>{phone_number}</Link>
-		// 	)
-		// },
 		{
 			title : "Status",
 			key : "status",
@@ -195,21 +183,13 @@ const saveNotification = () => {
               modelDelete(record.doctor_id)
             }}
           />
-
-          {/* <DeleteTwoTone
-            id={record.doctor_id}
-            onClick={() => {
-              deleteHandle(record.doctor_id)
-            }}
-          /> */}
-
-									<DeleteTwoTone
-										id={record.doctor_id}
-										onClick={(event) => {
-											event.stopPropagation()
-											modelDelete(record.doctor_id)
-										}}
-									/>
+					<DeleteTwoTone
+						id={record.doctor_id}
+						onClick={(event) => {
+							event.stopPropagation()
+							modelDelete(record.doctor_id)
+						}}
+					/>
         </Space>
       ) : 						
 			<Tag color="red">
@@ -230,32 +210,36 @@ const saveNotification = () => {
 			if(searchType === 'doctor_id') {
 				setLoading(true)
 				try {
-					let response 
 					if(searchValue.trim().length > 0){
-						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/doctors/doctor_id/${searchValue}`,{mode: 'cors'})
+						axios(`${baseUrl}/doctors/doctor_id/${searchValue}`).then(response => {
+							setDoctorData(response.data)
+							setLoading(false)
+						})
 					} else {
-						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/doctors`,{mode: 'cors'})
+						axios(`${baseUrl}/doctors`).then(response => {
+							setDoctorData(response.data)
+							setLoading(false)
+						})
 					}					
-					const jsonData = await response.json()
-					setDoctorData(jsonData)
-					setLoading(false)
 				} catch(error){
 					console.log(error.message)
 				}
 			} else {
 				setLoading(true)
 				try {
-					let response 
 					if(searchValue.trim().length > 0){
-						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/doctors/name/${searchValue}`,{mode: 'cors'})
+						 axios(`${baseUrl}/doctors/name/${searchValue}`).then(response => {
+							setDoctorData(response.data)
+							setLoading(false)
+						})
 					} else {
-						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/doctors`,{mode: 'cors'})
+						axios(`${baseUrl}/doctors`).then(response => {
+							setDoctorData(response.data)
+							setLoading(false)
+						})
 					}
-					const jsonData = await response.json()
-					setDoctorData(jsonData)
-					setLoading(false)
 				} catch(error){
-					console.log(error.message)
+					console.log(error)
 				}
 			}
 	}
