@@ -1,10 +1,11 @@
 import React , { useState, useEffect } from "react";
+import axios from 'axios'
 import styles from './Rooms.module.css'
 import ContactRow from "../../components/contactRow/ContactRow";
 import Navbar from "../../components/navbar/Navbar";
 import { Table, Tag, Input, Select,Button, Tooltip } from 'antd'
 import RegisterModal from "../../components/registerModal/RegisterModal";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { SearchOutlined } from '@ant-design/icons';
 import NotificationBox from "../../components/notificationBox/Notification";
 
@@ -15,26 +16,29 @@ const Rooms = () => {
 	const [isModalVisible, setIsModalVisible] = useState(false)
 	const [searchType, setSearchType] = useState('doctor_id')
 	const [searchValue, setSearchValue] = useState('')
+	const baseUrl = 'https://hospital-project-api.herokuapp.com/api'
 	const navigate = useNavigate();
 	const { Option } = Select;
 
   const getRooms = async () => {
 		  setLoading(true)
 			try {
-				const response = await fetch("https://hospital-project-api.herokuapp.com/api/rooms", {mode : 'cors'})
-				const jsonData = await response.json()
-				setRoomData(jsonData)
-				setLoading(false);
+				axios(`${baseUrl}/rooms`).then(response => {
+					setRoomData(response.data)
+					setLoading(false);
+				})
 			} catch(error){
-				console.log(error.message)
+				console.log(error)
 			}
 	}
     useEffect(() => {
     getRooms()
 	}, [])
+
 	useEffect(() => {
 		searchHandler()
 	}, [searchValue])
+
 	const toggleModalHandler = (state) => {
 		setIsModalVisible(state)
   }
@@ -137,32 +141,37 @@ const Rooms = () => {
 			if(searchType === 'room_id') {
 				setLoading(true)
 				try {
-					let response 
 					if(searchValue.trim().length > 0){
-						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/rooms/room_id/${searchValue}`, {mode : 'cors'})
+						 axios(`${baseUrl}/rooms/room_id/${searchValue}`).then(response => {
+							setRoomData(response.data)
+							setLoading(false)
+						})
+
 					} else {
-						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/rooms`, {mode : 'cors'})
+						 axios(`${baseUrl}/rooms`).then(response => {
+							 setRoomData(response.data)
+							 setLoading(false)
+						 })
 					}			
-					const jsonData = await response.json()
-					setRoomData(jsonData)
-					setLoading(false)
 				} catch(error){
-					console.log(error.message)
+					console.log(error)
 				}
 			} else {
 				setLoading(true)
 				try {
-					let response 
 					if(searchValue.trim().length > 0){
-						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/rooms/specialty/${searchValue}`, {mode : 'cors'})
+						 axios(`${baseUrl}/rooms/specialty/${searchValue}`).then(response => {
+							setRoomData(response.data)
+							setLoading(false)
+						})
 					} else {
-						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/rooms`, {mode : 'cors'})
+						axios(`${baseUrl}/rooms`).then(response => {
+							setRoomData(response.data)
+							setLoading(false)
+						})
 					}							
-					const jsonData = await response.json()
-					setRoomData(jsonData)
-					setLoading(false)
 				} catch(error){
-					console.log(error.message)
+					console.log(error)
 				}
 			}
 	}
