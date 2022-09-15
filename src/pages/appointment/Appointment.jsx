@@ -190,6 +190,7 @@ const yetEditedNotification = () => {
   const toggleBillModalHandler = (state) => {
 		setIsBillModalVisible(state)
 	}
+	console.log("loginData: ", loginData)
   const searchHandler = async () => {
 		  
 			if(searchType === 'appointment_id') {
@@ -257,15 +258,15 @@ const yetEditedNotification = () => {
 const filterMyAppointment = async () => {
 	setLoading(true)
 		try {
-				const response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/doctor_id/${loginData.doctor_id}`,{mode : 'cors'})
-				const jsonData = await response.json()
-				const transformedData =  await jsonData.map(appointment => {
-					return {...appointment, 
-						diagnosis: (appointment.diagnosis !== null ? appointment.diagnosis : "in progess"),
-					}
+			  axios(`${baseUrl}/appointments/doctor_id/${loginData.doctor_id}`).then(response => {
+					const transformedData =   response.data.map(appointment => {
+						return {...appointment, 
+							diagnosis: (appointment.diagnosis !== null ? appointment.diagnosis : "in progess"),
+						}
+					})
+					setAppointmentData(transformedData)
+					setLoading(false)
 				})
-				setAppointmentData(transformedData)
-				setLoading(false)
 		}catch(error){
 				console.log(error)
 		}
