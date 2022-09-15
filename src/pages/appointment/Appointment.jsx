@@ -1,4 +1,5 @@
 import {React, Fragment, useState, useEffect, useContext}from "react";
+import axios from 'axios'
 import styles from "./Appointment.module.css"
 import ContactRow from "../../components/contactRow/ContactRow";
 import Navbar from "../../components/navbar/Navbar";
@@ -8,7 +9,6 @@ import RegisterModal from "../../components/registerModal/RegisterModal";
 import { SearchOutlined, EditTwoTone, DeleteTwoTone, SendOutlined } from '@ant-design/icons'
 import LogginContext from '../../components/accountBox/LogginContext'
 import BillModal from "../../components/bill/BillModal";
-import { copyFileSync } from "fs";
 
 const Appointments = (props) => {
   const [appointmentData, setAppointmentData] = useState([])
@@ -24,6 +24,7 @@ const Appointments = (props) => {
 	const [doctorStatus, setDoctorStatus] = useState(false)
 	const [typeSee, setTypeSee] = useState(true)
 	const [sent, setSent] = useState(false)
+	const baseUrl = 'https://hospital-project-api.herokuapp.com/api'
 
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -35,32 +36,36 @@ const Appointments = (props) => {
   const getAppointments = async () => {
 		setLoading(true)
 			try {
-				const response = await fetch("https://hospital-project-api.herokuapp.com/api/appointments",{mode : 'cors'})
-				const jsonData = await response.json()
-				console.log(jsonData)
-				const transformedData =  await jsonData.map(appointment => {
-					return {...appointment, 
-						diagnosis: (appointment.diagnosis !== null ? appointment.diagnosis : "in progess"),
-					}
+				// const response = await fetch("https://hospital-project-api.herokuapp.com/api/appointments",{mode : 'cors'})
+				// const jsonData = await response.json()
+				axios(`${baseUrl}/appointments`).then(response => {
+					const transformedData =  response.data.map(appointment => {
+						return {...appointment, 
+							diagnosis: (appointment.diagnosis !== null ? appointment.diagnosis : "in progess"),
+						}
+					})
+					setAppointmentData(transformedData)
+					setLoading(false)
 				})
-				console.log("transformedData: ", transformedData)
-				setAppointmentData(transformedData)
-				setLoading(false)
 			} catch(error){
-				console.log(error.message)
+				console.log(error)
 			}
 		}
+
 		useEffect(() => {
 			getAppointments()
 			setDoctorStatus(!appointmentData.map(element => element.doctor_id).includes(loginData.doctor_id))
-	}, [])
+		}, [])
+
 	useEffect(() => {
 		searchHandler()
 	}, [searchValue])
+
+
 	const editAppointmentHandler = (id) => {
 			navigate(`/Appointments/Edit/${id}`)
 	}
-	console.log("appointmentData:", appointmentData)
+
 const successNotification = () => {
 	notification["success"]({
 		message: 'SUCCESSFULL',
@@ -68,7 +73,8 @@ const successNotification = () => {
 			`You have just successfully make new appointment.!!`,
 	});
 };
-console.log("doctor status : ", doctorStatus)
+
+
 const saveNotification = () => {
 	notification["success"]({
 		message: 'SUCCESSFULL',
@@ -84,7 +90,6 @@ const yetEditedNotification = () => {
 	});
 };
 
-console.log("loginData: ", loginData)
 	const columns = [
 		{
 			title : "Appointment ID",
@@ -262,7 +267,7 @@ const filterMyAppointment = async () => {
 				setAppointmentData(transformedData)
 				setLoading(false)
 		}catch(error){
-				console.log(error.message)
+				console.log(error)
 		}
 }
 const addAppointmentHandler = async () => {
@@ -289,7 +294,7 @@ const addAppointmentHandler = async () => {
 			})
 			successNotification()
 	}catch(error) {
-		console.log(error.message)
+		console.log(error)
 	}
 }
 	return (

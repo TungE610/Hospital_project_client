@@ -3,10 +3,9 @@ import axios from 'axios'
 import styles from "./EditAppointment.module.css"
 import ContactRow from "../../../components/contactRow/ContactRow";
 import Navbar from "../../../components/navbar/Navbar";
-import { Input,Select,Button, Form,Modal,TimePicker } from 'antd'
+import { Input,Button, Form,Modal,TimePicker } from 'antd'
 import { useParams,useNavigate } from "react-router-dom";
 import RegisterModal from "../../../components/registerModal/RegisterModal";
-import moment from 'moment';
 
 const layout = {
   labelCol: {
@@ -26,6 +25,7 @@ const EditAppointments = () => {
 	const [form] = Form.useForm();
   const navigate = useNavigate()
 	const baseUrl = 'https://hospital-project-api.herokuapp.com/api'
+
 	const fetchAppointment = async () => {
 		setLoading(true)
 		try {
@@ -36,10 +36,12 @@ const EditAppointments = () => {
 		}catch(error){
 			console.log(error.message)
 		}
-	}
+	};
+
 	const toggleModalHandler = (state) => {
 		setIsModalVisible(state)
-  }
+  };
+
 	const onFinish = async (values) => {
 		setLoading(true)
 		const body = {diagnosis : values.diagnosis}
@@ -55,9 +57,11 @@ const EditAppointments = () => {
 		
 		navigate('/Appointments',{state:{edited: true}} )
   };
+
   useEffect(() => {
     fetchAppointment()
 	}, [])
+
 	return (
 		<div className ="edit-appointment">
 			<RegisterModal isModalVisible={isModalVisible} toggleModal={toggleModalHandler}/>

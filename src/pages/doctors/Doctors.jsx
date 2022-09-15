@@ -1,4 +1,5 @@
-import {React, Fragment, useState, useEffect, useContext}from "react";
+import {React, useState, useEffect, useContext}from "react";
+import axios from 'axios'
 import styles from "./Doctors.module.css"
 import ContactRow from "../../components/contactRow/ContactRow";
 import Navbar from "../../components/navbar/Navbar";
@@ -17,6 +18,7 @@ const Doctors = () => {
 	const [searchType, setSearchType] = useState('doctor_id')
 	const [searchValue, setSearchValue] = useState('')
 	const [loginData, setLoggedIn] = useContext(LogginContext)
+	const baseUrl = 'https://hospital-project-api.herokuapp.com/api'
 	const navigate = useNavigate();
 	const { Option } = Select;
 
@@ -24,12 +26,12 @@ const Doctors = () => {
   const getDoctors = async () => {
 		setLoading(true)
 			try {
-				const response = await fetch("https://hospital-project-api.herokuapp.com/api/doctors",{mode: 'cors'})
-				const jsonData = await response.json()
-				setDoctorData(jsonData)
-				setLoading(false)
+				axios(`${baseUrl}/doctors`).then(response => {
+					setDoctorData(response.data)
+					setLoading(false)
+				})
 			} catch(error){
-				console.log(error.message)
+				console.log(error)
 			}
 	}
   useEffect(() => {
