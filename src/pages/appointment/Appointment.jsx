@@ -258,7 +258,7 @@ const yetEditedNotification = () => {
 const filterMyAppointment = async () => {
 	setLoading(true)
 		try {
-			  axios(`${baseUrl}/appointments/doctor_id/${loginData.doctor_id}`).then(response => {
+			  axios(`${baseUrl}/appointments/doctor_id/${sessionStorage.getItem('doctor_id')}`).then(response => {
 					const transformedData =   response.data.map(appointment => {
 						return {...appointment, 
 							diagnosis: (appointment.diagnosis !== null ? appointment.diagnosis : "in progess"),
