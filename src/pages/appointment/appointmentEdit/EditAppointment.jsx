@@ -30,13 +30,14 @@ const EditAppointments = () => {
 			console.log('runs')
 			const response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/${appointment_id}`,{mode : 'no-cors'})
 			const jsonData = await response.json()
+			console.log("Edit data:", jsonData)
 			setAppointmentData(jsonData)
-			console.log("Appointment data: ", appointmentData)
 			setLoading(false)
 		}catch(error){
 			console.log(error.message)
 		}
 	}
+	console.log("Appointment data: ", appointmentData)
 	const toggleModalHandler = (state) => {
 		setIsModalVisible(state)
   }
