@@ -26,7 +26,7 @@ const Doctors = () => {
   const getDoctors = async () => {
 		setLoading(true)
 			try {
-				axios(`${baseUrl}/doctors`).then(response => {
+				await axios(`${baseUrl}/doctors`).then(response => {
 					setDoctorData(response.data)
 					setLoading(false)
 				})

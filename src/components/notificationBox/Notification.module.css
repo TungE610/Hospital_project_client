@@ -93,3 +93,22 @@
 .chatCon .pop img {
   width: 20%;
 }
+
+.numbox{
+	 width : 30px;
+	height : 30px; 
+	background-color: #B56161;
+	position : absolute;
+	top : -13px; 
+	right : -5px;
+	border-radius : 50%;
+	text-align : center;
+	color : white;
+	margin: auto;
+}
+.numMess {
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	right : 35%;
+}

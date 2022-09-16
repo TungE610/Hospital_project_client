@@ -42,13 +42,14 @@ export function LoginForm() {
 					sessionStorage.setItem("email", user.email);
 					sessionStorage.setItem("role", user.role);
 					sessionStorage.setItem("doctor_id", user.doctor_id);
+					sessionStorage.setItem("room_id", user.room_id);
 				} else {
-					loginFailNotification()
-					navigate('/Login')
 				}
 			})
-			.catch(error => 
-				console.log(error)
+			.catch(error => {
+				loginFailNotification()
+				navigate('/Login')
+			}
 			);
 		}catch(error) {
 			alert("Please wait some second...")

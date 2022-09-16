@@ -4,25 +4,20 @@ import styles from './Notification.module.css';
 const NotificationBox = () => {
 	const [chatopen, setChatopen] = useState(false)
 	const notification = (sessionStorage.getItem("patient_id") && sessionStorage.getItem("notifications")) ? sessionStorage.getItem("notifications") : ""
-	// const [notifications, setNotifications ] = useState(initMessages)
   let hide = {
     display: 'none',
   }
   let show = {
     display: 'block'
   }
-	useEffect(() => {
 
-	}, )
   const toggle = e => {
     setChatopen(!chatopen)
   }
-	// const clearCountdown = () => {
-	// 	console.log("clear runs")
-	// 	sessionStorage.clear();
-	// };
+	const clickNotiBoxhandler = () => {
+		localStorage.setItem('clicked', 'true')
+	}
 
-	// window.onunload = clearCountdown();
 		return (
 		<div className={styles.chatCon}>
       <div className={styles.chatBox} style={chatopen ? show : hide}>
@@ -44,8 +39,9 @@ const NotificationBox = () => {
       }
     </div>
   	</div>
-    <div className={styles.pop}>
-			<p><img onClick={toggle} src={require(`../../assets/messages.png`)}/></p>
+    <div className={styles.pop} onClick={clickNotiBoxhandler}>
+			<p style={{"position" : "relative" }}><img onClick={toggle} src={require(`../../assets/messages.png`)}/></p>
+			{notification && !localStorage.getItem('clicked')? <div className={styles.numbox}><p className={styles.numMess}>1</p></div> : ""}
     </div>
     </div>
 		)

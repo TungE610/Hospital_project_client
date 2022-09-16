@@ -24,6 +24,8 @@ const Appointments = (props) => {
 	const [doctorStatus, setDoctorStatus] = useState(false)
 	const [typeSee, setTypeSee] = useState(true)
 	const [sent, setSent] = useState(false)
+	const [count, setCount] = useState(0)
+	const [edited, setEdited] = useState(false)
 	const baseUrl = 'https://hospital-project-api.herokuapp.com/api'
 
 	const location = useLocation();
@@ -36,20 +38,22 @@ const Appointments = (props) => {
   const getAppointments = async () => {
 		setLoading(true)
 			try {
-				// const response = await fetch("https://hospital-project-api.herokuapp.com/api/appointments",{mode : 'cors'})
-				// const jsonData = await response.json()
-				axios(`${baseUrl}/appointments`).then(response => {
+				await axios(`${baseUrl}/appointments`).then(response => {
 					const transformedData =  response.data.map(appointment => {
 						return {...appointment, 
 							diagnosis: (appointment.diagnosis !== null ? appointment.diagnosis : "in progess"),
 						}
 					})
 					const index = transformedData.findIndex(element => element.doctor_id === sessionStorage.getItem('doctor_id'))
-					tempAppointmentData = transformedData.slice()
-					let temp  = JSON.parse(JSON.stringify(tempAppointmentData[0]));
-					tempAppointmentData[0] = JSON.parse(JSON.stringify(tempAppointmentData[index]));
-					tempAppointmentData[index] = JSON.parse(JSON.stringify(temp));
-					setAppointmentData(tempAppointmentData)
+					if(index >= 0) {
+						tempAppointmentData = transformedData.slice()
+						let temp  = JSON.parse(JSON.stringify(tempAppointmentData[0]));
+						tempAppointmentData[0] = JSON.parse(JSON.stringify(tempAppointmentData[index]));
+						tempAppointmentData[index] = JSON.parse(JSON.stringify(temp));
+						setAppointmentData(tempAppointmentData)
+					} else {
+						setAppointmentData(transformedData)
+					}
 					setLoading(false)
 				})
 			} catch(error){
@@ -66,10 +70,19 @@ const Appointments = (props) => {
 		searchHandler()
 	}, [searchValue])
 
+	useEffect(() => {
+		setCount(prev => prev++)
+	}, [location.state])
+
+	useEffect(() => {
+		if(count > 0)
+		setEdited(true)
+	}, [count >= 1])
 	const editAppointmentHandler = (id) => {
 			navigate(`/Appointments/Edit/${id}`)
 	}
-
+console.log("edited: ", edited)
+console.log("count: ", count)
 const successNotification = () => {
 	notification["success"]({
 		message: 'SUCCESSFULL',
@@ -167,7 +180,7 @@ const yetEditedNotification = () => {
 								setSelectedPatientId(record.patient_id)
 								const status_insurance = appointmentData.find(element => element.patient_id === record.patient_id).status_of_insurance
 								setStatus_of_insurance(status_insurance)
-								if (location.state) {
+								if (edited) {
 									setIsBillModalVisible(true)
 								} else {
 									yetEditedNotification()
@@ -213,11 +226,15 @@ const yetEditedNotification = () => {
 						}
 					})
 					const index = transformedData.findIndex(element => element.doctor_id === sessionStorage.getItem('doctor_id'))
-					tempAppointmentData = transformedData.slice()
-					let temp  = JSON.parse(JSON.stringify(tempAppointmentData[0]));
-					tempAppointmentData[0] = JSON.parse(JSON.stringify(tempAppointmentData[index]));
-					tempAppointmentData[index] = JSON.parse(JSON.stringify(temp));
-					setAppointmentData(tempAppointmentData)
+					if(index >= 0) {
+						tempAppointmentData = transformedData.slice()
+						let temp  = JSON.parse(JSON.stringify(tempAppointmentData[0]));
+						tempAppointmentData[0] = JSON.parse(JSON.stringify(tempAppointmentData[index]));
+						tempAppointmentData[index] = JSON.parse(JSON.stringify(temp));
+						setAppointmentData(tempAppointmentData)
+					} else {
+						setAppointmentData(transformedData)
+					}
 					setLoading(false)
 				} catch(error){
 					console.log(error.message)
@@ -238,11 +255,15 @@ const yetEditedNotification = () => {
 						}
 					})
 					const index = transformedData.findIndex(element => element.doctor_id === sessionStorage.getItem('doctor_id'))
-					tempAppointmentData = transformedData.slice()
-					let temp  = JSON.parse(JSON.stringify(tempAppointmentData[0]));
-					tempAppointmentData[0] = JSON.parse(JSON.stringify(tempAppointmentData[index]));
-					tempAppointmentData[index] = JSON.parse(JSON.stringify(temp));
-					setAppointmentData(tempAppointmentData)
+					if(index >= 0) {
+						tempAppointmentData = transformedData.slice()
+						let temp  = JSON.parse(JSON.stringify(tempAppointmentData[0]));
+						tempAppointmentData[0] = JSON.parse(JSON.stringify(tempAppointmentData[index]));
+						tempAppointmentData[index] = JSON.parse(JSON.stringify(temp));
+						setAppointmentData(tempAppointmentData)
+					} else {
+						setAppointmentData(transformedData)
+					}
 					setLoading(false)
 				} catch(error){
 					console.log(error.message)
@@ -263,14 +284,18 @@ const yetEditedNotification = () => {
 						}
 					})
 					const index = transformedData.findIndex(element => element.doctor_id === sessionStorage.getItem('doctor_id'))
-					tempAppointmentData = transformedData.slice()
-					let temp  = JSON.parse(JSON.stringify(tempAppointmentData[0]));
-					tempAppointmentData[0] = JSON.parse(JSON.stringify(tempAppointmentData[index]));
-					tempAppointmentData[index] = JSON.parse(JSON.stringify(temp));
-					setAppointmentData(tempAppointmentData)
+					if(index >= 0) {
+						tempAppointmentData = transformedData.slice()
+						let temp  = JSON.parse(JSON.stringify(tempAppointmentData[0]));
+						tempAppointmentData[0] = JSON.parse(JSON.stringify(tempAppointmentData[index]));
+						tempAppointmentData[index] = JSON.parse(JSON.stringify(temp));
+						setAppointmentData(tempAppointmentData)
+					} else {
+						setAppointmentData(transformedData)
+					}
 					setLoading(false)
 				} catch(error){
-					console.log(error.message)
+					console.log(error)
 				}
 			}
 	}
@@ -289,11 +314,15 @@ const filterMyAppointment = async () => {
 						}
 					})
 					const index = transformedData.findIndex(element => element.end_time === null)
-					tempAppointmentData = transformedData.slice()
-					let temp  = JSON.parse(JSON.stringify(tempAppointmentData[0]));
-					tempAppointmentData[0] = JSON.parse(JSON.stringify(tempAppointmentData[index]));
-					tempAppointmentData[index] = JSON.parse(JSON.stringify(temp));
-					setAppointmentData(tempAppointmentData)
+					if(index >= 0) {
+						tempAppointmentData = transformedData.slice()
+						let temp  = JSON.parse(JSON.stringify(tempAppointmentData[0]));
+						tempAppointmentData[0] = JSON.parse(JSON.stringify(tempAppointmentData[index]));
+						tempAppointmentData[index] = JSON.parse(JSON.stringify(temp));
+						setAppointmentData(tempAppointmentData)
+					} else {
+						setAppointmentData(transformedData)
+					}
 					setLoading(false)
 				})
 		}catch(error){
@@ -302,7 +331,7 @@ const filterMyAppointment = async () => {
 }
 const addAppointmentHandler = async () => {
 	try {
-			axios(`${baseUrl}/registrations/${loginData.room_id}`).then(response => {
+			axios(`${baseUrl}/registrations/${sessionStorage.getItem('room_id')}`).then(response => {
 				const body = {
 						appointment_id : `${loginData.doctor_id.slice(-2)}${response.data.patient_id.slice(-2)}${new Date().toISOString().split('T')[0].slice(-5).replace('-', '')}`,
 						doctor_id : loginData.doctor_id,

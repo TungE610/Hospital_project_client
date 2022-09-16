@@ -46,7 +46,7 @@ const EditAppointments = () => {
 		setLoading(true)
 		const body = {diagnosis : values.diagnosis}
 		console.log("body:",body)
-		axios.post(`${baseUrl}/appointments/${appointment_id}`, body)
+		await axios.post(`${baseUrl}/appointments/${appointment_id}`, body)
 		.then(response => {
 			console.log(response)
 		})

@@ -23,7 +23,7 @@ const Rooms = () => {
   const getRooms = async () => {
 		  setLoading(true)
 			try {
-				axios(`${baseUrl}/rooms`).then(response => {
+				await	axios(`${baseUrl}/rooms`).then(response => {
 					setRoomData(response.data)
 					setLoading(false);
 				})

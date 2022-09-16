@@ -1,5 +1,6 @@
 import React, {useState, useForm, useCallback, useEffect} from "react";
 import styles from './RegisterModal.module.css'
+import axios from 'axios'
 import { Modal, Form, Input, Select, Switch, notification} from "antd";
 import 'antd/dist/antd.css';
 
@@ -9,100 +10,94 @@ const { TextArea } = Input;
 
 const RegisterModal = (props) => {
 	const [form] = Form.useForm();
+	const baseUrl = 'https://hospital-project-api.herokuapp.com/api'
 	const getRegisterValueHandler = async (values) => {
 		const patient_id =`${values.citizen_id.slice(-4)}${values.dob.slice(-5).replace('-','')}`
-		console.log(values.examinate)
 					try {
-						let response = await fetch(`https://hospital-project-api.herokuapp.com/api/specialties/${values.examinate}`, {mode: 'cors'})
-						let jsonData = await response.json()
-						const room_id = jsonData.room_id
-						const num_of_waiting = jsonData.num_of_waiting
-						console.log("room_id", room_id)
-						if(jsonData.room_id) {
-							response = await fetch(`https://hospital-project-api.herokuapp.com/api/room/${jsonData.room_id}`, {mode: 'cors'})
-							jsonData = await response.json()
-							console.log("doctor: ", jsonData.doctor_id)
-							const body = {
-								specialty_id : values.examinate,
-								patient_id : patient_id,
-								registration_time : new Date().toLocaleString(),
-								expected_time : new Date(new Date().getTime() + num_of_waiting*20*60000).toLocaleString(),
-								room_id : room_id,
-								status : true
-							}
-
-							response = await fetch(`https://hospital-project-api.herokuapp.com/api/registrations`, {
-								method : "POST",
-								headers : {"Content-Type" : "application/json"},
-								body : JSON.stringify(body),
-								mode : 'cors'
-							})
-							const transformedExpectedTime = new Date(new Date().getTime() + jsonData.num_of_waiting*20*60000)
-								sessionStorage.clear();
-								sessionStorage.setItem("patient_id", patient_id);
-								sessionStorage.setItem("notifications", `Có ${num_of_waiting} người đang đợi trong phòng mà bạn đang kí. ${num_of_waiting > 0 ? `Vui lòng đợi đến ${transformedExpectedTime.getHours()}:${transformedExpectedTime.getMinutes()}` : "Hãy vào vòng nhé"} !!`);
-
-							console.log(jsonData.doctor_id)
-							if(jsonData.doctor_id){
-								const body = {
-									specialty_id : values.examinate,
-									room_id : room_id,
-									patient_id : patient_id,
-									doctor_id : jsonData.doctor_id,
-									start_time : new Date().toLocaleString() ,
-									appointment_id : `${jsonData.doctor_id.slice(-2)}${patient_id.slice(-2)}${new Date().toISOString().split('T')[0].slice(-5).replace('-', '')}`
-								}
-								const 
-								response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments`, {
-									method : "POST",
-									headers : {"Content-Type" : "application/json"},
-									body : JSON.stringify(body),
-									mode: 'cors'
-								})
-								successNotification()
-							} else {
+						await axios(`${baseUrl}/specialties/${values.examinate}`).then(response => {
+							const room_id = response.data.room_id
+							const num_of_waiting = response.data.num_of_waiting
+							console.log("room_id: ", room_id)
+							if(response.data.room_id) {
+							 axios(`${baseUrl}/room/${response.data.room_id}`).then(response => {
+									console.log("doctor: ", response.data.doctor_id)
+									const body = {
+										specialty_id : values.examinate,
+										patient_id : patient_id,
+										registration_time : new Date().toLocaleString(),
+										expected_time : new Date(new Date().getTime() + num_of_waiting*20*60000).toLocaleString(),
+										room_id : room_id,
+										status : true
+									}
+									axios.post(`${baseUrl}/registrations`, body).then(response => {
+										console.log(response)
+									})
+									const transformedExpectedTime = new Date(new Date().getTime() + response.data.num_of_waiting*20*60000)
+										sessionStorage.clear();
+										sessionStorage.setItem("patient_id", patient_id);
+										sessionStorage.setItem("notifications", `Có ${num_of_waiting} người đang đợi trong phòng mà bạn đang kí. ${num_of_waiting > 0 ? `Vui lòng đợi đến ${transformedExpectedTime.getHours()}:${transformedExpectedTime.getMinutes()}` : "Hãy vào vòng nhé"} !!`);
+		
+									if(response.data.doctor_id){
+										const body = {
+											specialty_id : values.examinate,
+											room_id : room_id,
+											patient_id : patient_id,
+											doctor_id : response.data.doctor_id,
+											start_time : new Date().toLocaleString() ,
+											appointment_id : `${response.data.doctor_id.slice(-2)}${patient_id.slice(-2)}${new Date().toISOString().split('T')[0].slice(-5).replace('-', '')}`
+										}
+									axios.post(`${baseUrl}/appointments`, body).then(response => {
+										console.log(response)
+									})
+										successNotification()
+									} else {
+										failNotification()
+									}
+								}).catch(error => console.log(error))
+								} else {
+									axios(`${baseUrl}/room/min_wait/${values.examinate}`).then(response => {
+										console.log("response data: ",response.data )
+										const body = {
+											specialty_id : values.examinate,
+											patient_id : patient_id,
+											registration_time : new Date().toLocaleString(),
+											expected_time : new Date(new Date().getTime() + response.data.num_of_waiting*20*60000).toLocaleString(),
+											room_id : response.data.room_id
+										}
+										axios.post(`${baseUrl}/registrations`,body).then(response => {
+											console.log(response)
+										}).catch(error => {
+											console.log(error)
+										})
+			
+										const transformedExpectedTime = new Date(new Date().getTime() + response.data.num_of_waiting*20*60000)
+										sessionStorage.clear();
+										localStorage.clear()
+										sessionStorage.setItem("patient_id", patient_id);
+										sessionStorage.setItem("notifications", `Có ${response.data.num_of_waiting} người đang đợi trong phòng mà bạn đang kí. ${response.data.num_of_waiting > 0 ? `Vui lòng đợi đến ${transformedExpectedTime.getHours()}:${transformedExpectedTime.getMinutes()}` : "Hãy vào vòng nhé"} !!`);	
+									})
 								failNotification()
+
 							}
-						} else {
-							failNotification()
-						}
-					} catch(error){
-						let response = await fetch(`https://hospital-project-api.herokuapp.com/api/room/min_wait/${values.examinate}`)
-						let jsonData = await response.json()
-						const body = {
-							specialty_id : values.examinate,
-							patient_id : patient_id,
-							registration_time : new Date().toLocaleString(),
-							expected_time : new Date(new Date().getTime() + jsonData.num_of_waiting*20*60000).toLocaleString(),
-							room_id : jsonData.room_id
-						}
-						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/registrations`, {
-							method : "POST",
-							headers : {"Content-Type" : "application/json"},
-							body : JSON.stringify(body)
+							
+						}).catch(error => {
+							console.log(error)						
 						})
-						const transformedExpectedTime = new Date(new Date().getTime() + jsonData.num_of_waiting*20*60000)
-						sessionStorage.clear();
-						sessionStorage.setItem("patient_id", patient_id);
-						sessionStorage.setItem("notifications", `Có ${jsonData.num_of_waiting} người đang đợi trong phòng mà bạn đang kí. ${jsonData.num_of_waiting > 0 ? `Vui lòng đợi đến ${transformedExpectedTime.getHours()}:${transformedExpectedTime.getMinutes()}` : "Hãy vào vòng nhé"} !!`);
-
-
-						failNotification()
-						console.log("error: ", error.message)
+					} catch(error){
+						console.log(error)
 				}
 	}
 	const  onSubmit = useCallback( async (values) => {
 		getRegisterValueHandler(values)
 		 try {
 			const body = values
-			const response = await fetch("https://hospital-project-api.herokuapp.com/api/patients", {
-				method : "POST",
-				headers : {"Content-Type" : "application/json"},
-				body : JSON.stringify(body)
+			axios.post(`${baseUrl}/patients`,body ).then(response => {
+				console.log(response)
+			}).catch(error => {
+				console.log(error)
 			})
-       
 		 } catch(error) {
-			 console.log(error.message)
+			 console.log(error)
 		 }
 		 form.resetFields();
 		 props.toggleModal(false)
