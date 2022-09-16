@@ -29,7 +29,7 @@ const Appointments = (props) => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const { Option } = Select;
-
+	let tempAppointmentData
 	const toggleModalHandler = (state) => {
 		setIsModalVisible(state)
   }
@@ -44,7 +44,12 @@ const Appointments = (props) => {
 							diagnosis: (appointment.diagnosis !== null ? appointment.diagnosis : "in progess"),
 						}
 					})
-					setAppointmentData(transformedData)
+					const index = transformedData.findIndex(element => element.doctor_id === sessionStorage.getItem('doctor_id'))
+					tempAppointmentData = transformedData.slice()
+					let temp  = JSON.parse(JSON.stringify(tempAppointmentData[0]));
+					tempAppointmentData[0] = JSON.parse(JSON.stringify(tempAppointmentData[index]));
+					tempAppointmentData[index] = JSON.parse(JSON.stringify(temp));
+					setAppointmentData(tempAppointmentData)
 					setLoading(false)
 				})
 			} catch(error){
@@ -60,7 +65,6 @@ const Appointments = (props) => {
 	useEffect(() => {
 		searchHandler()
 	}, [searchValue])
-
 
 	const editAppointmentHandler = (id) => {
 			navigate(`/Appointments/Edit/${id}`)
@@ -208,7 +212,12 @@ const yetEditedNotification = () => {
 							diagnosis: (appointment.diagnosis !== null ? appointment.diagnosis : "in progess"),
 						}
 					})
-					setAppointmentData(transformedData)
+					const index = transformedData.findIndex(element => element.doctor_id === sessionStorage.getItem('doctor_id'))
+					tempAppointmentData = transformedData.slice()
+					let temp  = JSON.parse(JSON.stringify(tempAppointmentData[0]));
+					tempAppointmentData[0] = JSON.parse(JSON.stringify(tempAppointmentData[index]));
+					tempAppointmentData[index] = JSON.parse(JSON.stringify(temp));
+					setAppointmentData(tempAppointmentData)
 					setLoading(false)
 				} catch(error){
 					console.log(error.message)
@@ -228,7 +237,12 @@ const yetEditedNotification = () => {
 							diagnosis: (appointment.diagnosis !== null ? appointment.diagnosis : "in progess"),
 						}
 					})
-					setAppointmentData(transformedData)
+					const index = transformedData.findIndex(element => element.doctor_id === sessionStorage.getItem('doctor_id'))
+					tempAppointmentData = transformedData.slice()
+					let temp  = JSON.parse(JSON.stringify(tempAppointmentData[0]));
+					tempAppointmentData[0] = JSON.parse(JSON.stringify(tempAppointmentData[index]));
+					tempAppointmentData[index] = JSON.parse(JSON.stringify(temp));
+					setAppointmentData(tempAppointmentData)
 					setLoading(false)
 				} catch(error){
 					console.log(error.message)
@@ -248,13 +262,23 @@ const yetEditedNotification = () => {
 							diagnosis: (appointment.diagnosis !== null ? appointment.diagnosis : "in progess"),
 						}
 					})
-					setAppointmentData(transformedData)
+					const index = transformedData.findIndex(element => element.doctor_id === sessionStorage.getItem('doctor_id'))
+					tempAppointmentData = transformedData.slice()
+					let temp  = JSON.parse(JSON.stringify(tempAppointmentData[0]));
+					tempAppointmentData[0] = JSON.parse(JSON.stringify(tempAppointmentData[index]));
+					tempAppointmentData[index] = JSON.parse(JSON.stringify(temp));
+					setAppointmentData(tempAppointmentData)
 					setLoading(false)
 				} catch(error){
 					console.log(error.message)
 				}
 			}
 	}
+	// const  swapArrayElements = (arr, indexA, indexB) => {
+	// 	let temp  = JSON.parse(JSON.stringify(arr[indexA]));
+	// 	arr[indexA] = JSON.parse(JSON.stringify(arr[indexB]));
+	// 	arr[indexB] = JSON.parse(JSON.stringify(temp));
+	// };
 const filterMyAppointment = async () => {
 	setLoading(true)
 		try {
@@ -264,7 +288,12 @@ const filterMyAppointment = async () => {
 							diagnosis: (appointment.diagnosis !== null ? appointment.diagnosis : "in progess"),
 						}
 					})
-					setAppointmentData(transformedData)
+					const index = transformedData.findIndex(element => element.end_time === null)
+					tempAppointmentData = transformedData.slice()
+					let temp  = JSON.parse(JSON.stringify(tempAppointmentData[0]));
+					tempAppointmentData[0] = JSON.parse(JSON.stringify(tempAppointmentData[index]));
+					tempAppointmentData[index] = JSON.parse(JSON.stringify(temp));
+					setAppointmentData(tempAppointmentData)
 					setLoading(false)
 				})
 		}catch(error){
