@@ -20,7 +20,6 @@ const RegisterModal = (props) => {
 							console.log("room_id: ", room_id)
 							if(response.data.room_id && num_of_waiting === 0) {
 							 axios(`${baseUrl}/room/${response.data.room_id}`).then(response => {
-									console.log("doctor: ", response.data.doctor_id)
 									const body = {
 										specialty_id : values.examinate,
 										patient_id : patient_id,
@@ -89,6 +88,7 @@ const RegisterModal = (props) => {
 	}
 	const  onSubmit = useCallback( async (values) => {
 		getRegisterValueHandler(values)
+		localStorage.setItem('showNumMess', 'true')
 		 try {
 			const body = values
 			axios.post(`${baseUrl}/patients`,body ).then(response => {

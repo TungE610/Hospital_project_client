@@ -13,6 +13,7 @@ const NotificationBox = () => {
   const toggle = e => {
     setChatopen(!chatopen)
 		localStorage.removeItem('showNotiBox')
+		localStorage.removeItem('showNumMess')
   }
 	const clickNotiBoxhandler = () => {
 		localStorage.setItem('clicked', 'true')
@@ -41,7 +42,7 @@ const NotificationBox = () => {
   	</div>
     <div className={styles.pop} onClick={clickNotiBoxhandler}>
 			<p style={{"position" : "relative" }}><img onClick={toggle} src={require(`../../assets/messages.png`)}/></p>
-			{notification && !localStorage.getItem('clicked')? <div className={styles.numbox}><p className={styles.numMess}>1</p></div> : ""}
+			{(notification && !localStorage.getItem('clicked')) || localStorage.getItem('showNumMess')? <div className={styles.numbox}><p className={styles.numMess}>1</p></div> : ""}
     </div>
     </div>
 		)
