@@ -103,7 +103,6 @@ const Rooms = () => {
 			key : "manager",
 			dataIndex : "manager",
 			align : "center",
-			sorter: true,
 		},
 		{
 			title : "Specialty",
