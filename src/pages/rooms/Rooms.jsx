@@ -155,7 +155,7 @@ const Rooms = () => {
 				} catch(error){
 					console.log(error)
 				}
-			} else {
+			} else if(searchType === 'specialty'){
 				setLoading(true)
 				try {
 					if(searchValue.trim().length > 0){
@@ -172,9 +172,27 @@ const Rooms = () => {
 				} catch(error){
 					console.log(error)
 				}
+			} else {
+				setLoading(true)
+				try {
+					if(searchValue.trim().length > 0){
+						 axios(`${baseUrl}/rooms/manager/${searchValue}`).then(response => {
+							setRoomData(response.data)
+							setLoading(false)
+						})
+					} else {
+						axios(`${baseUrl}/rooms`).then(response => {
+							setRoomData(response.data)
+							setLoading(false)
+						})
+					}							
+				} catch(error){
+					console.log(error)
+				}
 			}
 	}
-	console.log(searchValue)
+	console.log("searchValue", searchValue)
+	console.log("search type", searchType)
 	return (
 		<div className={styles.roomsPage}>
 		<RegisterModal isModalVisible={isModalVisible} toggleModal={toggleModalHandler}/>
@@ -196,9 +214,10 @@ const Rooms = () => {
       <Select defaultValue="room_id" onChange={searchTypeHandler}>
         <Option value="specialty">Specialty</Option>
         <Option value="room_id">Room Id</Option>
+        <Option value="manager">Manager</Option>
       </Select>
       <Input
-				placeholder={searchType === 'room_id' ? "Please type Room Id" : "Please type Name"} onChange={getSearchData}
+				placeholder={searchType === 'room_id' ? "Please type Room Id" : (searchType === 'specialty' ? "Please type specialty name" : "Please type manager name")} onChange={getSearchData}
       />
 			<Tooltip title="search">
 				<Button shape="circle" icon={<SearchOutlined />} onClick={searchHandler}/>
