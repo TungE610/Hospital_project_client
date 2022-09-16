@@ -77,13 +77,13 @@ const Rooms = () => {
 				if (status === 'f') {
 					return (
 						<Tag key={status} color="red">
-							False
+							Busy
 						</Tag>
 					) 
 				} else {
 					return (
 						<Tag key={status} color="green">
-							True
+							Free
 						</Tag>
 					) 
 				}
