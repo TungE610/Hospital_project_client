@@ -18,7 +18,7 @@ const RegisterModal = (props) => {
 							const room_id = response.data.room_id
 							const num_of_waiting = response.data.num_of_waiting
 							console.log("room_id: ", room_id)
-							if(response.data.room_id) {
+							if(response.data.room_id && num_of_waiting === 0) {
 							 axios(`${baseUrl}/room/${response.data.room_id}`).then(response => {
 									console.log("doctor: ", response.data.doctor_id)
 									const body = {

@@ -105,8 +105,9 @@ const BillModal = (props) => {
 						console.log(error)
 					);
 					closePopup()
+					successNotification()
 				}catch (error) {
-					console.log(error.message)
+					console.log(error)
 				}
 		};
 
@@ -115,7 +116,7 @@ const BillModal = (props) => {
 			notification["success"]({
 				message: 'SUCCESSFULL',
 				description:
-					`You have just successfully registered.Your  !!`,
+					`You have just successfully make a bill and end up appointment!!`,
 			});
 		};
 	

@@ -54,8 +54,8 @@ const EditAppointments = () => {
 			console.log(error)
 		);
 		setLoading(false)
-		
-		navigate('/Appointments',{state:{edited: true}} )
+		localStorage.setItem('edited','true')
+		navigate('/Appointments')
   };
 
   useEffect(() => {

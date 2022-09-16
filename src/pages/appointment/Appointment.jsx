@@ -24,7 +24,6 @@ const Appointments = (props) => {
 	const [doctorStatus, setDoctorStatus] = useState(false)
 	const [typeSee, setTypeSee] = useState(true)
 	const [sent, setSent] = useState(false)
-	const [count, setCount] = useState(0)
 	const [edited, setEdited] = useState(false)
 	const baseUrl = 'https://hospital-project-api.herokuapp.com/api'
 
@@ -70,19 +69,10 @@ const Appointments = (props) => {
 		searchHandler()
 	}, [searchValue])
 
-	useEffect(() => {
-		setCount(prev => prev++)
-	}, [location.state])
-
-	useEffect(() => {
-		if(count > 0)
-		setEdited(true)
-	}, [count >= 1])
 	const editAppointmentHandler = (id) => {
 			navigate(`/Appointments/Edit/${id}`)
 	}
 console.log("edited: ", edited)
-console.log("count: ", count)
 const successNotification = () => {
 	notification["success"]({
 		message: 'SUCCESSFULL',
@@ -180,7 +170,7 @@ const yetEditedNotification = () => {
 								setSelectedPatientId(record.patient_id)
 								const status_insurance = appointmentData.find(element => element.patient_id === record.patient_id).status_of_insurance
 								setStatus_of_insurance(status_insurance)
-								if (edited) {
+								if (localStorage.getItem('edited') === 'true') {
 									setIsBillModalVisible(true)
 								} else {
 									yetEditedNotification()
@@ -347,6 +337,7 @@ const addAppointmentHandler = async () => {
 					console.log(error)
 
 				})
+				localStorage.removeItem('edited')
 				successNotification()
 			})
 	}catch(error) {

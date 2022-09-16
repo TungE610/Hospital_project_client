@@ -23,7 +23,7 @@ const RoomDetail = () => {
 				setDoctorData(response.data)
 			})
 		} catch(error){
-			console.log(error.message)
+			console.log(error)
 		}
 }
 useEffect(() => {
