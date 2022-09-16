@@ -229,7 +229,7 @@ const RegisterModal = (props) => {
 											},
 									 ]}
 					>
-							<Input placeholder="YYYY/MM/DD"/>
+							<Input placeholder="YYYY-MM-DD"/>
 				</Form.Item>
 
 				<Form.Item
