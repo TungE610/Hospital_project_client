@@ -51,7 +51,7 @@ const Rooms = () => {
   };
 	const columns = [
 		{
-			title : "Room ID",
+			title : "ID",
 			key : "room_id",
 			dataIndex : "room_id",
 			align : "center",
@@ -109,7 +109,6 @@ const Rooms = () => {
 			key : "specialty",
 			dataIndex : "specialty",
 			align : "center",
-			sorter: true,
 			filters : [
 				{
 					text: 'Tim Mạch',
@@ -191,8 +190,6 @@ const Rooms = () => {
 				}
 			}
 	}
-	console.log("searchValue", searchValue)
-	console.log("search type", searchType)
 	return (
 		<div className={styles.roomsPage}>
 		<RegisterModal isModalVisible={isModalVisible} toggleModal={toggleModalHandler}/>

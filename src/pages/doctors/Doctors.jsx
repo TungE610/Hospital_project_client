@@ -94,13 +94,13 @@ const saveNotification = () => {
 };
 	const columns = [
 		{
-			title : "Doctor ID",
+			title : "ID",
 			key : "doctor_id",
 			dataIndex : "doctor_id",
 			align : "center"
 		},
 		{
-			title : "Doctor Name",
+			title : "Full Name",
 			key : "doctor_name",
 			dataIndex : "doctor_name",
 			align : "center"
@@ -165,7 +165,7 @@ const saveNotification = () => {
 			onFilter: (value, record) => record.specialty === value,
 		},
 		{
-			title : "Room_id",
+			title : "Room",
 			key : "room_id",
 			dataIndex : "room_id",
 			align : "center"
