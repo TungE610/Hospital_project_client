@@ -49,14 +49,14 @@ return (
 			{
 				(loginData.isLoggedIn || sessionStorage.getItem("email")) ? 
 			<MyButton  type="primary" size="large" onClick={logoutHandler}>
-				<p className={styles.loginText} style={{marginBottom : 0, fontWeight : "bold"}}>LOGOUT</p>
+				<p className={styles.loginText} style={{marginBottom : 0, fontWeight : "bold"}}>Logout</p>
 			</MyButton> : 
 			<MyButton  type="primary" size="large" onClick={() => {navigate('/Login')}}>
-				<p className={styles.loginText} style={{marginBottom : 0, fontWeight : "bold"}}>LOGIN</p>
+				<p className={styles.loginText} style={{marginBottom : 0, fontWeight : "bold"}}>Doctor Login</p>
 			</MyButton>
 			}
 			<MyButton  type="primary" size="large" onClick={() => {openModalHandler(true)}}>
-				<p className={styles.appointmentText} style={{marginBottom : 0, fontWeight : "bold"}}>APPOINTMENT</p>
+				<p className={styles.appointmentText} style={{marginBottom : 0, fontWeight : "bold"}}>Appointment</p>
 			</MyButton>
 		</div>
 		</div>
