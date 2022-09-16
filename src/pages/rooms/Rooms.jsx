@@ -14,7 +14,7 @@ const Rooms = () => {
   const [roomData, setRoomData] = useState([])
 	const [loading, setLoading] = useState(false);
 	const [isModalVisible, setIsModalVisible] = useState(false)
-	const [searchType, setSearchType] = useState('doctor_id')
+	const [searchType, setSearchType] = useState('room_id')
 	const [searchValue, setSearchValue] = useState('')
 	const baseUrl = 'https://hospital-project-api.herokuapp.com/api'
 	const navigate = useNavigate();
