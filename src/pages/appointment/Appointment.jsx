@@ -319,31 +319,31 @@ const filterMyAppointment = async () => {
 				console.log(error)
 		}
 }
-const addAppointmentHandler = async () => {
-	try {
-			axios(`${baseUrl}/registrations/${sessionStorage.getItem('room_id')}`).then(response => {
-				const body = {
-						appointment_id : `${loginData.doctor_id.slice(-2)}${response.data.patient_id.slice(-2)}${new Date().toISOString().split('T')[0].slice(-5).replace('-', '')}`,
-						doctor_id : loginData.doctor_id,
-						patient_id : response.data.patient_id,
-						specialty_id : response.data.specialty_id,
-						room_id : loginData.room_id,
-						start_time : new Date().toLocaleString()
-				}
-				axios.post(`${baseUrl}/appointments`, body)
-				.then(response => {
-					console.log(response)
-				}).catch(error => {
-					console.log(error)
+// const addAppointmentHandler = async () => {
+// 	try {
+// 		await	axios(`${baseUrl}/registrations/${sessionStorage.getItem('room_id')}`).then(response => {
+// 				const body = {
+// 						appointment_id : `${sessionStorage.getItem("doctor_id").slice(-2)}${response.data.patient_id.slice(-2)}${new Date().toISOString().split('T')[0].slice(-5).replace('-', '')}`,
+// 						doctor_id : sessionStorage.getItem("doctor_id"),
+// 						patient_id : response.data.patient_id,
+// 						specialty_id : response.data.specialty_id,
+// 						room_id : sessionStorage.getItem("room_id"),
+// 						start_time : new Date().toLocaleString()
+// 				}
+// 				axios.post(`${baseUrl}/appointments`, body)
+// 				.then(response => {
+// 					console.log(response)
+// 				}).catch(error => {
+// 					console.log(error)
 
-				})
-				localStorage.removeItem('edited')
-				successNotification()
-			})
-	}catch(error) {
-		console.log(error)
-	}
-}
+// 				})
+// 				localStorage.removeItem('edited')
+// 				successNotification()
+// 			})
+// 	}catch(error) {
+// 		console.log(error)
+// 	}
+// }
 	return (
 		<div className={styles.doctorsPage}>
 			<RegisterModal isModalVisible={isModalVisible} toggleModal={toggleModalHandler}/>
@@ -354,7 +354,7 @@ const addAppointmentHandler = async () => {
 				<p className={styles.titleText}>APPOINTMENTS</p>
 				<img src={require(`../../assets/appointment.png`)} className={styles.titleLogo}/>
 			</div>
-				<Button onClick={addAppointmentHandler} size="large" style={{backgroundColor : "#B53E5A", color : "#fff", position:"relative", float : 'right', top : '-40px'}}>Next Patient</Button>
+				{/* <Button onClick={addAppointmentHandler} size="large" style={{backgroundColor : "#B53E5A", color : "#fff", position:"relative", float : 'right', top : '-40px'}}>Next Patient</Button> */}
 			<Input.Group  compact style={{
 				width: '40%',
 				position: 'relative',

@@ -10,9 +10,9 @@ const NotificationBox = () => {
   let show = {
     display: 'block'
   }
-
   const toggle = e => {
     setChatopen(!chatopen)
+		localStorage.removeItem('showNotiBox')
   }
 	const clickNotiBoxhandler = () => {
 		localStorage.setItem('clicked', 'true')
@@ -20,7 +20,7 @@ const NotificationBox = () => {
 
 		return (
 		<div className={styles.chatCon}>
-      <div className={styles.chatBox} style={chatopen ? show : hide}>
+      <div className={styles.chatBox} style={chatopen || localStorage.getItem('showNotiBox') ? show : hide}>
     		<div className={styles.header} onClick={toggle}>Notification</div>
     			<div className={styles.msgArea}>
 						<p className={styles.left}><span>Welcome to HUST CLINIC website</span></p>

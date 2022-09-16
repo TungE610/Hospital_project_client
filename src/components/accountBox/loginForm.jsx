@@ -71,6 +71,10 @@ export function LoginForm() {
 				'Your email or password is incorrect. Please try again !!',
 		});
 	};
+
+	const showNotiBoxHandler = () => {
+		localStorage.setItem('showNotiBox', 'true')
+	}
 	return (
     <BoxContainer>
       <FormContainer>
@@ -82,7 +86,7 @@ export function LoginForm() {
       <Marginer direction="vertical" margin="1.6em" />
       <SubmitButton type="submit" onClick={() => {loginHandler()}}>SIGN IN AS DOCTOR</SubmitButton>
 			<SubmitButton>
-					<Link to="/TopPage">
+					<Link to="/TopPage" onClick={showNotiBoxHandler}>
 				USE AS GUEST
 					</Link>
 			</SubmitButton>

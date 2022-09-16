@@ -35,7 +35,7 @@ export default function App() {
           <Route path="/Contact" element={<Contact />} />
           <Route path="/Error" element={<ErrorPage />} />
           <Route path="/Appointments" element={sessionStorage.getItem('role') === 'super_admin' || sessionStorage.getItem("role")==='doctor' || loginData.isLoggedIn? <Appointment /> : < ErrorPage/>} />
-					<Route path="/Appointments/Edit/:appointment_id" element={sessionStorage.getItem('role') === 'super_admin' || sessionStorage.getItem('role')==='doctor'? <EditAppointments /> : < ErrorPage/>} />
+					<Route path="/Appointments/Edit/:appointment_id" element={sessionStorage.getItem('role') === 'super_admin' || sessionStorage.getItem('role')==='doctor' || loginData.isLoggedIn? <EditAppointments /> : < ErrorPage/>} />
         </Route>
       </Routes>
     </BrowserRouter>
