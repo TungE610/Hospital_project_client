@@ -64,11 +64,11 @@ const Rooms = () => {
 			align : "center",
 			filters : [
 				{
-					text: 'True',
+					text: 'Free',
 					value: 't',
 				},
 				{
-					text: 'False',
+					text: 'Busy',
 					value: 'f',
 				},
 			],

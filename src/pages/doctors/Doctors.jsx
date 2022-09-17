@@ -117,11 +117,11 @@ const saveNotification = () => {
 			dataIndex : "status",
 			filters : [
 				{
-					text: 'True',
+					text: 'Free',
 					value: true,
 				},
 				{
-					text: 'False',
+					text: 'Busy',
 					value: false,
 				},
 			],
