@@ -7,6 +7,7 @@
 	align-items: center;
 	width: 30%;
 	margin-right : 120px;
+	cursor: pointer;
 }
 .logoImg {
 	width : 70px;
