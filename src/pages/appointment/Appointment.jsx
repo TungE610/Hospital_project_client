@@ -25,7 +25,7 @@ const Appointments = (props) => {
 	const [typeSee, setTypeSee] = useState(true)
 	const [sent, setSent] = useState(false)
 	const [edited, setEdited] = useState(false)
-	const baseUrl = 'https://hospital-project-api.herokuapp.com/api'
+	const baseUrl = 'https://hospital-project-api.onrender.com/api'
 
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -205,9 +205,9 @@ const yetEditedNotification = () => {
 				try {
 					let response 
 					if(searchValue.trim().length > 0){
-						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/appointment_id/${searchValue}`,{mode : 'cors'})
+						 response = await fetch(`https://hospital-project-api.onrender.com/api/appointments/appointment_id/${searchValue}`,{mode : 'cors'})
 					} else {
-						 response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments`,{mode : 'cors'})
+						 response = await fetch(`https://hospital-project-api.onrender.com/api/appointments`,{mode : 'cors'})
 					}					
 					const jsonData = await response.json()
 					const transformedData =  await jsonData.map(appointment => {
@@ -234,9 +234,9 @@ const yetEditedNotification = () => {
 				try {
 					let response 
 					if(searchValue.trim().length > 0){
-						response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/doctor_id/${searchValue}`,{mode : 'cors'})
+						response = await fetch(`https://hospital-project-api.onrender.com/api/appointments/doctor_id/${searchValue}`,{mode : 'cors'})
 				 } else {
-						response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments`,{mode : 'cors'})
+						response = await fetch(`https://hospital-project-api.onrender.com/api/appointments`,{mode : 'cors'})
 				 }	
 					const jsonData = await response.json()
 					const transformedData =  await jsonData.map(appointment => {
@@ -263,9 +263,9 @@ const yetEditedNotification = () => {
 				try {
 					let response 
 					if(searchValue.trim().length > 0){
-						response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments/specialty/${searchValue}`,{mode : 'cors'})
+						response = await fetch(`https://hospital-project-api.onrender.com/api/appointments/specialty/${searchValue}`,{mode : 'cors'})
 				 } else {
-						response = await fetch(`https://hospital-project-api.herokuapp.com/api/appointments`,{mode : 'cors'})
+						response = await fetch(`https://hospital-project-api.onrender.com/api/appointments`,{mode : 'cors'})
 				 }	
 					const jsonData = await response.json()
 					const transformedData =  await jsonData.map(appointment => {

@@ -12,7 +12,7 @@ const BillModal = (props) => {
 	const [medicineFee, setMedicineFee] = useState(0)
 	const [medical, setMedical] = useState([])
 	const [totalFee, setTotalFee] = useState(0)
-	const baseUrl = 'https://hospital-project-api.herokuapp.com/api'
+	const baseUrl = 'https://hospital-project-api.onrender.com/api'
 	const { Option } = Select;
 	const [medical1,setMedical1] = useState('heroin')
 	const [medical2,setMedical2] = useState('heroin')

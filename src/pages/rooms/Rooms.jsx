@@ -16,7 +16,7 @@ const Rooms = () => {
 	const [isModalVisible, setIsModalVisible] = useState(false)
 	const [searchType, setSearchType] = useState('room_id')
 	const [searchValue, setSearchValue] = useState('')
-	const baseUrl = 'https://hospital-project-api.herokuapp.com/api'
+	const baseUrl = 'https://hospital-project-api.onrender.com/api'
 	const navigate = useNavigate();
 	const { Option } = Select;
 

@@ -24,7 +24,7 @@ const EditAppointments = () => {
 	let { appointment_id } = useParams();
 	const [form] = Form.useForm();
   const navigate = useNavigate()
-	const baseUrl = 'https://hospital-project-api.herokuapp.com/api'
+	const baseUrl = 'https://hospital-project-api.onrender.com/api'
 
 	const fetchAppointment = async () => {
 		setLoading(true)

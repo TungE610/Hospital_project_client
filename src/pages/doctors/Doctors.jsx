@@ -18,7 +18,7 @@ const Doctors = () => {
 	const [searchType, setSearchType] = useState('doctor_id')
 	const [searchValue, setSearchValue] = useState('')
 	const [loginData, setLoggedIn] = useContext(LogginContext)
-	const baseUrl = 'https://hospital-project-api.herokuapp.com/api'
+	const baseUrl = 'https://hospital-project-api.onrender.com/api'
 	const navigate = useNavigate();
 	const { Option } = Select;
 
@@ -74,7 +74,7 @@ const deletetpl =async  (id) => {
 const deleteTptt = async (id) => {
 	try {
 		console.log(id)
-		const res = await fetch(`https://hospital-project-api.herokuapp.com/api/doctors/delete/${id}`,{
+		const res = await fetch(`https://hospital-project-api.onrender.com/api/doctors/delete/${id}`,{
 			method : "POST",
 			headers : {"Content-Type" : "application/json"},
 			mode: 'cors'

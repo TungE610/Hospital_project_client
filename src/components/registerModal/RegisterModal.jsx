@@ -10,7 +10,7 @@ const { TextArea } = Input;
 
 const RegisterModal = (props) => {
 	const [form] = Form.useForm();
-	const baseUrl = 'https://hospital-project-api.herokuapp.com/api'
+	const baseUrl = 'https://hospital-project-api.onrender.com/api'
 	const getRegisterValueHandler = async (values) => {
 		const patient_id =`${values.citizen_id.slice(-4)}${values.dob.slice(-5).replace('-','')}`
 					try {

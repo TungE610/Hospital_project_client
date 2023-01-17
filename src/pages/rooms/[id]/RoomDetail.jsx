@@ -12,7 +12,7 @@ const RoomDetail = () => {
 	const [doctorData, setDoctorData] = useState([])
 	const [isModalVisible, setIsModalVisible] = useState(false)
   const { roomId } = useParams();
-	const baseUrl = 'https://hospital-project-api.herokuapp.com/api'
+	const baseUrl = 'https://hospital-project-api.onrender.com/api'
 
 	const toggleModalHandler = (state) => {
 		setIsModalVisible(state)
