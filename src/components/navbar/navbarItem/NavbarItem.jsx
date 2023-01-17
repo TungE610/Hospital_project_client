@@ -5,14 +5,13 @@ import { Link } from "react-router-dom";
 const NavbarItem = (props) => {
 
 	return (
-			<Link to={props.link} className= {styles.navbarItem}>
-				<img src={require(`../../../assets/${props.iconLink}`)} className={styles.navBarItemIcon}/>
+		<Link to={props.link} className= {styles.navbarItem}>
+			<img src={require(`../../../assets/${props.iconLink}`)} className={styles.navBarItemIcon}/>
 				<div className={styles.itemContent}>
-						<p>{props.itemContent}</p>
+					<p>{props.itemContent}</p>
 				</div>
-			</Link>
+		</Link>
 	)
 }
 
 export default NavbarItem;
-
