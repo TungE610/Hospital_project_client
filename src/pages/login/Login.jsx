@@ -2,7 +2,7 @@ import React from "react";
 import styles from './Login.module.css'
 import { AccountBox } from "../../components/accountBox";
 
-const Login = (props) => {
+const Login = () => {
 
 	return (
 		<div className={styles.loginPage}>
@@ -12,4 +12,4 @@ const Login = (props) => {
 
 }
 
-export default Login
+export default Login;

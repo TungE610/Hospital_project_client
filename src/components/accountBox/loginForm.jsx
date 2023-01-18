@@ -15,40 +15,45 @@ import { Link, useNavigate } from "react-router-dom";
 import LogginContext from "./LogginContext"; 
 
 export function LoginForm() {
-  const { switchToSignup } = useContext(AccountContext);
-  const [loginData, setLoginData] = useState({})
-	const [,setLoggedIn] = useContext(LogginContext)
-	const baseUrl = 'https://hospital-project-api.onrender.com/api'
 
-  let navigate = useNavigate();
+  	const {switchToSignup} = useContext(AccountContext);
+  	const [loginData, setLoginData] = useState({});
+	const [ ,setLoggedIn] = useContext(LogginContext);
+	const baseUrl = 'https://hospital-project-api.onrender.com/api';
+
+  	let navigate = useNavigate();
+
 	const loginHandler = async () => {
 		 try {
 			axios(`${baseUrl}/users/login`).then(response => {
-				console.log(response)
-			})
+
+			});
 
 			 const body = {
 				email : loginData.email,
 				password : loginData.password
-			}
-			axios.post(`${baseUrl}/users/login`, body)
-			.then(response => {
+			};
+
+			axios.post(`${baseUrl}/users/login`, body).then(response => {
+
 				if(response.status === 200) {
 					successNotification()
 					navigate('/TopPage')
 					const user =  response.data
-					setLoggedIn({isLoggedIn : true, role : user.role, doctor_id : user.doctor_id, room_id : user.room_id})
+					setLoggedIn({isLoggedIn : true, role : user.role, doctor_id : user.doctor_id, room_id : user.room_id});
+
 					sessionStorage.clear();
 					sessionStorage.setItem("email", user.email);
 					sessionStorage.setItem("role", user.role);
 					sessionStorage.setItem("doctor_id", user.doctor_id);
 					sessionStorage.setItem("room_id", user.room_id);
 				} else {
+
 				}
 			})
 			.catch(error => {
-				loginFailNotification()
-				navigate('/Login')
+				loginFailNotification();
+				navigate('/Login');
 			}
 			);
 		}catch(error) {
@@ -57,6 +62,7 @@ export function LoginForm() {
 		
 	}
 	const successNotification = () => {
+
 		notification["success"]({
 			message: 'SUCCESSFULL',
 			description:
@@ -65,6 +71,7 @@ export function LoginForm() {
 	};
   
 	const loginFailNotification = () => {
+
 		notification["error"]({
 			message: 'UNSUCCESSFUL',
 			description:
@@ -73,29 +80,52 @@ export function LoginForm() {
 	};
 
 	const showNotiBoxHandler = () => {
-		localStorage.setItem('showNotiBox', 'true')
+
+		localStorage.setItem('showNotiBox', 'true');
 	}
+
 	return (
-    <BoxContainer>
-      <FormContainer>
-        <Input type="email" placeholder="Email" onChange={(e) => {setLoginData(prev => {return {...prev, email: e.target.value}})}}/>
-        <Input type="password" placeholder="Password" onChange={(e) => {setLoginData(prev => {return {...prev, password: e.target.value}})}}/>
-      </FormContainer>
-      <Marginer direction="vertical" margin={10} />
-      <MutedLink href="#">Forget your password?</MutedLink>
-      <Marginer direction="vertical" margin="1.6em" />
-      <SubmitButton type="submit" onClick={() => {loginHandler()}}>SIGN IN AS DOCTOR</SubmitButton>
-			<SubmitButton>
-					<Link to="/TopPage" onClick={showNotiBoxHandler}>
+    	<BoxContainer>
+      		<FormContainer>
+        	
+				<Input 
+					type="email" 
+					placeholder="Email" 			
+					onChange={(e) => {
+						setLoginData( prev => { return {...prev, email: e.target.value }})
+					}}
+				/>
+        	
+				<Input 
+					type="password" 
+					placeholder="Password" 
+					onChange={(e) => {
+						setLoginData( prev => { return {...prev, password: e.target.value }})
+					}}
+				/>
+      
+	  		</FormContainer>
+
+    	<Marginer direction="vertical" margin={10} />
+
+      	<MutedLink href="#"> Forget your password ?</MutedLink>
+
+      	<Marginer direction="vertical" margin="1.6em" />
+
+      	<SubmitButton type="submit" onClick={() => {loginHandler()}}> SIGN IN AS DOCTOR </SubmitButton>
+	  
+	  	<SubmitButton>
+			<Link to="/TopPage" onClick={showNotiBoxHandler}>
 				USE AS GUEST
-					</Link>
+				</Link>
 			</SubmitButton>
-      <Marginer direction="vertical" margin="1em" />
-      <MutedLink href="#">
-        Don't have an accoun?{" "}
+      	<Marginer direction="vertical" margin="1em" />
+      	<MutedLink href="#">
+        	Don't have an accoun?{" "}
         <BoldLink href="#" onClick={switchToSignup}>
           Signup
         </BoldLink>
+		
       </MutedLink>
     </BoxContainer>
   );
