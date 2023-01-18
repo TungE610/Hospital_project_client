@@ -126,6 +126,7 @@ export function AccountBox(props) {
   };
 
   const contextValue = { switchToSignup, switchToSignin };
+
   return (
 		<div className={styles.loginBox}>
     <AccountContext.Provider value={contextValue}>

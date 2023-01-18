@@ -11,57 +11,64 @@ import NotificationBox from "../../../components/notificationBox/Notification";
 const { Meta } = Card;
 
 const DoctorDetail = () => {
-	const [doctorData, setDoctorData] = useState([])
-	const [isModalVisible, setIsModalVisible] = useState(false)
+	const [doctorData, setDoctorData] = useState([]);
+	const [isModalVisible, setIsModalVisible] = useState(false);
 	const { doctorId } = useParams();
-	const myRef = useRef(null)
+	const myRef = useRef(null);
+	const baseUrl = 'https://hospital-project-api.onrender.com/api';
 
 	const toggleModalHandler = (state) => {
-		setIsModalVisible(state)
+		setIsModalVisible(state);
   }
+
 	const getDoctor = async () => {
 		try {
-			const response = await fetch(`https://hospital-project-api.onrender.com/api/doctors/${doctorId}`,{mode : 'cors'})
-			const jsonData = await response.json()
-			setDoctorData(jsonData)
-		} catch(error){
-			console.log(error.message)
-		}
-}
-const scrollToSection = () => {
-	scroller.scrollTo(".doctorCard", {
-		duration: 800,
-		delay: 0,
-		smooth: "easeInOutQuart",
-	});
-};
 
-useEffect(() => {
-	getDoctor()
-	scrollToSection()
-}, [])
+			const response = await fetch(`${baseUrl}/doctors/${doctorId}`,{mode : 'cors'});
+			const jsonData = await response.json();
+			setDoctorData(jsonData);
+		} catch(error){
+
+			console.log(error);
+		}
+	}
+	const scrollToSection = () => {
+
+		scroller.scrollTo(".doctorCard", {
+			duration: 800,
+			delay: 0,
+			smooth: "easeInOutQuart",
+		});
+
+	};
+
+	useEffect(() => {
+		getDoctor();
+		scrollToSection();
+	}, []);
+
 	return (
 		<div className={styles.DoctorDetail}>
-				<RegisterModal isModalVisible={isModalVisible} toggleModal={toggleModalHandler}/>
-				<ContactRow />
-				<Navbar openModal={toggleModalHandler}/>
-				<div className={styles.pageTitle}>
+			<RegisterModal isModalVisible={isModalVisible} toggleModal={toggleModalHandler}/>
+			<ContactRow />
+			<Navbar openModal={toggleModalHandler}/>
+			<div className={styles.pageTitle}>
 				<p className={styles.titleText}>DOCTORS DETAIL</p>
 				<img src={require(`../../../assets/doctor.png`)} className={styles.titleLogo}/>
-			 </div>
-				<Card
-				   className={styles.doctorCard}
-           hoverable
-    			 style={{
-            width: 900,
-            }}
-           cover={<img alt="example" src={require("../../../assets/doctor.jpg")} />}
-  			>
-    <Meta title={doctorData.doctor_name} description="www.instagram.com" id="19"/>
-  </Card>
-		<NotificationBox />
+			</div>
+			<Card
+				className={styles.doctorCard}
+        hoverable
+    		style={{
+          width: 900,
+        }}
+        cover={<img alt="example" src={require("../../../assets/doctor.jpg")} />}
+  		>
+    		<Meta title={doctorData.doctor_name} description="www.instagram.com" id="19"/>
+  		</Card>
+			<NotificationBox />
 		</div>
 	)
 }
 
-export default DoctorDetail
+export default DoctorDetail;

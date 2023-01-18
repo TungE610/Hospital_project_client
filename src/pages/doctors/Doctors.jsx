@@ -11,45 +11,52 @@ import LogginContext from '../../components/accountBox/LogginContext'
 import NotificationBox from "../../components/notificationBox/Notification";
 
 const Doctors = () => {
-  const [doctorData, setDoctorData] = useState([])
-	const [isModalVisible, setIsModalVisible] = useState(false)
+  const [doctorData, setDoctorData] = useState([]);
+	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [loading, setLoading] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
-	const [searchType, setSearchType] = useState('doctor_id')
-	const [searchValue, setSearchValue] = useState('')
-	const [loginData, setLoggedIn] = useContext(LogginContext)
-	const baseUrl = 'https://hospital-project-api.onrender.com/api'
+	const [searchType, setSearchType] = useState('doctor_id');
+	const [searchValue, setSearchValue] = useState('');
+	const [loginData, setLoggedIn] = useContext(LogginContext);
 	const navigate = useNavigate();
 	const { Option } = Select;
+	const baseUrl = 'https://hospital-project-api.onrender.com/api';
 
-	
   const getDoctors = async () => {
 		setLoading(true)
 			try {
 				await axios(`${baseUrl}/doctors`).then(response => {
-					setDoctorData(response.data)
-					setLoading(false)
+					setDoctorData(response.data);
+					setLoading(false);
 				})
 			} catch(error){
-				console.log(error)
+				console.log(error);
 			}
 	}
+
   useEffect(() => {
-    getDoctors()
-	}, [])
+
+    getDoctors();
+
+	}, []);
+
 	useEffect(() => {
-		searchHandler()
-	}, [searchValue])
+
+		searchHandler();
+
+	}, [searchValue]);
+
 	const toggleModalHandler = (state) => {
-		setIsModalVisible(state)
-  }
-const modelDelete = (id) => {
+		setIsModalVisible(state);
+  };
+
+	const modelDelete = (id) => {
 	Modal.confirm({
 		title: 'You sure to remove this doctor',
 		icon: <ExclamationCircleOutlined />,
 		content: '',
 		onOk: () => {
-			deletetpl(id)
+			deletetpl(id);
 		},
 		onCancel: () => { 
 			setIsDeleteModalVisible(false);
@@ -60,38 +67,52 @@ const modelDelete = (id) => {
 	})
 }
 const deletetpl =async  (id) => {
+
 	try {
-		const newDoctorData = doctorData.filter((x) => x.doctor_id !== id)
-		setDoctorData(newDoctorData)
-    await deleteTptt(id)
-		saveNotification()
+
+		const newDoctorData = doctorData.filter((x) => x.doctor_id !== id);
+
+		setDoctorData(newDoctorData);
+
+    await deleteTptt(id);
+
+		saveNotification();
+
 	} catch (error) {
+
 		if (error.response.status === 404) {
-			navigate('/404')
+
+			navigate('/404');
 		}
 	}
 }
 const deleteTptt = async (id) => {
 	try {
-		console.log(id)
-		const res = await fetch(`https://hospital-project-api.onrender.com/api/doctors/delete/${id}`,{
+
+		const res = await fetch(`${baseUrl}/doctors/delete/${id}`,{
 			method : "POST",
 			headers : {"Content-Type" : "application/json"},
 			mode: 'cors'
-		})
+		});
+
 	}catch (error) {
 		if (error.response.status === 404) {
-			navigate('/404')
+
+			navigate('/404');
 		}
 	}
 }
-const saveNotification = () => {
-	notification["success"]({
-		message: 'SUCCESSFULL',
-		description:
-			`Successfully change!!`,
-	});
-};
+
+	const saveNotification = () => {
+
+		notification["success"]({
+			message: 'SUCCESSFULL',
+			description:
+				`Successfully change!!`,
+		});
+		
+	};
+
 	const columns = [
 		{
 			title : "ID",
@@ -180,14 +201,14 @@ const saveNotification = () => {
           <EditTwoTone
             id={record.doctor_id}
             onClick={() => {
-              modelDelete(record.doctor_id)
+              modelDelete(record.doctor_id);
             }}
           />
 					<DeleteTwoTone
 						id={record.doctor_id}
 						onClick={(event) => {
-							event.stopPropagation()
-							modelDelete(record.doctor_id)
+							event.stopPropagation();
+							modelDelete(record.doctor_id);
 						}}
 					/>
         </Space>
@@ -198,17 +219,17 @@ const saveNotification = () => {
     },
 	]
 	const searchTypeHandler = (value) => {
-    setSearchType(value)
+    setSearchType(value);
 	}
 
   const getSearchData = (e) => {
-		setSearchValue(e.target.value)
+		setSearchValue(e.target.value);
 	}
 
   const searchHandler = async () => {
 		  
 			if(searchType === 'doctor_id') {
-				setLoading(true)
+				setLoading(true);
 				try {
 					if(searchValue.trim().length > 0){
 						axios(`${baseUrl}/doctors/doctor_id/${searchValue}`).then(response => {
@@ -222,7 +243,7 @@ const saveNotification = () => {
 						})
 					}					
 				} catch(error){
-					console.log(error.message)
+					console.log(error);
 				}
 			} else {
 				setLoading(true)
@@ -246,6 +267,7 @@ const saveNotification = () => {
 	const onChange = (filters) => {
 		console.log(filters);
 	};
+
 	return (
 		<div className={styles.doctorsPage}>
 			<RegisterModal isModalVisible={isModalVisible} toggleModal={toggleModalHandler}/>

@@ -1,8 +1,7 @@
 import React from "react";
-import styles from './style.module.css'
+import styles from './style.module.css';
 
 const ContactItem = (props) => {
-
 
 	return (
 		<div className= {styles.contactItem}>
@@ -12,7 +11,6 @@ const ContactItem = (props) => {
 				</div>
 		</div>
 	)
-
 }
 
 export default ContactItem;

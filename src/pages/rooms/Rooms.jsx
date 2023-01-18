@@ -21,33 +21,47 @@ const Rooms = () => {
 	const { Option } = Select;
 
   const getRooms = async () => {
-		  setLoading(true)
-			try {
-				await	axios(`${baseUrl}/rooms`).then(response => {
-					setRoomData(response.data)
-					setLoading(false);
-				})
-			} catch(error){
-				console.log(error)
+
+		setLoading(true);
+
+		try {
+
+			await	axios(`${baseUrl}/rooms`).then(response => {
+				setRoomData(response.data)
+				setLoading(false);
+			});
+
+			}catch(error){
+
+				console.log(error);
 			}
 	}
-    useEffect(() => {
-    getRooms()
-	}, [])
+
+  useEffect(() => {
+
+    getRooms();
+
+	}, []);
 
 	useEffect(() => {
-		searchHandler()
-	}, [searchValue])
+
+		searchHandler();
+
+	}, [searchValue]);
 
 	const toggleModalHandler = (state) => {
-		setIsModalVisible(state)
+
+		setIsModalVisible(state);
+
   }
   const handleTableChange = (filters, sorter) => {
+
     getRooms({
       sortField: sorter.field,
       sortOrder: sorter.order,
       ...filters,
     });
+
   };
 	const columns = [
 		{
@@ -127,114 +141,141 @@ const Rooms = () => {
 		},
 	]
 	const searchTypeHandler = (value) => {
-    setSearchType(value)
+
+    setSearchType(value);
+		
 	}
 
   const getSearchData = (e) => {
-		setSearchValue(e.target.value)
+
+		setSearchValue(e.target.value);
+
 	}
 	
   const searchHandler = async () => {
 		  
 			if(searchType === 'room_id') {
-				setLoading(true)
+
+				setLoading(true);
+
 				try {
 					if(searchValue.trim().length > 0){
+
 						 axios(`${baseUrl}/rooms/room_id/${searchValue}`).then(response => {
-							setRoomData(response.data)
-							setLoading(false)
-						})
+							setRoomData(response.data);
+							setLoading(false);
+						});
 
 					} else {
+
 						 axios(`${baseUrl}/rooms`).then(response => {
-							 setRoomData(response.data)
-							 setLoading(false)
-						 })
+							 setRoomData(response.data);
+							 setLoading(false);
+						 });
+
 					}			
 				} catch(error){
-					console.log(error)
+					console.log(error);
 				}
 			} else if(searchType === 'specialty'){
-				setLoading(true)
+
+				setLoading(true);
+
 				try {
 					if(searchValue.trim().length > 0){
+
 						 axios(`${baseUrl}/rooms/specialty/${searchValue}`).then(response => {
-							setRoomData(response.data)
-							setLoading(false)
+							setRoomData(response.data);
+							setLoading(false);
 						})
+						
 					} else {
+
 						axios(`${baseUrl}/rooms`).then(response => {
-							setRoomData(response.data)
-							setLoading(false)
+							setRoomData(response.data);
+							setLoading(false);
 						})
+
 					}							
 				} catch(error){
-					console.log(error)
+
+					console.log(error);
 				}
 			} else {
-				setLoading(true)
+
+				setLoading(true);
+
 				try {
+
 					if(searchValue.trim().length > 0){
+
 						 axios(`${baseUrl}/rooms/manager/${searchValue}`).then(response => {
-							setRoomData(response.data)
-							setLoading(false)
-						})
+							setRoomData(response.data);
+							setLoading(false);
+						});
+
 					} else {
+
 						axios(`${baseUrl}/rooms`).then(response => {
-							setRoomData(response.data)
-							setLoading(false)
-						})
+							setRoomData(response.data);
+							setLoading(false);
+						});
+
 					}							
 				} catch(error){
-					console.log(error)
+					console.log(error);
 				}
 			}
 	}
+
 	return (
 		<div className={styles.roomsPage}>
-		<RegisterModal isModalVisible={isModalVisible} toggleModal={toggleModalHandler}/>
-		<ContactRow />
-		<Navbar openModal={toggleModalHandler}/>
-		<div className={styles.pageTitle}>
-			<p className={styles.titleText}>ROOMS</p>
-			<img src={require(`../../assets/dining-table.png`)} className={styles.titleLogo}/>
-		</div>
-		<Input.Group  compact style={{
-				          width: '30%',
-									position: 'relative',
-									float : 'right',
-									display :'flex',
-									right : '10px',
-									marginBottom :'30px',
-									marginRight : '0'
+			<RegisterModal isModalVisible={isModalVisible} toggleModal={toggleModalHandler}/>
+			<ContactRow />
+			<Navbar openModal={toggleModalHandler}/>
+			<div className={styles.pageTitle}>
+				<p className={styles.titleText}>ROOMS</p>
+				<img src={require(`../../assets/dining-table.png`)} className={styles.titleLogo}/>
+			</div>
+			<Input.Group  compact style={{
+				  width: '30%',
+					position: 'relative',
+					float : 'right',
+					display :'flex',
+					right : '10px',
+					marginBottom :'30px',
+					marginRight : '0'
 			}}>
+
       <Select defaultValue="room_id" onChange={searchTypeHandler}>
         <Option value="specialty">Specialty</Option>
         <Option value="room_id">Room Id</Option>
         <Option value="manager">Manager</Option>
       </Select>
+
       <Input
 				placeholder={searchType === 'room_id' ? "Please type Room Id" : (searchType === 'specialty' ? "Please type specialty name" : "Please type manager name")} onChange={getSearchData}
       />
 			<Tooltip title="search">
 				<Button shape="circle" icon={<SearchOutlined />} onClick={searchHandler}/>
 			</Tooltip>    
-	  </Input.Group>
-			<Table 
-				bordered 
-				size="middle" 
-				columns={columns} 
-				dataSource={roomData} 
-				onChange={handleTableChange}  
-				loading={loading}
-			  onRow={(record) => ({
+
+	  	</Input.Group>
+				<Table 
+					bordered 
+					size="middle" 
+					columns={columns} 
+					dataSource={roomData} 
+					onChange={handleTableChange}  
+					loading={loading}
+			  	onRow={(record) => ({
           onClick: () => {
 							navigate(`/Rooms/${record.room_id}`);
             },
           })}/>
-					<NotificationBox />
+				<NotificationBox />
 	</div>
 	)
 }
 
-export default Rooms
+export default Rooms;
