@@ -9,26 +9,35 @@ import { useParams } from "react-router-dom";
 import NotificationBox from "../../../components/notificationBox/Notification";
 
 const RoomDetail = () => {
-	const [doctorData, setDoctorData] = useState([])
-	const [isModalVisible, setIsModalVisible] = useState(false)
+	const [doctorData, setDoctorData] = useState([]);
+	const [isModalVisible, setIsModalVisible] = useState(false);
   const { roomId } = useParams();
-	const baseUrl = 'https://hospital-project-api.onrender.com/api'
+	const baseUrl = 'https://hospital-project-api.onrender.com/api';
 
 	const toggleModalHandler = (state) => {
-		setIsModalVisible(state)
+
+		setIsModalVisible(state);
+
   }
 	const getDoctors = async () => {
+
 		try {
+
 			await axios(`${baseUrl}/rooms/${roomId}`).then(response => {
-				setDoctorData(response.data)
-			})
+				setDoctorData(response.data);
+			});
+
 		} catch(error){
-			console.log(error)
+
+			console.log(error);
 		}
 }
-useEffect(() => {
-	getDoctors()
-}, [])
+	useEffect(() => {
+
+		getDoctors();
+
+	}, []);
+
 	const columns = [
 		{
 			title : "Doctor Id",
@@ -95,4 +104,4 @@ useEffect(() => {
 
 }
 
-export default RoomDetail
+export default RoomDetail;

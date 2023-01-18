@@ -1,53 +1,62 @@
 import React,{useState, useRef, useCallback, useEffect} from "react";
-import styles from './BillModal.module.css'
-import axios from 'axios'
+import styles from './BillModal.module.css';
+import axios from 'axios';
 import { Modal, Form, Input, Select, notification,Space} from "antd";
 import 'antd/dist/antd.css';
 
-
-
 const BillModal = (props) => {
 	const [form] = Form.useForm();
-	const [examinationFee, setExaminationFee] = useState(0)
-	const [medicineFee, setMedicineFee] = useState(0)
-	const [medical, setMedical] = useState([])
-	const [totalFee, setTotalFee] = useState(0)
-	const baseUrl = 'https://hospital-project-api.onrender.com/api'
+	const [examinationFee, setExaminationFee] = useState(0);
+	const [medicineFee, setMedicineFee] = useState(0);
+	const [medical, setMedical] = useState([]);
+	const [totalFee, setTotalFee] = useState(0);
 	const { Option } = Select;
-	const [medical1,setMedical1] = useState('heroin')
-	const [medical2,setMedical2] = useState('heroin')
-	const [medical3,setMedical3] = useState('heroin')
+	const [medical1,setMedical1] = useState('heroin');
+	const [medical2,setMedical2] = useState('heroin');
+	const [medical3,setMedical3] = useState('heroin');
+	const baseUrl = 'https://hospital-project-api.onrender.com/api';
   
 	const selectMedical1Handler = (value) => {
-			setMedical1(value)
+			setMedical1(value);
 	}
-	  console.log("medical: ", medical)
+
 	const selectMedical2Handler = (value) => {
-			setMedical2(value)
+			setMedical2(value);
 	}
 	  
 	const selectMedical3Handler = (value) => {
-		setMedical3(value)
+		setMedical3(value);
 	}
 	const closePopup = useCallback(() => {
+
 		form.resetFields();
-		props.toggleBillModal(false)
+
+		props.toggleBillModal(false);
+
 	}, [form]);
 
 	const getMedical = async () => {
+
 		   try {
 				axios(`${baseUrl}/medicals`).then(response => {
+
 					const medicalData = response.data.map(element => {
+
 						return {...element,selectedQuantity : 0}
 					})
-					setMedical(medicalData)			 
+
+					setMedical(medicalData);	
+
 				})
 			 }catch(error) {
-					console.log(error.message)
+
+					console.log(error);
 			 }
 	}
 	useEffect(() => {
-		getMedical()
+
+		getMedical();
+
 	}, [])
 
 	const  onSubmit = async () => {
@@ -104,8 +113,11 @@ const BillModal = (props) => {
 					.catch(error => 
 						console.log(error)
 					);
-					closePopup()
-					endupSuccessNotification()
+
+					closePopup();
+
+					endupSuccessNotification();
+
 					await	axios(`${baseUrl}/registrations/${sessionStorage.getItem('room_id')}`).then(response => {
 						const body = {
 								appointment_id : `${sessionStorage.getItem("doctor_id").slice(-2)}${response.data.patient_id.slice(-2)}${new Date().toISOString().split('T')[0].slice(-5).replace('-', '')}`,
@@ -155,35 +167,47 @@ const BillModal = (props) => {
 					'All room being full. I\'m sorry!!',
 			});
 		};
-	 const getExaminationFeeHandler = (e) => {
-			setExaminationFee(parseInt(e.target.value))
-		}	 
-	 useEffect(() => {
-		setTotalFee(parseInt(examinationFee) + parseInt(medicineFee))
-	 }, [examinationFee, medicineFee])
+	const getExaminationFeeHandler = (e) => {
+
+		setExaminationFee(parseInt(e.target.value));
+
+	};
+
+	useEffect(() => {
+
+		setTotalFee(parseInt(examinationFee) + parseInt(medicineFee));
+
+	}, [examinationFee, medicineFee]);
 
 	 const selectedQuantityHandler = (count, medical_name) => {
-				setMedical(prevState => {
-					return prevState.map(element => {
-						if(element.medical_name === medical_name) {
-								return {...element, selectedQuantity :element.selectedQuantity > 0 ? element.quantity + parseInt(count) : parseInt(count)}
-						}
-						return element
-					})
-				})
-	 }
-	const calMedicineFee = () => {
-		console.log(medical)
-		let medicine_fee = 0
-		medical.forEach(element => {
-			medicine_fee = medicine_fee + Number(element.cost.replace(/[^0-9.-]+/g,"")) * element.selectedQuantity
+		setMedical(prevState => {
+			return prevState.map(element => {
+
+				if(element.medical_name === medical_name) {
+					return {...element, selectedQuantity :element.selectedQuantity > 0 ? element.quantity + parseInt(count) : parseInt(count)}
+				}
+
+			return element
 		})
-		console.log("medicine_fee: ", medicine_fee)
-		setMedicineFee(medicine_fee)
+	})
+}
+	const calMedicineFee = () => {
+
+		let medicine_fee = 0;
+
+		medical.forEach(element => {
+			medicine_fee = medicine_fee + Number(element.cost.replace(/[^0-9.-]+/g,"")) * element.selectedQuantity;
+		})
+
+		setMedicineFee(medicine_fee);
 	}
-	 useEffect(() => {
-		calMedicineFee()
-	 },[JSON.stringify(medical)])
+
+	useEffect(() => {
+
+		calMedicineFee();
+
+	},[JSON.stringify(medical)]);
+
 	return (
 		<Modal title="Make Bill" visible={props.isBillModalVisible} onOk={form.submit} onCancel={closePopup} okText="Submit" cancelText="Cancel" width={800}>
 		<Form    
@@ -328,8 +352,4 @@ const BillModal = (props) => {
 
 }
 
-export default BillModal
-
-
-
-
+export default BillModal;

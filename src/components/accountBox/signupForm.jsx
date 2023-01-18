@@ -1,4 +1,6 @@
 import React, { useContext } from "react";
+import { Marginer } from "../marginer";
+import { AccountContext } from "./AccountContext";
 import {
   BoldLink,
   BoxContainer,
@@ -7,9 +9,9 @@ import {
   MutedLink,
   SubmitButton,
 } from "./common";
-import { Marginer } from "../marginer";
-import { AccountContext } from "./AccountContext";
-export function SignupForm(props) {
+
+function SignupForm () {
+
   const { switchToSignin } = useContext(AccountContext);
 
   return (
@@ -32,3 +34,5 @@ export function SignupForm(props) {
     </BoxContainer>
   );
 }
+
+export default SignupForm;

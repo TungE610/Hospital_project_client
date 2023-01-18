@@ -1,6 +1,7 @@
 import React from "react";
-import styles from './style.module.css'
+import styles from './style.module.css';
 import ContactItem from "./contactItem/ContactItem";
+
 const ContactRow = () => {
   
 	return (
@@ -15,4 +16,3 @@ const ContactRow = () => {
 }
 
 export default ContactRow;
-
