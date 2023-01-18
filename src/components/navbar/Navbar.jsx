@@ -22,12 +22,12 @@ const MyButton = styled(Button)`
 
 const Navbar = props => {
 
-  	let navigate = useNavigate();
+  let navigate = useNavigate();
 
-    const [loginData, setLoggedIn] = useContext(LogginContext);
+  const [loginData, setLoggedIn] = useContext(LogginContext);
 
 	const openModalHandler = state =>  {
-      props.openModal(state);
+		props.openModal(state);
 	};
 
 const logoutHandler = () => {
