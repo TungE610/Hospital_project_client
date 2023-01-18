@@ -117,15 +117,16 @@ export function LoginForm() {
 	  	<SubmitButton>
 			<Link to="/TopPage" onClick={showNotiBoxHandler}>
 				USE AS GUEST
-				</Link>
-			</SubmitButton>
+			</Link>
+		</SubmitButton>
+		
       	<Marginer direction="vertical" margin="1em" />
       	<MutedLink href="#">
         	Don't have an accoun?{" "}
         <BoldLink href="#" onClick={switchToSignup}>
           Signup
         </BoldLink>
-		
+
       </MutedLink>
     </BoxContainer>
   );
