@@ -4,127 +4,146 @@ import axios from 'axios'
 import { Modal, Form, Input, Select, notification,Space} from "antd";
 import 'antd/dist/antd.css';
 
-
-
 const BillModal = (props) => {
+
 	const [form] = Form.useForm();
-	const [examinationFee, setExaminationFee] = useState(0)
-	const [medicineFee, setMedicineFee] = useState(0)
-	const [medical, setMedical] = useState([])
-	const [totalFee, setTotalFee] = useState(0)
-	const baseUrl = 'https://hospital-project-api.onrender.com/api'
+	const [examinationFee, setExaminationFee] = useState(0);
+	const [medicineFee, setMedicineFee] = useState(0);
+	const [medical, setMedical] = useState([]);
+	const [totalFee, setTotalFee] = useState(0);
 	const { Option } = Select;
-	const [medical1,setMedical1] = useState('heroin')
-	const [medical2,setMedical2] = useState('heroin')
-	const [medical3,setMedical3] = useState('heroin')
+	const [medical1,setMedical1] = useState('heroin');
+	const [medical2,setMedical2] = useState('heroin');
+	const [medical3,setMedical3] = useState('heroin');
+	const baseUrl = 'https://hospital-project-api.onrender.com/api';
   
 	const selectMedical1Handler = (value) => {
-			setMedical1(value)
+
+			setMedical1(value);
+
 	}
-	  console.log("medical: ", medical)
+
 	const selectMedical2Handler = (value) => {
-			setMedical2(value)
+
+			setMedical2(value);
+
 	}
 	  
 	const selectMedical3Handler = (value) => {
-		setMedical3(value)
+
+		setMedical3(value);
+
 	}
+
 	const closePopup = useCallback(() => {
+
 		form.resetFields();
-		props.toggleBillModal(false)
+		props.toggleBillModal(false);
+
 	}, [form]);
 
 	const getMedical = async () => {
+
 		   try {
+
 				axios(`${baseUrl}/medicals`).then(response => {
+
 					const medicalData = response.data.map(element => {
 						return {...element,selectedQuantity : 0}
 					})
-					setMedical(medicalData)			 
+
+					setMedical(medicalData);	 
 				})
 			 }catch(error) {
-					console.log(error.message)
+
+					console.log(error);
 			 }
 	}
+
 	useEffect(() => {
-		getMedical()
-	}, [])
+
+		getMedical();
+
+	}, []);
 
 	const  onSubmit = async () => {
-				try {
-					let body = {
-						bill_id : props.appointment_id,
-						appointment_id : props.appointment_id,
-						patient_id : props.patient_id,
-						examination_fee : examinationFee,
-						medicine_fee : medicineFee,
-						discounted_charges : props.status_insurance === true ? totalFee  : 0,
-						total_charges : totalFee,
-						date_time :     new Date().toLocaleString(),
-					}
-					axios.post(`${baseUrl}/bills`, body)
-					.then(response => {
-						console.log(response)
-					})
-					.catch(error => 
-						console.log(error)
-					);
+		try {
 
-					const medicalbody = medical.map(element => {
-						if(element.selectedQuantity > 0) {
-							return {
-								medical_id : element.medical_id,
-								bill_id : props.appointment_id,
-								quantity : element.selectedQuantity
-							}
-						} else {
-							return null
-						}
-					})
-					console.log("medicalbody: ", medicalbody)
-					medicalbody.forEach(async (element) => {
-						if (element) 
-						{
-							axios.post(`${baseUrl}/medicines`, element)
-							.then(response => {
-								console.log(response)
-							})
-							.catch(error => 
-								console.log(error)
-							);
-						}
-					})
-					body = {
-						end_time : new Date().toLocaleTimeString('it-IT')
-					}
-					axios.post(`${baseUrl}/appointments/end_up/${props.appointment_id}`, body)
-					.then(response => {
+			let body = {
+				bill_id : props.appointment_id,
+				appointment_id : props.appointment_id,
+				patient_id : props.patient_id,
+				examination_fee : examinationFee,
+				medicine_fee : medicineFee,
+				discounted_charges : props.status_insurance === true ? totalFee  : 0,
+				total_charges : totalFee,
+				date_time :     new Date().toLocaleString(),
+			}
+			
+			axios.post(`${baseUrl}/bills`, body).then(response => {
 						console.log(response)
-					})
-					.catch(error => 
+			}).catch(error => 
 						console.log(error)
+			);
+
+			const medicalbody = medical.map(element => {
+						
+				if(element.selectedQuantity > 0) {
+					
+					return {
+						medical_id : element.medical_id,
+						bill_id : props.appointment_id,
+						quantity : element.selectedQuantity
+					}
+				} else {
+						return null
+				}
+			})
+					
+			medicalbody.forEach(async (element) => {
+				
+				if (element) {
+
+					axios.post(`${baseUrl}/medicines`, element).then(response => {
+								console.log(response);
+					}).catch(error => 
+								console.log(error)
 					);
-					closePopup()
-					endupSuccessNotification()
-					await	axios(`${baseUrl}/registrations/${sessionStorage.getItem('room_id')}`).then(response => {
-						const body = {
-								appointment_id : `${sessionStorage.getItem("doctor_id").slice(-2)}${response.data.patient_id.slice(-2)}${new Date().toISOString().split('T')[0].slice(-5).replace('-', '')}`,
-								doctor_id : sessionStorage.getItem("doctor_id"),
-								patient_id : response.data.patient_id,
-								specialty_id : response.data.specialty_id,
-								room_id : sessionStorage.getItem("room_id"),
-								start_time : new Date().toLocaleString()
-						}
-						axios.post(`${baseUrl}/appointments`, body)
-						.then(response => {
+				}
+			})
+			
+			body = {
+				end_time : new Date().toLocaleTimeString('it-IT')
+			}
+
+			axios.post(`${baseUrl}/appointments/end_up/${props.appointment_id}`, body).then(response => {
+						console.log(response)
+			}).catch(error => 
+						console.log(error)
+			);
+
+			closePopup();
+			endupSuccessNotification();
+
+			await	axios(`${baseUrl}/registrations/${sessionStorage.getItem('room_id')}`).then(response => {
+				const body = {
+					appointment_id : `${sessionStorage.getItem("doctor_id").slice(-2)}${response.data.patient_id.slice(-2)}${new Date().toISOString().split('T')[0].slice(-5).replace('-', '')}`,
+					doctor_id : sessionStorage.getItem("doctor_id"),
+					patient_id : response.data.patient_id,
+					specialty_id : response.data.specialty_id,
+					room_id : sessionStorage.getItem("room_id"),
+					start_time : new Date().toLocaleString()
+				}
+
+				axios.post(`${baseUrl}/appointments`, body).then(response => {
 							console.log(response)
-						}).catch(error => {
+				}).catch(error => {
 							console.log(error)
-		
-						})
-						localStorage.removeItem('edited')
-						makeNewSuccessNotification()
-					})
+				})
+
+				localStorage.removeItem('edited');
+				makeNewSuccessNotification();
+			})
 				}catch (error) {
 					console.log(error)
 				}
@@ -155,36 +174,49 @@ const BillModal = (props) => {
 					'All room being full. I\'m sorry!!',
 			});
 		};
+
 	 const getExaminationFeeHandler = (e) => {
-			setExaminationFee(parseInt(e.target.value))
+
+			setExaminationFee(parseInt(e.target.value));
+
 		}	 
 	 useEffect(() => {
-		setTotalFee(parseInt(examinationFee) + parseInt(medicineFee))
+
+		setTotalFee(parseInt(examinationFee) + parseInt(medicineFee));
+
 	 }, [examinationFee, medicineFee])
 
 	 const selectedQuantityHandler = (count, medical_name) => {
-				setMedical(prevState => {
-					return prevState.map(element => {
-						if(element.medical_name === medical_name) {
-								return {...element, selectedQuantity :element.selectedQuantity > 0 ? element.quantity + parseInt(count) : parseInt(count)}
-						}
-						return element
-					})
+
+			setMedical(prevState => {
+				return prevState.map(element => {
+					if(element.medical_name === medical_name) {
+						return {...element, selectedQuantity :element.selectedQuantity > 0 ? element.quantity + parseInt(count) : parseInt(count)}
+					}
+					return element;
 				})
+			})
 	 }
 	const calMedicineFee = () => {
-		console.log(medical)
-		let medicine_fee = 0
+
+		let medicine_fee = 0;
+
 		medical.forEach(element => {
-			medicine_fee = medicine_fee + Number(element.cost.replace(/[^0-9.-]+/g,"")) * element.selectedQuantity
-		})
-		console.log("medicine_fee: ", medicine_fee)
-		setMedicineFee(medicine_fee)
+			medicine_fee = medicine_fee + Number(element.cost.replace(/[^0-9.-]+/g,"")) * element.selectedQuantity;
+		});
+
+		setMedicineFee(medicine_fee);
 	}
-	 useEffect(() => {
-		calMedicineFee()
-	 },[JSON.stringify(medical)])
+
+
+	useEffect(() => {
+
+		calMedicineFee();
+
+	},[JSON.stringify(medical)]);
+
 	return (
+
 		<Modal title="Make Bill" visible={props.isBillModalVisible} onOk={form.submit} onCancel={closePopup} okText="Submit" cancelText="Cancel" width={800}>
 		<Form    
 		    form={form}
@@ -328,8 +360,4 @@ const BillModal = (props) => {
 
 }
 
-export default BillModal
-
-
-
-
+export default BillModal;
