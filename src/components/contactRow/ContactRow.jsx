@@ -1,6 +1,7 @@
 import React from "react";
 import styles from './style.module.css'
 import ContactItem from "./contactItem/ContactItem";
+
 const ContactRow = () => {
   
 	return (
@@ -11,8 +12,6 @@ const ContactRow = () => {
 			<ContactItem iconLink="clock.png" itemInfo="Mon-Fri: 7am - 5pm"/>
 		</div>
 	)
-
 }
 
 export default ContactRow;
-
